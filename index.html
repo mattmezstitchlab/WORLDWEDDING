@@ -1871,8 +1871,7 @@
 
             grid.innerHTML = DESTINATIONS.map(destination => {
                 const number = String(destination.id).padStart(3, '0');
-                const keyword = (destination.keywords && destination.keywords[0]) || destination.name;
-                const image = `https://source.unsplash.com/900x1200/?${encodeURIComponent(keyword)}`;
+                const image = `https://picsum.photos/seed/worldwedding-${destination.id}/900/1200`;
                 return `
                     <button class="edition-tile" type="button" data-edition-id="${destination.id}" aria-label="Day ${number}, ${destination.name}, ${destination.country}">
                         <img class="edition-tile-media" src="${image}" alt="" loading="lazy">
