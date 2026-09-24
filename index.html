@@ -1838,7 +1838,7 @@
             grid.querySelectorAll('[data-edition-id]').forEach(tile => {
                 tile.addEventListener('click', () => {
                     const destination = DESTINATIONS.find(d => d.id === Number(tile.dataset.editionId));
-                    if (destination) openEdition(destination);
+                    if (destination) openEditionInMosaic(destination, tile);
                 });
             });
         }
