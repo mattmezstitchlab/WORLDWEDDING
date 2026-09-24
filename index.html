@@ -919,8 +919,7 @@
             </div>
             <div class="nav-links">
                 <span class="nav-link" id="nav-world">WORLD</span>
-                <span class="nav-link" id="nav-editions">EDITIONS</span>
-                <span class="nav-link" id="nav-project">PROJECT</span>
+                <span class="nav-link" id="nav-editions">365 EDITIONS</span>
                 <span class="nav-link" id="nav-system">SYSTEM</span>
                 <span class="nav-link" id="nav-project">MY WEDDING</span>
                 <span class="nav-link" id="nav-about">COMPOSE</span>
@@ -1714,6 +1713,7 @@
                 document.getElementById('view-list').classList.add('active');
                 document.getElementById('view-globe').classList.remove('active');
                 autoRotate = false;
+                openPanel('system-panel');
             });
 
             // Click outside to close
