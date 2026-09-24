@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WORLD WEDDING — PATTERN LAB</title>
+<script src="./destinations.js"></script>
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:#0b0b0c;color:#f5f3ee;font-family:Arial,Helvetica,sans-serif}button{font:inherit;color:inherit}
+:root{--gold:#c9a962;--line:rgba(255,255,255,.11);--panel:#121214}
+body{min-height:100vh}
+header{padding:28px 4vw 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:30px;align-items:end}
+.k{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold)}h1{font-size:clamp(42px,8vw,112px);font-weight:200;line-height:.82;letter-spacing:-.055em;margin:12px 0 0;text-transform:uppercase}p{color:rgba(255,255,255,.48);line-height:1.7}
+a{color:inherit;text-decoration:none;border:1px solid var(--line);padding:11px 15px;font-size:9px;letter-spacing:.18em;text-transform:uppercase}
+main{padding:0 4vw 70px}.intro{max-width:850px;padding:34px 0 22px}.intro p{font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.hour-grid{display:grid;grid-template-columns:repeat(24,minmax(45px,1fr));gap:1px;background:var(--line);overflow:auto}
+.hour{border:0;background:#101012;min-height:82px;text-align:left;padding:8px;cursor:pointer}.hour:hover,.hour.active{background:rgba(201,169,98,.15);outline:1px solid var(--gold);outline-offset:-1px}.hour b{font-size:10px;font-weight:400}.hour .sym{font-size:17px;color:var(--gold);display:block;margin:8px 0}.hour small{font-size:7px;opacity:.45;text-transform:uppercase;letter-spacing:.08em}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:1px;background:var(--line);margin-top:1px}
+.board{background:#0d0d0f;padding:18px;overflow:auto}.board-head{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:15px}.board-head h2{font-weight:200;font-size:clamp(25px,4vw,54px);margin:5px 0}.board-head span{font-size:9px;letter-spacing:.16em;color:var(--gold);text-transform:uppercase}
+.mosaic{display:grid;grid-template-columns:repeat(24,28px);grid-auto-rows:28px;gap:2px;min-width:max-content;padding:10px;background:#080809}
+.cell{border:1px solid rgba(255,255,255,.08);background:#151517;display:grid;place-items:center;position:relative;cursor:pointer;font-size:12px}.cell:hover{border-color:var(--gold)}.cell.active{background:rgba(201,169,98,.18);border-color:var(--gold)}.cell .h{position:absolute;bottom:1px;right:2px;font-size:5px;color:rgba(255,255,255,.25)}
+.legend{margin-top:12px;display:grid;grid-template-columns:repeat(6,1fr);gap:2px}.legend button{background:#121214;border:1px solid var(--line);padding:8px 4px;font-size:7px;cursor:pointer}.legend button.active{border-color:var(--gold);color:var(--gold)}
+.tools{background:var(--panel);padding:22px}.tool{border-top:1px solid var(--line);padding:18px 0}.tool:first-child{border-top:0;padding-top:0}.tool-title{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px}.colors{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.color{aspect-ratio:1;border:1px solid rgba(255,255,255,.15);cursor:pointer;font-size:7px;color:#fff;text-shadow:0 1px 2px #000}.color.active{outline:1px solid var(--gold);outline-offset:2px}.symbols{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}.symbols button{aspect-ratio:1;border:1px solid var(--line);background:#0e0e10;cursor:pointer;font-size:16px}.symbols button.active{border-color:var(--gold);color:var(--gold)}.tools button.action{width:100%;padding:10px;border:1px solid var(--line);background:transparent;cursor:pointer;font-size:8px;letter-spacing:.15em;text-transform:uppercase}.tools button.action:hover{border-color:var(--gold)}.roles{display:grid;gap:1px;background:var(--line);margin-top:1px}.role{background:#111113;padding:13px}.role b{font-size:8px;letter-spacing:.13em;font-weight:400;color:var(--gold)}.role p{font-size:11px;margin:7px 0 0}.note{font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-top:20px}
+@media(max-width:900px){header{align-items:start;flex-direction:column}.layout{grid-template-columns:1fr}.hour-grid{grid-template-columns:repeat(12,70px)}.mosaic{grid-template-columns:repeat(24,25px);grid-auto-rows:25px}}
+</style>
+</head>
+<body>
+<header><div><div class="k">WORLD WEDDING MAGAZINE / PATTERN LAB</div><h1>Le grand<br>tissage</h1></div><a href="./">Retour au monde</a></header>
+<main>
+<section class="intro"><div class="k">Une nouvelle représentation du mariage</div><p>24 heures × motifs × personnes × métiers × missions. Une seule grille. Plusieurs lectures. Le monde est commun. La vue est personnelle.</p></section>
+<section class="hour-grid" id="hours"></section>
+<div class="layout">
+<section class="board">
+<div class="board-head"><div><span id="phase">PHASE</span><h2 id="moment">18:00 · GOLDEN HOUR</h2></div><span id="destination">DAY 001 · TROMSØ</span></div>
+<div class="mosaic" id="mosaic"></div>
+<div class="legend" id="legend"></div>
+<div class="roles" id="roles"></div>
+<div class="note">Les missions affichées sont des modèles génériques — à confirmer. La grille est une projection, pas une nouvelle source de vérité.</div>
+</section>
+<aside class="tools">
+<div class="tool"><div class="tool-title">Fil / palette DMC — prototype</div><div class="colors" id="colors"></div></div>
+<div class="tool"><div class="tool-title">Symbole</div><div class="symbols" id="symbols"></div></div>
+<div class="tool"><div class="tool-title">Lecture</div><button class="action" id="toggleRoles">Afficher / masquer les rôles</button></div>
+<div class="tool"><div class="tool-title">Motif</div><button class="action" id="reset">Réinitialiser</button></div>
+</aside>
+</div>
+</main>
+<script>
+const hours=["MIDNIGHT","NIGHT","DEEP NIGHT","SILENCE","BEFORE DAWN","FIRST LIGHT","MORNING","LOCAL LIFE","CITY AWAKENS","CULTURE","DISCOVERY","PLACE","NOON","FOOD","TRAVEL","PEOPLE","CRAFT","PREPARATION","GOLDEN HOUR","CELEBRATION","DINNER","MUSIC","NIGHT LIFE","MEMORY"];
+const phases=["VEILLE / NUIT","VEILLE / NUIT","VEILLE / NUIT","VEILLE / NUIT","VEILLE / NUIT","PRÉPARATIFS","PRÉPARATIFS","PRÉPARATIFS","MISE EN PLACE","MISE EN PLACE","MISE EN PLACE","ACCUEIL","ACCUEIL","ACCUEIL","CÉRÉMONIE / COCKTAIL","CÉRÉMONIE / COCKTAIL","CÉRÉMONIE / COCKTAIL","LUMIÈRE / RÉCEPTION","LUMIÈRE / RÉCEPTION","LUMIÈRE / RÉCEPTION","DÎNER / FÊTE","DÎNER / FÊTE","DÎNER / FÊTE","MÉMOIRE / FIN"];
+const symbols=["◆","○","✦","＋","△","□","◇","✚","•","◈","╳","⌁"];
+const dmc=[["310","#111111"],["B5200","#F8F8F5"],["666","#C33A3A"],["550","#6C3A68"],["741","#E8892E"],["726","#E6C84A"],["699","#3F7547"],["3843","#2F9E9B"],["797","#3C668F"],["3865","#EEE8D8"]];
+let hour=18,color=0,symbol=0,showRoles=true;
+const roles=["MARIÉS","TÉMOINS","INVITÉS","PLANNER","LIEU","PHOTOGRAPHE","VIDÉASTE","DJ","SAXOPHONISTE","TRAITEUR","FLEURISTE","TRANSPORT"];
+const missions=["Confirmer les décisions et garder une marge de respiration.","Vérifier les éléments confiés et les personnes à contacter.","Suivre les informations pratiques et les indications d'accueil.","Contrôler le déroulé, les horaires et les points de contact.","Vérifier accès, espaces et conditions d'accueil.","Préparer matériel, lumière et moments prioritaires.","Préparer captation, batteries, cartes et positions.","Préparer régie, playlists, niveaux et signaux.","Vérifier instrument, accès et zone de jeu.","Synchroniser service, plats et boissons.","Contrôler fleurs, contenants et installation.","Confirmer véhicules, chauffeurs, itinéraires et horaires."];
+const $=id=>document.getElementById(id);
+function render(){ 
+ $("hours").innerHTML=hours.map((x,i)=>'<button class="hour '+(i===hour?'active':'')+'" onclick="setHour('+i+')"><b>'+String(i).padStart(2,"0")+':00</b><span class="sym">'+symbols[i%symbols.length]+'</span><small>'+x+'</small></button>').join("");
+ $("phase").textContent=phases[hour]; $("moment").textContent=String(hour).padStart(2,"0")+":00 · "+hours[hour];
+ $("destination").textContent="DAY 001 · "+(window.WORLD_WEDDING_DESTINATIONS?.[0]?.name||"TROMSØ");
+ $("colors").innerHTML=dmc.map((x,i)=>'<button class="color '+(i===color?'active':'')+'" style="background:'+x[1]+';color:'+(i===1||i===9?'#111':'#fff')+'" onclick="color='+i+';render()">'+x[0]+'</button>').join("");
+ $("symbols").innerHTML=symbols.map((x,i)=>'<button class="'+(i===symbol?'active':'')+'" onclick="symbol='+i+';render()">'+x+'</button>').join("");
+ $("mosaic").innerHTML=Array.from({length:96},(_,i)=>{let h=i%24;let row=Math.floor(i/24);let active=h===hour;let c=dmc[(color+h+row)%dmc.length][1];return '<button class="cell '+(active?'active':'')+'" onclick="setHour('+h+')" style="color:'+c+'">'+symbols[(symbol+h+row)%symbols.length]+'<span class="h">'+String(h).padStart(2,"0")+'</span></button>'}).join("");
+ $("roles").style.display=showRoles?"grid":"none";
+ $("roles").innerHTML=roles.map((r,i)=>'<div class="role"><b>'+r+'</b><p>'+missions[(i+hour)%missions.length]+' <span style="color:#c9a962">À CONFIRMER</span></p></div>').join("");
+}
+function setHour(h){hour=h;render()}
+$("toggleRoles").onclick=()=>{showRoles=!showRoles;render()};
+$("reset").onclick=()=>{hour=18;color=0;symbol=0;showRoles=true;render()};
+render();
+</script>
+</body>
+</html>
