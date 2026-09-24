@@ -1398,78 +1398,20 @@
             raycaster = new THREE.Raycaster();
             mouse = new THREE.Vector2();
 
-            // Globe geometry
-            const globeGeometry = new THREE.SphereGeometry(1, 64, 64);
-            
-            // Load Earth texture
-            const textureLoader = new THREE.TextureLoader();
-            textureLoader.load('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg', (texture) => {
-                const globeMaterial = new THREE.MeshStandardMaterial({
-                    map: texture,
-                    bumpScale: 0.05,
-                    metalness: 0.1,
-                    roughness: 0.8
-                });
-                globe = new THREE.Mesh(globeGeometry, globeMaterial);
-                scene.add(globe);
-            }, undefined, () => {
-                // Fallback material
-                const globeMaterial = new THREE.MeshStandardMaterial({
-                    color: 0x223344,
-                    metalness: 0.2,
-                    roughness: 0.8
-                });
-                globe = new THREE.Mesh(globeGeometry, globeMaterial);
-                scene.add(globe);
+            // Transparent dotted globe — the world is a field of points, not a filled sphere.
+            const globeGeometry = new THREE.SphereGeometry(1, 72, 48);
+            const globePositions = globeGeometry.attributes.position;
+            const dotMaterial = new THREE.PointsMaterial({
+                color: 0xd9d9d2,
+                size: 0.012,
+                sizeAttenuation: true,
+                transparent: true,
+                opacity: 0.72
             });
+            globe = new THREE.Points(globePositions, dotMaterial);
+            scene.add(globe);
 
-            // Atmosphere glow
-            const glowGeometry = new THREE.SphereGeometry(1.05, 64, 64);
-            const glowMaterial = new THREE.ShaderMaterial({
-                uniforms: {
-                    c: { type: "f", value: 0.5 },
-                    p: { type: "f", value: 4.0 },
-                    glowColor: { type: "c", value: new THREE.Color(0x3d5a80) },
-                    viewVector: { type: "v3", value: camera.position }
-                },
-                vertexShader: `
-                    uniform vec3 viewVector;
-                    varying float intensity;
-                    void main() {
-                        vec3 vNormal = normalize(normalMatrix * normal);
-                        vec3 vNormel = normalize(normalMatrix * viewVector);
-                        intensity = pow(0.7 - dot(vNormal, vNormel), 2.0);
-                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-                    }
-                `,
-                fragmentShader: `
-                    uniform vec3 glowColor;
-                    varying float intensity;
-                    void main() {
-                        vec3 glow = glowColor * intensity;
-                        gl_FragColor = vec4(glow, intensity * 0.4);
-                    }
-                `,
-                side: THREE.BackSide,
-                blending: THREE.AdditiveBlending,
-                transparent: true
-            });
-            const glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
-            scene.add(glowMesh);
-
-            // Lighting
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-            scene.add(ambientLight);
-
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-            directionalLight.position.set(5, 3, 5);
-            scene.add(directionalLight);
-
-            const backLight = new THREE.DirectionalLight(0x3d5a80, 0.3);
-            backLight.position.set(-5, -3, -5);
-            scene.add(backLight);
-
-            // Create markers for all destinations
+            // Minimal transparent world: no filled earth texture, no decorative glow.\n\n            // Points material is self-lit; no extra decorative lighting.\n\n            // Create markers for all destinations
             createMarkers();
 
             // Animation loop
@@ -1502,14 +1444,7 @@
                 markers.push(marker);
                 scene.add(marker);
 
-                // Add pulsing ring
-                const ringGeometry = new THREE.RingGeometry(0.015, 0.025, 32);
-                const ringMaterial = new THREE.MeshBasicMaterial({
-                    color: 0xc9a962,
-                    transparent: true,
-                    opacity: 0.5,
-                    side: THREE.DoubleSide
-                });
+                // Destination markers stay as the functional interaction layer; no decorative rings.\n            });
                 const ring = new THREE.Mesh(ringGeometry, ringMaterial);
                 ring.position.copy(marker.position);
                 ring.lookAt(new THREE.Vector3(0, 0, 0));
