@@ -1843,6 +1843,36 @@
             });
         }
 
+        function openEditionInMosaic(destination, tile) {
+            const grid = document.getElementById('home-editions-grid');
+            if (!grid || !destination || !tile) return;
+            const existing = document.getElementById('edition-inline-detail');
+            if (existing) existing.remove();
+            grid.querySelectorAll('.edition-tile.is-selected').forEach(el => el.classList.remove('is-selected'));
+            tile.classList.add('is-selected');
+            const detail = document.createElement('section');
+            detail.id = 'edition-inline-detail';
+            detail.className = 'edition-inline-detail';
+            detail.innerHTML = '<button class="edition-inline-close" type="button" aria-label="Close">×</button>' +
+                '<div><div class="edition-inline-kicker">EDITION ' + String(destination.id).padStart(3,'0') + '</div>' +
+                '<h3 class="edition-inline-title">' + destination.name + '</h3>' +
+                '<div class="edition-inline-country">' + destination.country + '</div>' +
+                '<p class="edition-inline-note">Le sommaire de cette édition. 24 heures pour entrer dans le lieu, la culture, les personnes et le mariage.</p></div>' +
+                '<div class="edition-inline-toc">' +
+                HOURS_CONFIG.map((hour,index) => '<button class="edition-inline-hour" type="button" data-hour="' + index + '"><span class="edition-inline-hour-number">' + String(index).padStart(2,'0') + '</span><span class="edition-inline-hour-name">' + hour.name + '</span></button>').join('') +
+                '</div>';
+            tile.insertAdjacentElement('afterend', detail);
+            detail.querySelector('.edition-inline-close').addEventListener('click', () => { detail.remove(); tile.classList.remove('is-selected'); });
+            detail.querySelectorAll('[data-hour]').forEach(button => {
+                button.addEventListener('click', () => {
+                    currentDestination = destination;
+                    initInterior(destination, Number(button.dataset.hour));
+                    document.getElementById('edition-interior').classList.add('visible');
+                });
+            });
+            requestAnimationFrame(() => detail.scrollIntoView({behavior:'smooth',block:'center'}));
+        }
+
         function openEditor() {
             const editor = document.getElementById('editor-panel');
             if (!editor) return;
