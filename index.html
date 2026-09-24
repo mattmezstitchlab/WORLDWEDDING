@@ -866,6 +866,210 @@
             }
         }
 
+
+        /* Home Editions Mosaic */
+        body.home-scroll {
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: auto;
+            min-height: 100vh;
+        }
+
+        body.home-scroll #app {
+            min-height: 100vh;
+        }
+
+        body.home-scroll #globe-container {
+            position: fixed;
+            z-index: 0;
+        }
+
+        body.home-scroll #hero {
+            position: relative;
+            min-height: 100vh;
+            height: 100vh;
+            z-index: 2;
+        }
+
+        #home-editions {
+            position: relative;
+            z-index: 10;
+            background: #111;
+            min-height: 100vh;
+            padding: 9rem 3vw 8rem;
+        }
+
+        .home-editions-intro {
+            max-width: 1500px;
+            margin: 0 auto 3rem;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 2rem;
+            align-items: end;
+            border-bottom: 1px solid rgba(255,255,255,.14);
+            padding-bottom: 1.5rem;
+        }
+
+        .home-editions-kicker {
+            font-size: .55rem;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: .8rem;
+        }
+
+        .home-editions-title {
+            font-size: clamp(2.5rem, 7vw, 7rem);
+            line-height: .85;
+            font-weight: 200;
+            letter-spacing: -.04em;
+            text-transform: uppercase;
+        }
+
+        .home-editions-title span { color: var(--accent); }
+
+        .home-editions-copy {
+            max-width: 430px;
+            font-size: .72rem;
+            line-height: 1.7;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            opacity: .45;
+            text-align: right;
+        }
+
+        .editions-mosaic {
+            max-width: 1500px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            grid-auto-rows: minmax(115px, 10vw);
+            gap: 3px;
+        }
+
+        .edition-tile {
+            position: relative;
+            min-width: 0;
+            overflow: hidden;
+            background: #1b1b1b;
+            cursor: pointer;
+            border: 0;
+            padding: 0;
+            color: #fff;
+            text-align: left;
+            isolation: isolate;
+        }
+
+        .edition-tile:nth-child(13n + 1),
+        .edition-tile:nth-child(13n + 8) { grid-column: span 3; grid-row: span 2; }
+
+        .edition-tile:nth-child(13n + 2),
+        .edition-tile:nth-child(13n + 5),
+        .edition-tile:nth-child(13n + 9),
+        .edition-tile:nth-child(13n + 12) { grid-column: span 2; }
+
+        .edition-tile:nth-child(13n + 3),
+        .edition-tile:nth-child(13n + 4),
+        .edition-tile:nth-child(13n + 6),
+        .edition-tile:nth-child(13n + 7),
+        .edition-tile:nth-child(13n + 10),
+        .edition-tile:nth-child(13n + 11),
+        .edition-tile:nth-child(13n + 13) { grid-column: span 1; }
+
+        .edition-tile-media {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: .72;
+            filter: saturate(.82) contrast(1.03);
+            transition: transform .7s var(--transition), opacity .4s ease, filter .4s ease;
+        }
+
+        .edition-tile::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.76));
+        }
+
+        .edition-tile:hover .edition-tile-media {
+            transform: scale(1.06);
+            opacity: .95;
+            filter: saturate(1) contrast(1.05);
+        }
+
+        .edition-tile-info {
+            position: absolute;
+            z-index: 2;
+            inset: auto .8rem .8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: .5rem;
+        }
+
+        .edition-tile-number {
+            font-size: clamp(1rem, 2vw, 2.3rem);
+            line-height: .8;
+            font-weight: 200;
+            letter-spacing: -.04em;
+        }
+
+        .edition-tile-name {
+            font-size: .48rem;
+            line-height: 1.3;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            text-align: right;
+            opacity: .78;
+        }
+
+        .edition-tile-country {
+            display: block;
+            margin-top: .15rem;
+            opacity: .42;
+            font-size: .42rem;
+        }
+
+        .edition-tile-label {
+            position: absolute;
+            z-index: 2;
+            top: .7rem;
+            left: .75rem;
+            font-size: .4rem;
+            letter-spacing: .18em;
+            opacity: .55;
+        }
+
+        .home-editions-end {
+            max-width: 1500px;
+            margin: 3px auto 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.5rem;
+            font-size: .5rem;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            opacity: .4;
+        }
+
+        @media (max-width: 800px) {
+            #home-editions { padding: 6rem 1rem 5rem; }
+            .home-editions-intro { grid-template-columns: 1fr; }
+            .home-editions-copy { text-align: left; }
+            .editions-mosaic {
+                grid-template-columns: repeat(6, minmax(0, 1fr));
+                grid-auto-rows: 26vw;
+            }
+            .edition-tile:nth-child(n) { grid-column: span 1; grid-row: span 1; }
+            .edition-tile:nth-child(7n + 1),
+            .edition-tile:nth-child(7n + 6) { grid-column: span 2; grid-row: span 2; }
+        }
+
         /* Animations */
         @keyframes fadeInUp {
             from {
@@ -939,6 +1143,26 @@
             <div class="scroll-indicator">
                 <span>Explore</span>
                 <div class="scroll-line"></div>
+            </div>
+        </section>
+
+
+        <!-- 365 Editions — the homepage magazine mosaic -->
+        <section id="home-editions" aria-label="365 editions">
+            <div class="home-editions-intro">
+                <div>
+                    <div class="home-editions-kicker">365 DAYS / 365 EDITIONS</div>
+                    <h2 class="home-editions-title">THE <span>EDITIONS</span></h2>
+                </div>
+                <p class="home-editions-copy">
+                    Une destination. Une couverture. Une édition.<br>
+                    Le monde devient le sommaire.
+                </p>
+            </div>
+            <div class="editions-mosaic" id="home-editions-grid"></div>
+            <div class="home-editions-end">
+                <span>001 — 365</span>
+                <span>THE WORLD IS COMMON. THE VIEW IS PERSONAL.</span>
             </div>
         </section>
 
@@ -1640,6 +1864,39 @@
             }
         }
 
+
+        function renderHomeEditions() {
+            const grid = document.getElementById('home-editions-grid');
+            if (!grid || !Array.isArray(DESTINATIONS)) return;
+
+            grid.innerHTML = DESTINATIONS.map(destination => {
+                const number = String(destination.id).padStart(3, '0');
+                const keyword = (destination.keywords && destination.keywords[0]) || destination.name;
+                const image = `https://source.unsplash.com/900x1200/?${encodeURIComponent(keyword)}`;
+                return `
+                    <button class="edition-tile" type="button" data-edition-id="${destination.id}" aria-label="Day ${number}, ${destination.name}, ${destination.country}">
+                        <img class="edition-tile-media" src="${image}" alt="" loading="lazy">
+                        <span class="edition-tile-label">DAY ${number}</span>
+                        <span class="edition-tile-info">
+                            <span class="edition-tile-number">${number}</span>
+                            <span class="edition-tile-name">${destination.name}<span class="edition-tile-country">${destination.country}</span></span>
+                        </span>
+                    </button>
+                `;
+            }).join('');
+
+            grid.querySelectorAll('[data-edition-id]').forEach(tile => {
+                tile.addEventListener('click', () => {
+                    const destination = DESTINATIONS.find(d => d.id === Number(tile.dataset.editionId));
+                    if (destination) openEdition(destination);
+                });
+            });
+        }
+
+        function scrollToHomeEditions() {
+            document.getElementById('home-editions')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
         // =============================================
         // WORLD SYSTEM UI
         // =============================================
@@ -1675,6 +1932,10 @@
         // =============================================
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Homepage: one hero, then the complete 365-edition magazine.
+            document.body.classList.add('home-scroll');
+            renderHomeEditions();
+
             // Initialize globe
             initGlobe();
 
@@ -1734,13 +1995,10 @@
             document.getElementById('nav-world').addEventListener('click', () => {
                 closeCover();
                 autoRotate = true;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             });
 
-            document.getElementById('nav-editions').addEventListener('click', () => {
-                if (DESTINATIONS.length > 0) {
-                    openEdition(DESTINATIONS[0]);
-                }
-            });
+            document.getElementById('nav-editions').addEventListener('click', scrollToHomeEditions);
         });
     </script>
 </body>
