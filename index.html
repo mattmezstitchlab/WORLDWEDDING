@@ -875,9 +875,42 @@
         .edition-tile-country{font-size:10px!important;display:block;letter-spacing:.1em;margin-top:4px}
         .editor-edition-meta b{font-size:15px!important}
         .editor-edition-meta span{font-size:clamp(15px,1.6vw,23px)!important;font-weight:700}
-        .editor-panel{z-index:5000!important}
+        .editor-panel{z-index:5000!important;position:fixed;inset:0;background:#111;color:#f5f5f5;display:none;overflow:auto}
+        .editor-panel.visible{display:block}
+        .editor-panel-shell{min-height:100%;padding:110px 4vw 5vw}
+        .editor-panel-header{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:36px}
+        .editor-panel-kicker{font-size:10px;letter-spacing:.22em;text-transform:uppercase;opacity:.55;margin-bottom:10px}
+        .editor-panel-title{font-size:clamp(38px,6vw,88px);font-weight:200;line-height:.9;letter-spacing:-.04em}
+        .editor-panel-title span{color:var(--accent)}
+        .editor-panel-note{max-width:520px;font-size:13px;line-height:1.6;opacity:.6}
+        .editor-panel-close{border:0;background:none;color:#fff;font-size:32px;cursor:pointer;padding:8px}
+        .editor-space-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:42px}
+        .editor-space-card{border:1px solid rgba(255,255,255,.14);padding:18px;background:#151515}
+        .editor-space-card b{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+        .editor-space-card span{font-size:12px;opacity:.55}
+        .editor-editions-heading{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid rgba(255,255,255,.14);padding-top:18px}
+        .editor-editions-heading h3{font-size:20px;font-weight:500}
+        .editor-editions-heading span{font-size:10px;letter-spacing:.16em;opacity:.45}
+        .editor-editions-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;padding:24px 0}
+        .editor-edition-tile{position:relative;aspect-ratio:3/4;border:0;background:#111;overflow:hidden;color:#fff;text-align:left;cursor:pointer}
+        .editor-edition-tile img{width:100%;height:100%;object-fit:cover;display:block;opacity:.72}
+        .editor-edition-meta{position:absolute;left:10px;right:10px;bottom:10px;display:flex;align-items:end;gap:10px;text-shadow:0 2px 12px #000}
+        .editor-edition-meta b{font-size:15px;line-height:.9}
+        .editor-edition-meta span{font-size:clamp(15px,1.6vw,23px)!important;font-weight:700}
+        .editor-inspector{display:none;position:fixed;right:24px;bottom:24px;width:min(390px,calc(100vw - 48px));padding:20px;background:#f7f4ec;color:#111;z-index:6000;box-shadow:0 20px 70px #0008}
+        .editor-inspector.active{display:block}
+        .editor-inspector.saved{outline:2px solid #111}
+        .editor-inspector-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px}
+        .editor-inspector-top span{font-size:32px;font-weight:800}
+        .editor-inspector-top strong{font-size:18px}
+        .editor-form label{display:block;font-size:10px;letter-spacing:.12em;margin:12px 0}
+        .editor-form input{display:block;width:100%;box-sizing:border-box;padding:11px;margin-top:6px;border:1px solid #aaa;background:#fff}
+        .editor-form button{margin-top:10px;padding:12px 16px;border:0;background:#111;color:#fff;cursor:pointer}
+        .editor-inspector small{display:block;margin-top:14px;font-size:10px;line-height:1.4;opacity:.65}
         .system-panel{z-index:4500!important}
         .edition-cover,.edition-interior{z-index:3000!important}
+        .nav-link-primary{opacity:1!important;color:#fff}
+        @media(max-width:800px){.editor-editions-grid{grid-template-columns:repeat(3,1fr)}.editor-space-grid{grid-template-columns:repeat(2,1fr)}.editor-panel-header{align-items:flex-start}.editor-panel-note{display:none}}
         .world-dots{position:absolute;inset:0;pointer-events:none;z-index:2}
         .world-dot{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.72);box-shadow:0 0 8px rgba(255,255,255,.25)}
         .world-globe-shell{position:relative;width:min(72vw,760px);aspect-ratio:1;border-radius:50%;border:1px solid rgba(255,255,255,.12);overflow:hidden;background:radial-gradient(circle at 45% 40%,rgba(255,255,255,.025),transparent 58%)}
@@ -1147,7 +1180,7 @@
 
         <!-- Navigation -->
         <nav>
-            <div class="logo">WORLD <span>WEDDING</span> MAGAZINE</div>
+            <div class="logo">WORLD <span>WEDDING</span> CENTER</div>
             <div class="nav-center">
                 <span class="day-indicator">DAY</span>
                 <span class="day-number" id="current-day">001</span>
@@ -1155,9 +1188,7 @@
             <div class="nav-links">
                 <span class="nav-link" id="nav-world">WORLD</span>
                 <span class="nav-link" id="nav-editions">365 EDITIONS</span>
-                <span class="nav-link" id="nav-system">SYSTEM</span>
-                <span class="nav-link" id="nav-project">MY WEDDING</span>
-                <span class="nav-link" id="nav-about">COMPOSE</span>
+                <span class="nav-link nav-link-primary" id="nav-my-space">MY SPACE</span>
             </div>
         </nav>
 
@@ -1261,6 +1292,44 @@
                 <svg viewBox="0 0 24 24"><polyline points="9,6 15,12 9,18"></polyline></svg>
             </div>
         </div>
+        <!-- MY SPACE / UNIVERSAL EDITOR -->
+        <section id="editor-panel" aria-hidden="true">
+            <div class="editor-panel-shell">
+                <div class="editor-panel-header">
+                    <div>
+                        <div class="editor-panel-kicker">MY SPACE / UNIVERSAL EDITOR</div>
+                        <h2 class="editor-panel-title">YOUR <span>SPACE.</span></h2>
+                    </div>
+                    <button class="editor-panel-close" id="editor-close" aria-label="Close">×</button>
+                    <p class="editor-panel-note">Une seule identité. Un seul éditeur. Les mêmes 365 éditions pour tout le monde. Aujourd'hui, chaque utilisateur peut éditer ; demain, les permissions définiront simplement ce que chacun peut modifier.</p>
+                </div>
+                <div class="editor-space-grid">
+                    <div class="editor-space-card"><b>IDENTITY</b><span>Une personne, une identité.</span></div>
+                    <div class="editor-space-card"><b>WEDDINGS</b><span>Les mariages auxquels je participe.</span></div>
+                    <div class="editor-space-card"><b>PROFESSIONAL</b><span>Mes activités et profils professionnels.</span></div>
+                    <div class="editor-space-card"><b>CONTRIBUTIONS</b><span>Ce que j'apporte au World.</span></div>
+                </div>
+                <div class="editor-editions-heading">
+                    <h3>365 EDITIONS</h3>
+                    <span>ONE SOURCE OF TRUTH · EDITOR</span>
+                </div>
+                <div class="editor-editions-grid" id="editor-editions-grid"></div>
+            </div>
+            <aside class="editor-inspector" id="editor-inspector">
+                <div class="editor-inspector-top">
+                    <span id="editor-edition-number">001</span>
+                    <strong id="editor-edition-name">Tromsø</strong>
+                </div>
+                <form class="editor-form" id="editor-form">
+                    <label>IMAGE URL<input id="editor-image-url" type="url" placeholder="https://…"></label>
+                    <label>VIDEO URL<input id="editor-video-url" type="url" placeholder="https://…"></label>
+                    <label>MUSIC URL<input id="editor-music-url" type="url" placeholder="https://…"></label>
+                    <button type="submit">SAVE EDITION</button>
+                </form>
+                <small>Prototype : les données d'édition sont enregistrées localement. La future couche de permissions contrôlera les droits d'écriture sans créer un autre éditeur.</small>
+            </aside>
+        </section>
+
         <!-- WORLD SYSTEM / PRODUCT ARCHITECTURE -->
         <section id="system-panel" aria-hidden="true">
             <div class="system-shell">
@@ -1458,13 +1527,7 @@
                 markers.push(marker);
                 scene.add(marker);
 
-                // Destination markers stay as the functional interaction layer; no decorative rings.\n            });
-                const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-                ring.position.copy(marker.position);
-                ring.lookAt(new THREE.Vector3(0, 0, 0));
-                ring.userData = { isRing: true, baseScale: 1 };
-                markers.push(ring);
-                scene.add(ring);
+                // Destination markers stay as the functional interaction layer; no decorative rings.
             });
         }
 
@@ -1983,17 +2046,13 @@
         // =============================================
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Homepage: one hero, then the complete 365-edition magazine.
+            // Never let a visual initialization failure trap the page behind the loader.
+            setTimeout(() => document.getElementById('loader')?.classList.add('hidden'), 900);
+
             document.body.classList.add('home-scroll');
-            renderHomeEditions();
+            try { renderHomeEditions(); } catch (error) { console.error('Home editions initialization failed:', error); }
 
-            // Initialize globe
-            initGlobe();
-
-            // Hide loader after a delay
-            setTimeout(() => {
-                document.getElementById('loader').classList.add('hidden');
-            }, 2000);
+            try { initGlobe(); } catch (error) { console.error('Globe initialization failed:', error); }
 
             // Event listeners for UI
             document.getElementById('close-cover').addEventListener('click', closeCover);
@@ -2035,9 +2094,9 @@
                 }
             });
 
-            document.getElementById('nav-system').addEventListener('click', () => openPanel('system-panel'));
-            document.getElementById('nav-project').addEventListener('click', () => openPanel('project-panel'));
-            document.getElementById('nav-about').addEventListener('click', () => openPanel('composer-panel'));
+            document.getElementById('nav-my-space').addEventListener('click', openEditor);
+            document.getElementById('editor-close').addEventListener('click', closeEditor);
+            document.getElementById('editor-form').addEventListener('submit', saveEditorEdition);
             document.getElementById('system-close').addEventListener('click', closeSystemPanels);
             document.getElementById('project-close').addEventListener('click', closeSystemPanels);
             document.getElementById('composer-close').addEventListener('click', closeSystemPanels);
