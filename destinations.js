@@ -1,7 +1,7 @@
 // WORLD WEDDING MAGAZINE — canonical 365-day destination registry
 // Source: mattmezstitchlab/worldweddingmagazine / src/lib/destinations.ts
 // This file is intentionally data-only so the visual prototype can remain dependency-free.
-const DESTINATIONS = [
+window.WORLD_WEDDING_DESTINATIONS = [
   {
     "id": 1,
     "name": "Tromsø",
@@ -5179,4 +5179,3 @@ const DESTINATIONS = [
     "season": "winter"
   }
 ];
-window.WORLD_WEDDING_DESTINATIONS = DESTINATIONS;
