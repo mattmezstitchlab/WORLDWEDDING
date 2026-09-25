@@ -161,7 +161,8 @@ h1{font-size:clamp(60px,12vw,190px);line-height:.78;letter-spacing:-.07em;font-w
 </section>
 
 <script>
-function saveDestinationToWedding(){const title=document.getElementById('drawer-title').textContent;const d=(window.WORLD_WEDDING_DESTINATIONS||[]).find(x=>x.name===title);if(!d||!window.WORLD_OBJECT)return;const entry=window.WORLD_OBJECT.saveToWedding(window.WORLD_OBJECT.destination(d),{origin:'living-magazine'});const cta=document.querySelector('.drawer-copy .cta');if(cta)cta.textContent=entry?'SAVED TO MY WEDDING':'SAVE TO MY WEDDING';}
+let currentDestinationId=null;
+function saveDestinationToWedding(){const d=(window.WORLD_WEDDING_DESTINATIONS||[]).find(x=>String(x.id)===String(currentDestinationId));if(!d||!window.WORLD_OBJECT)return;const entry=window.WORLD_OBJECT.saveToWedding(window.WORLD_OBJECT.destination(d),{origin:'living-magazine'});const cta=document.querySelector('.drawer-copy .cta');if(cta)cta.textContent=entry?'SAVED TO MY WEDDING':'SAVE TO MY WEDDING';}
 function bootMagazine(){
   const list=window.WORLD_WEDDING_DESTINATIONS||window.DESTINATIONS||[];
   if(window.WORLD_OBJECT)window.WORLD_OBJECT.registerDestinations(list);
@@ -174,6 +175,7 @@ function bootMagazine(){
   });
 }
 function openDestination(d){
+  currentDestinationId=d.id;
   if(window.WORLD_OBJECT)window.WORLD_OBJECT.upsert(window.WORLD_OBJECT.destination(d));
   document.getElementById('drawer-img').src='https://picsum.photos/seed/ww-mag-'+d.id+'-detail/1400/1800';
   document.getElementById('drawer-img').alt=d.name;
