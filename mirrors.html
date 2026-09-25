@@ -39,9 +39,9 @@ h1 span{color:var(--accent)}
 .tile-art:before{content:"";width:54%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(201,169,98,.78),rgba(17,17,17,.08) 68%,transparent 69%);filter:saturate(.8)}
 .tile-bottom{display:block;text-align:center}
 .tile-country{display:block;font-size:7px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
-.tile-name{display:block;font-size:clamp(13px,1.45vw,22px);font-weight:700;line-height:.92;letter-spacing:-.025em;overflow-wrap:anywhere}
+.tile-name{display:block;font-size:clamp(12px,1.25vw,20px);font-weight:700;line-height:1.02;letter-spacing:-.025em;overflow-wrap:anywhere;max-width:100%;hyphens:none}
 .footer{display:flex;justify-content:space-between;margin-top:14px;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-#detail{display:none;position:fixed;inset:0;z-index:40;background:rgba(17,17,17,.62);padding:5vh 4vw;overflow:auto}
+#detail{display:none;position:fixed;inset:0;z-index:40;background:rgba(17,17,17,.62);padding:clamp(70px,9vh,110px) 4vw 5vh;overflow:auto}
 #detail.visible{display:block}
 .detail-shell{max-width:1100px;margin:auto;background:var(--panel);min-height:90vh;padding:44px}
 .detail-close{float:right;border:0;background:none;font-size:28px;cursor:pointer}
