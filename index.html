@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>WORLD WEDDING — The Living Magazine</title>
 <script defer src="./destinations.js"></script>
+<script defer src="./world-object.js"></script>
 <style>
 *{box-sizing:border-box;margin:0}
 :root{--ink:#111;--paper:#f7f5ef;--line:#171717;--pink:#ff2b8a}
@@ -155,13 +156,15 @@ h1{font-size:clamp(60px,12vw,190px);line-height:.78;letter-spacing:-.07em;font-w
   <div class="drawer-head"><div class="brand">WORLD WEDDING</div><button class="close" onclick="closeDestination()" aria-label="Fermer">×</button></div>
   <div class="drawer-grid">
     <div class="drawer-image"><img id="drawer-img" alt=""></div>
-    <div class="drawer-copy"><div id="drawer-kicker" class="kicker"></div><h2 id="drawer-title"></h2><p id="drawer-desc"></p><a class="cta" href="./my-wedding.html">BUILD MY WEDDING</a></div>
+    <div class="drawer-copy"><div id="drawer-kicker" class="kicker"></div><h2 id="drawer-title"></h2><p id="drawer-desc"></p><button class="cta" type="button" onclick="saveDestinationToWedding()">SAVE TO MY WEDDING</button></div>
   </div>
 </section>
 
 <script>
+function saveDestinationToWedding(){const title=document.getElementById('drawer-title').textContent;const d=(window.WORLD_WEDDING_DESTINATIONS||[]).find(x=>x.name===title);if(!d||!window.WORLD_OBJECT)return;const entry=window.WORLD_OBJECT.saveToWedding(window.WORLD_OBJECT.destination(d),{origin:'living-magazine'});const cta=document.querySelector('.drawer-copy .cta');if(cta)cta.textContent=entry?'SAVED TO MY WEDDING':'SAVE TO MY WEDDING';}
 function bootMagazine(){
   const list=window.WORLD_WEDDING_DESTINATIONS||window.DESTINATIONS||[];
+  if(window.WORLD_OBJECT)window.WORLD_OBJECT.registerDestinations(list);
   const row=document.getElementById('dest-row');
   list.slice(0,24).forEach((d,i)=>{
     const el=document.createElement('article'); el.className='dest';
@@ -171,6 +174,7 @@ function bootMagazine(){
   });
 }
 function openDestination(d){
+  if(window.WORLD_OBJECT)window.WORLD_OBJECT.upsert(window.WORLD_OBJECT.destination(d));
   document.getElementById('drawer-img').src='https://picsum.photos/seed/ww-mag-'+d.id+'-detail/1400/1800';
   document.getElementById('drawer-img').alt=d.name;
   document.getElementById('drawer-kicker').textContent=(d.country||'WORLD')+' · '+(d.region||'');
