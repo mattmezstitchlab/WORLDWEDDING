@@ -5,127 +5,69 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>WORLD WEDDING CENTER — UNIVERSAL GRID</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0b0b0b;--paper:#f4f1e8;--ink:#111;--muted:#aaa;--line:rgba(244,241,232,.18);--a:#ff3d9a;--b:#ffd34d;--c:#6ee7ff;--d:#8df58d}
-html,body{background:var(--bg);color:var(--paper);font-family:Arial,Helvetica,sans-serif}
-body{min-height:100vh}
-button,input{font:inherit}
-header{border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;background:rgba(11,11,11,.94);backdrop-filter:blur(14px)}
-.head{max-width:1500px;margin:auto;padding:20px 3vw;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:10px;letter-spacing:.28em;font-weight:700}.logo span{color:var(--a)}
-.back{color:var(--paper);text-decoration:none;font-size:9px;letter-spacing:.2em;text-transform:uppercase}
-main{max-width:1500px;margin:auto;padding:65px 3vw 100px}
-.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:50px;align-items:end}
-.kicker{font-size:9px;letter-spacing:.3em;color:var(--a);margin-bottom:16px}
-h1{font-size:clamp(54px,9vw,135px);font-weight:200;letter-spacing:-.07em;line-height:.8}
-h1 span{color:var(--a)}
-.lead{font-size:13px;line-height:1.8;color:#bcbab2}
-.rule{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 0;margin:38px 0 25px;display:flex;justify-content:space-between;gap:20px;font-size:9px;letter-spacing:.2em;text-transform:uppercase}
-.controls{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}
-.ctrl{border:1px solid var(--line);background:transparent;color:var(--paper);padding:10px 13px;font-size:9px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer}
-.ctrl.active,.ctrl:hover{background:var(--paper);color:var(--ink)}
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:2px}
-.cell{aspect-ratio:1;border:1px solid rgba(244,241,232,.08);background:#111;position:relative;cursor:pointer;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.cell:hover{border-color:var(--paper)}
-.cell .n{position:absolute;top:6px;left:7px;font-size:7px;opacity:.55}
-.mark{width:38%;height:38%;display:flex;align-items:center;justify-content:center;font-size:clamp(15px,2vw,28px);font-weight:700}
-.mark.cross:before{content:'×'}
-.mark.dot:before{content:'•'}
-.mark.star:before{content:'✣'}
-.mark.line:before{content:'╱'}
-.mark.chain:before{content:'◌'}
-.mark.knot:before{content:'●';font-size:.7em}
-.mark.satin{border:5px solid currentColor}
-.mark.half{border-left:3px solid currentColor;border-bottom:3px solid currentColor}
-.mark.double{border:2px solid currentColor;transform:rotate(45deg)}
-.cell[data-color="pink"]{color:var(--a)}.cell[data-color="yellow"]{color:var(--b)}.cell[data-color="cyan"]{color:var(--c)}.cell[data-color="green"]{color:var(--d)}
-.cell[data-level="2"] .mark{transform:scale(1.35)}.cell[data-level="3"] .mark{transform:scale(1.7);font-weight:900}
-.legend{margin-top:28px;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--line)}
-.legend-card{background:var(--bg);padding:20px;min-height:125px}
-.legend-card b{display:block;font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:12px}
-.legend-card p{font-size:11px;line-height:1.6;color:#aaa}
-.symbol{font-size:25px;margin-bottom:10px}
-.composer{margin-top:45px;border-top:1px solid var(--line);padding-top:25px}
-.composer h2{font-size:32px;font-weight:300;letter-spacing:-.03em}
-.composer p{color:#aaa;font-size:11px;margin:8px 0 20px;line-height:1.6}
-.signature{display:grid;grid-template-columns:1fr 280px;gap:18px}
-.message{width:100%;min-height:120px;background:#111;color:var(--paper);border:1px solid var(--line);padding:15px;resize:vertical;outline:none}
-.preview{border:1px solid var(--line);padding:18px;min-height:120px}
-.preview-label{font-size:8px;letter-spacing:.2em;color:#999;margin-bottom:12px}
-.signature-line{display:flex;gap:5px;flex-wrap:wrap}
-.sig{width:18px;height:18px;display:grid;place-items:center;font-size:13px;border:1px solid currentColor}
-.small{font-size:8px;color:#777;margin-top:15px;line-height:1.5}
-.notice{margin-top:30px;padding:16px;background:#151515;border-left:3px solid var(--a);font-size:10px;line-height:1.7;color:#bbb}
-@media(max-width:900px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(6,1fr)}.legend{grid-template-columns:1fr 1fr}.signature{grid-template-columns:1fr}}
-@media(max-width:520px){.grid{grid-template-columns:repeat(4,1fr)}.legend{grid-template-columns:1fr}}
+*{box-sizing:border-box;margin:0;padding:0} :root{--bg:#090909;--paper:#f5f1e7;--muted:#999;--line:rgba(245,241,231,.17);--pink:#ff3d9a;--yellow:#ffd34d;--cyan:#6ee7ff;--green:#8df58d;--panel:#121212}
+html,body{background:var(--bg);color:var(--paper);font-family:Arial,Helvetica,sans-serif}body{min-height:100vh}button,input,textarea,select{font:inherit}
+header{border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30;background:rgba(9,9,9,.95);backdrop-filter:blur(14px)}.head{max-width:1600px;margin:auto;padding:18px 3vw;display:flex;justify-content:space-between;align-items:center}.logo{font-size:10px;letter-spacing:.28em;font-weight:700}.logo span{color:var(--pink)}.back{color:var(--paper);text-decoration:none;font-size:9px;letter-spacing:.2em;text-transform:uppercase}
+main{max-width:1600px;margin:auto;padding:60px 3vw 100px}.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:end}.kicker{font-size:9px;letter-spacing:.3em;color:var(--pink);margin-bottom:16px}h1{font-size:clamp(48px,8vw,125px);font-weight:200;letter-spacing:-.07em;line-height:.82}h1 span{color:var(--pink)}.lead{font-size:13px;line-height:1.8;color:#b9b6ae}.rule{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 0;margin:35px 0 22px;display:flex;justify-content:space-between;gap:20px;font-size:9px;letter-spacing:.2em;text-transform:uppercase}
+.controls{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}.ctrl{border:1px solid var(--line);background:transparent;color:var(--paper);padding:9px 12px;font-size:8px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}.ctrl.active,.ctrl:hover{background:var(--paper);color:var(--bg)}
+.grid{display:grid;grid-template-columns:repeat(15,1fr);gap:2px}.cell{aspect-ratio:1;border:1px solid rgba(245,241,231,.08);background:#101010;color:var(--paper);position:relative;cursor:pointer;display:flex;align-items:center;justify-content:center;overflow:hidden}.cell:hover,.cell:focus-visible{border-color:var(--paper);outline:none}.cell .n{position:absolute;top:5px;left:6px;font-size:6px;opacity:.45}.mark{width:37%;height:37%;display:flex;align-items:center;justify-content:center;font-size:clamp(12px,1.6vw,25px);font-weight:700}.mark.cross:before{content:'×'}.mark.dot:before{content:'•'}.mark.star:before{content:'✣'}.mark.line:before{content:'╱'}.mark.chain:before{content:'◌'}.mark.knot:before{content:'●';font-size:.7em}.mark.satin{border:5px solid currentColor}.mark.half{border-left:3px solid currentColor;border-bottom:3px solid currentColor}.mark.double{border:2px solid currentColor;transform:rotate(45deg)}.cell[data-color=pink]{color:var(--pink)}.cell[data-color=yellow]{color:var(--yellow)}.cell[data-color=cyan]{color:var(--cyan)}.cell[data-color=green]{color:var(--green)}.cell[data-level="2"] .mark{transform:scale(1.35)}.cell[data-level="3"] .mark{transform:scale(1.7);font-weight:900}
+.section{margin-top:55px;border-top:1px solid var(--line);padding-top:25px}.section h2{font-size:30px;font-weight:300;letter-spacing:-.03em}.section-intro{font-size:11px;line-height:1.7;color:#999;margin:8px 0 20px;max-width:850px}
+.legend{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--line)}.legend-card{background:var(--bg);padding:18px;min-height:145px}.legend-card b{display:block;font-size:9px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px}.legend-card p{font-size:10px;line-height:1.6;color:#999}.symbol{font-size:24px;margin-bottom:9px}
+.editor{display:grid;grid-template-columns:1.3fr .7fr;gap:2px;background:var(--line)}.editor-panel{background:var(--panel);padding:22px}.editor-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:3px}.mini{aspect-ratio:1;border:1px solid var(--line);background:#0e0e0e;cursor:pointer;display:grid;place-items:center;color:var(--paper)}.mini.selected{border:2px solid var(--pink)}.mini .m{font-size:22px}.fields{display:grid;gap:10px}.fields label{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#999}.fields input,.fields select{width:100%;background:#0d0d0d;color:var(--paper);border:1px solid var(--line);padding:11px;outline:none}.swatches{display:flex;gap:7px}.swatch{width:30px;height:30px;border:2px solid transparent;cursor:pointer}.swatch.selected{border-color:#fff}.swatch.pink{background:var(--pink)}.swatch.yellow{background:var(--yellow)}.swatch.cyan{background:var(--cyan)}.swatch.green{background:var(--green)}.range{width:100%}.preview-box{margin-top:15px;padding:14px;border:1px solid var(--line);min-height:90px}.preview-box b{font-size:8px;letter-spacing:.16em}.preview-symbol{font-size:35px;margin-top:8px}
+.composer{display:grid;grid-template-columns:1fr 320px;gap:18px}.message{width:100%;min-height:145px;background:#0e0e0e;color:var(--paper);border:1px solid var(--line);padding:15px;resize:vertical;outline:none}.signature{border:1px solid var(--line);padding:18px;min-height:145px}.preview-label{font-size:8px;letter-spacing:.2em;color:#888;margin-bottom:14px}.signature-line{display:flex;gap:4px;flex-wrap:wrap}.sig{width:19px;height:19px;display:grid;place-items:center;font-size:12px;border:1px solid currentColor}.small{font-size:8px;color:#666;margin-top:14px;line-height:1.5}
+.notice{margin-top:28px;padding:16px;background:#151515;border-left:3px solid var(--pink);font-size:10px;line-height:1.7;color:#aaa}.notice b{color:var(--paper)}.footer{margin-top:55px;padding-top:18px;border-top:1px solid var(--line);font-size:8px;letter-spacing:.18em;color:#666;display:flex;justify-content:space-between}
+@media(max-width:1000px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(8,1fr)}.editor,.composer{grid-template-columns:1fr}.legend{grid-template-columns:1fr 1fr}}@media(max-width:550px){.grid{grid-template-columns:repeat(5,1fr)}.legend{grid-template-columns:1fr}.footer{display:block;line-height:2}}
 </style>
 </head>
 <body>
 <header><div class="head"><div class="logo">WORLD <span>WEDDING</span> CENTER</div><a class="back" href="./mirrors.html">← Mirrors</a></div></header>
 <main>
-<section class="hero">
-<div><div class="kicker">ACCESSIBILITY / AAC / DIGITAL SAMPLER</div><h1>THE <span>UNIVERSAL GRID</span></h1></div>
-<p class="lead">Une grille où une information peut être exprimée par la position, le signe, la forme, la densité, le rythme et une couleur d'appui. Le système est pensé pour être lisible sans langue parlée, puis traduit vers du texte, de la voix ou du braille.</p>
-</section>
-<div class="rule"><span>ONE POINT · MANY MEANINGS</span><span>365 CELLS</span></div>
-<div class="controls" id="controls"></div>
-<div class="grid" id="grid" aria-label="Grille universelle"></div>
+<section class="hero"><div><div class="kicker">ACCESSIBILITY / AAC / DIGITAL SAMPLER</div><h1>THE <span>UNIVERSAL GRID</span></h1></div><p class="lead">Un même langage peut être lu par la position, le signe, la forme, la couleur, l'intensité, le rythme et le nombre. Cette page transforme l'idée en prototype : une grammaire graphique configurable, progressive et réversible.</p></section>
+<div class="rule"><span>ONE POINT · MANY MEANINGS</span><span>365 CELLS / 1 LANGUAGE</span></div>
+<div class="controls" id="modes"></div>
+<div class="grid" id="grid" aria-label="365 cellules universelles"></div>
+
+<section class="section"><h2>THE LANGUAGE</h2><p class="section-intro">Les noms des points viennent de techniques réelles de broderie. Les significations ci-dessous sont des conventions proposées pour WWC : elles doivent être apprises comme une légende, puis rester stables. Une couleur n'est jamais porteuse du sens à elle seule.</p>
 <div class="legend">
-<div class="legend-card"><div class="symbol">×</div><b>Point de croix</b><p>Proposition WWC : présence / expérience. Le sens est défini par le système, pas par une signification historique universelle.</p></div>
-<div class="legend-card"><div class="symbol">╱</div><b>Point lancé</b><p>Proposition WWC : direction / intention / mouvement.</p></div>
-<div class="legend-card"><div class="symbol">◌</div><b>Chaînette</b><p>Proposition WWC : relation continue / lien.</p></div>
-<div class="legend-card"><div class="symbol">●</div><b>Nœud</b><p>Proposition WWC : détail / souvenir / point d'attention.</p></div>
-</div>
-<section class="composer">
-<h2>COMPOSER UNE SIGNATURE</h2>
-<p>Le texte ci-dessous sert de contenu source. La grille produit une représentation symbolique. Pour un usage réel, le message original doit rester conservé et la représentation doit être réversible.</p>
-<div class="signature"><textarea id="message" class="message" placeholder="Écrire un message, une déclaration ou une transmission…"></textarea><div class="preview"><div class="preview-label">SIGNATURE VIBRATOIRE / VISUELLE</div><div id="signature" class="signature-line"></div><div class="small">Prototype : la signature n'est pas une signature électronique juridiquement qualifiée.</div></div></div>
-</section>
-<div class="notice"><b>ACCESSIBILITÉ :</b> la couleur n'est jamais la seule information. Chaque état possède un signe et une intensité distincts. Le système pourra ensuite être adapté à l'oeil, au toucher, au son, au balayage, au regard ou à une commande assistive.</div>
+<div class="legend-card"><div class="symbol">×</div><b>Point de croix</b><p>Convention WWC : présence / expérience.</p></div>
+<div class="legend-card"><div class="symbol">╱</div><b>Point lancé</b><p>Convention WWC : direction / intention / mouvement.</p></div>
+<div class="legend-card"><div class="symbol">◌</div><b>Point de chaînette</b><p>Convention WWC : relation continue / lien.</p></div>
+<div class="legend-card"><div class="symbol">●</div><b>Point de nœud</b><p>Convention WWC : détail / souvenir / attention.</p></div>
+</div></section>
+
+<section class="section"><h2>DEFINE THE SIGN</h2><p class="section-intro">Le langage doit pouvoir évoluer sans changer de grille. Ici, chaque signe reçoit une définition, une couleur d'appui, une intensité et une cadence. Le moteur conserve la même cellule : seul son état change.</p>
+<div class="editor"><div class="editor-panel"><div class="editor-grid" id="editorGrid"></div></div><div class="editor-panel"><div class="fields">
+<label>Signification<input id="meaning" value="Présence"></label>
+<label>Technique / signe<select id="symbolSelect"><option value="cross">Point de croix ×</option><option value="line">Point lancé ╱</option><option value="chain">Chaînette ◌</option><option value="knot">Nœud ●</option><option value="star">Étoile ✣</option><option value="dot">Point •</option><option value="satin">Satin □</option><option value="half">Demi-point ◢</option><option value="double">Double croix ◇</option></select></label>
+<label>Couleur d'appui</label><div class="swatches" id="swatches"><button class="swatch pink selected" data-c="pink"></button><button class="swatch yellow" data-c="yellow"></button><button class="swatch cyan" data-c="cyan"></button><button class="swatch green" data-c="green"></button></div>
+<label>Intensité <span id="intensityValue">2 / 3</span><input class="range" id="intensity" type="range" min="1" max="3" value="2"></label>
+<label>Rythme<select id="rhythm"><option>continu</option><option>pulsé</option><option>lent</option><option>rapide</option><option>silence / pause</option></select></label>
+<div class="preview-box"><b>PREVIEW</b><div class="preview-symbol" id="previewSymbol">×</div><div id="previewText" class="small">Présence · intensité 2 · continu</div></div>
+</div></div></div></section>
+
+<section class="section"><h2>COMPOSE A MESSAGE</h2><p class="section-intro">Le message original reste la source. La grille est une représentation symbolique qui peut ensuite être rendue visuellement, vocalement, tactilement ou par balayage assistif.</p>
+<div class="composer"><textarea id="message" class="message" placeholder="Écrire une déclaration, une transmission, un souvenir, une volonté…"></textarea><div class="signature"><div class="preview-label">SIGNATURE VISUELLE</div><div id="signature" class="signature-line"></div><div class="small">Prototype : cette représentation n'est pas une signature électronique juridiquement qualifiée et ne remplace pas les exigences légales d'un acte.</div></div></div></section>
+
+<div class="notice"><b>ACCESSIBILITÉ PAR CONCEPTION.</b> La même donnée pourra être sélectionnée par toucher, regard, balayage, switch, voix ou interface adaptée. Pour une utilisation médicale, palliative, successorale ou contractuelle réelle, le système devra être validé avec des spécialistes de l'accessibilité, des utilisateurs concernés et, selon le cas, des professionnels compétents. Il ne faut pas supposer qu'un symbole est universel sans l'avoir testé et documenté.</div>
+<div class="footer"><span>WORLD WEDDING CENTER</span><span>ONE GRID · MANY WAYS TO SPEAK</span></div>
 </main>
 <script>
 const colors=['pink','yellow','cyan','green'];
 const symbols=['cross','dot','star','line','chain','knot','satin','half','double'];
-let mode='all';
-const controls=document.getElementById('controls');
-const grid=document.getElementById('grid');
-const message=document.getElementById('message');
-const signature=document.getElementById('signature');
-['all','presence','relation','intention','memory'].forEach(x=>{
- const b=document.createElement('button');b.className='ctrl '+(x===mode?'active':'');b.textContent=x==='all'?'ALL':x.toUpperCase();
- b.onclick=()=>{mode=x;document.querySelectorAll('.ctrl').forEach(z=>z.classList.remove('active'));b.classList.add('active');render()};
- controls.appendChild(b);
-});
-function state(i){
- const types={presence:'cross',relation:'chain',intention:'line',memory:'knot'};
- const keys=Object.keys(types);
- const t=keys[i%keys.length];
- return {type:mode==='all'?symbols[i%symbols.length]:types[mode],color:colors[(i+Math.floor(i/7))%colors.length],level:1+(i%3),typeName:t};
-}
-function render(){
- grid.innerHTML='';
- for(let i=1;i<=365;i++){
-  const s=state(i-1),c=document.createElement('button');c.className='cell';c.dataset.color=s.color;c.dataset.level=s.level;
-  c.title='Cellule '+String(i).padStart(3,'0');
-  c.setAttribute('aria-label','Cellule '+String(i).padStart(3,'0')+' — '+s.typeName);
-  c.innerHTML='<span class="n">'+String(i).padStart(3,'0')+'</span><span class="mark '+s.type+'" aria-hidden="true"></span>';
-  c.onclick=()=>{c.dataset.level=(Number(c.dataset.level)%3)+1};
-  grid.appendChild(c);
- }
-}
-function makeSignature(){
- const text=message.value.trim();
- signature.innerHTML='';
- if(!text){return}
- [...text].slice(0,80).forEach((ch,i)=>{
-  if(/\s/.test(ch))return;
-  const s=state(ch.charCodeAt(0)+i);
-  const el=document.createElement('span');el.className='sig';el.style.color='var(--'+s.color+')';el.textContent=s.type==='cross'?'×':s.type==='chain'?'◌':s.type==='line'?'╱':s.type==='knot'?'●':'✣';
-  el.title='Position '+(i+1);
-  signature.appendChild(el);
- });
-}
-message.addEventListener('input',makeSignature);render();
+const glyph={cross:'×',dot:'•',star:'✣',line:'╱',chain:'◌',knot:'●',satin:'□',half:'◢',double:'◇'};
+let mode='all',selectedCell=1,selectedColor='pink',intensity=2,rhythm='continu';
+const grid=document.getElementById('grid'),modes=document.getElementById('modes');
+const modesList=[['all','ALL'],['presence','PRESENCE'],['relation','RELATION'],['intention','INTENTION'],['memory','MEMORY']];
+modesList.forEach(([id,label])=>{const b=document.createElement('button');b.className='ctrl '+(id===mode?'active':'');b.textContent=label;b.onclick=()=>{mode=id;document.querySelectorAll('#modes .ctrl').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderGrid()};modes.appendChild(b)});
+function semantic(i){const map=['presence','relation','intention','memory'];return map[i%4]}
+function state(i){const sem=semantic(i);const map={presence:'cross',relation:'chain',intention:'line',memory:'knot'};return {type:mode==='all'?symbols[i%symbols.length]:(map[mode]||map[sem]),color:colors[(i+Math.floor(i/7))%4],level:1+(i%3),semantic:mode==='all'?sem:mode}}
+function renderGrid(){grid.innerHTML='';for(let i=1;i<=365;i++){const s=state(i-1),c=document.createElement('button');c.className='cell';c.dataset.color=s.color;c.dataset.level=s.level;c.setAttribute('aria-label','Cellule '+String(i).padStart(3,'0')+' — '+s.semantic);c.innerHTML='<span class="n">'+String(i).padStart(3,'0')+'</span><span class="mark '+s.type+'" aria-hidden="true"></span>';c.onclick=()=>{selectedCell=i;c.dataset.level=(Number(c.dataset.level)%3)+1;intensity=Number(c.dataset.level);document.getElementById('intensity').value=intensity;updatePreview()};grid.appendChild(c)}}
+const editorGrid=document.getElementById('editorGrid');for(let i=1;i<=32;i++){const b=document.createElement('button');b.className='mini '+(i===1?'selected':'');b.innerHTML='<span class="m">'+glyph[symbols[(i-1)%symbols.length]]+'</span>';b.onclick=()=>{selectedCell=i;document.querySelectorAll('.mini').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');updatePreview()};editorGrid.appendChild(b)}
+document.getElementById('symbolSelect').onchange=updatePreview;document.getElementById('meaning').oninput=updatePreview;document.getElementById('rhythm').onchange=e=>{rhythm=e.target.value;updatePreview()};document.getElementById('intensity').oninput=e=>{intensity=Number(e.target.value);updatePreview()};document.querySelectorAll('.swatch').forEach(b=>b.onclick=()=>{selectedColor=b.dataset.c;document.querySelectorAll('.swatch').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');updatePreview()});
+function updatePreview(){const type=document.getElementById('symbolSelect').value;const el=document.getElementById('previewSymbol');el.textContent=glyph[type];el.style.color='var(--'+selectedColor+')';el.style.transform='scale('+(0.8+intensity*.35)+')';document.getElementById('intensityValue').textContent=intensity+' / 3';document.getElementById('previewText').textContent=document.getElementById('meaning').value+' · intensité '+intensity+' · '+rhythm}
+const message=document.getElementById('message'),signature=document.getElementById('signature');
+function makeSignature(){signature.innerHTML='';const text=message.value.trim();if(!text)return;[...text].slice(0,100).forEach((ch,i)=>{if(/\s/.test(ch))return;const s=state(ch.charCodeAt(0)+i);const e=document.createElement('span');e.className='sig';e.style.color='var(--'+s.color+')';e.textContent=glyph[s.type];e.title='position '+(i+1)+' · '+s.semantic;signature.appendChild(e)})}
+message.addEventListener('input',makeSignature);renderGrid();updatePreview();
 </script>
 </body>
 </html>
