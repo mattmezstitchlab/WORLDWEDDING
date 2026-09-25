@@ -1253,7 +1253,23 @@
         #ww-selection-bar.visible{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
         #ww-selection-bar button{border:0;background:var(--accent);color:var(--primary);padding:8px 11px;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
         @media (max-width:800px){#ww-search{top:4.65rem;width:min(86vw,420px)}}
-    </style>
+    
+        /* Final viewport polish: labels wrap inside their own space; overlays never hide page content. */
+        .edition-tile-info{align-items:flex-end}
+        .edition-tile-name{display:block;white-space:normal;overflow:visible;text-overflow:clip}
+        .edition-tile-name,.edition-tile-country{overflow-wrap:anywhere}
+        .timeline-item{position:relative}
+        .timeline-hour,.timeline-moment{white-space:normal;overflow:visible;text-overflow:clip}
+        .destination-info{max-width:min(90vw,620px)}
+        @media(max-width:768px){
+          .nav-center{gap:.7rem}
+          .day-number{font-size:1.1rem}
+          .destination-info{bottom:1rem}
+          .edition-inline-title{max-width:8ch}
+          .timeline-sidebar{border-bottom:1px solid rgba(255,255,255,.1)}
+          .timeline-item{padding:.7rem .5rem}
+        }
+</style>
 <link rel="stylesheet" href="./aime-universal.css"></head>
 <body>
     <!-- Loader -->
