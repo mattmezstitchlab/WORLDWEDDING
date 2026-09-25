@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WORLD WEDDING — MY WEDDING</title>
+<title>WORLD WEDDING — ESPACE</title>
 <script src="./destinations.js"></script>
 <script src="./world-object.js"></script>
 <style>
@@ -25,9 +25,9 @@ main{max-width:1500px;margin:auto;padding:6vw 3vw 8vw}.hero{display:grid;grid-te
 </style>
 </head>
 <body>
-<header><div class="head"><div class="logo">WORLD <span>WEDDING</span></div><nav class="links"><a href="./index.html">World</a><a href="./mirrors.html">Mirrors</a><a href="./universal-grid.html">Universal Grid</a></nav></div></header>
+<header><div class="head"><div class="logo">WORLD <span>WEDDING</span></div><nav class="links"><a href="./index.html">← Magazine</a></nav></div></header>
 <main>
-<section class="hero"><div><div class="kicker">MY WEDDING / MIRROR → PROJECT</div><h1>YOUR<br><span>WEDDING.</span></h1></div><p class="lead">Un espace de départ simple : choisissez une destination, une saison, un nombre d'invités et une intention. WORLD WEDDING transforme ces choix en une première lecture de votre journée. Vos choix restent locaux dans ce prototype.</p></section>
+<section class="hero"><div><div class="kicker">ESPACE / MON ÉDITION</div><h1>YOUR<br><span>EDITION.</span></h1></div><p class="lead">Un espace de départ simple : choisissez une destination, une saison, un nombre d'invités et une intention. WORLD WEDDING transforme ces choix en une première lecture de votre journée. Vos choix restent locaux dans ce prototype.</p></section>
 <div class="layout">
 <section class="panel"><h2>Votre point de départ</h2>
 <div class="field"><label>Destination</label><div class="search"><input id="destination" placeholder="Paris, Rome, Bali…" autocomplete="off"><div class="results" id="results"></div></div><div class="selected" id="selected"><b>Aucune destination</b><span>À CHOISIR</span></div></div>
@@ -37,12 +37,12 @@ main{max-width:1500px;margin:auto;padding:6vw 3vw 8vw}.hero{display:grid;grid-te
 <div class="field"><label>Budget indicatif (€)</label><input id="budget" type="number" min="0" step="1000" value="25000"></div>
 <div class="field"><label>Style</label><select id="style"><option>Éditorial</option><option>Intime</option><option>Contemporain</option><option>Nature</option><option>Traditionnel</option><option>Destination</option></select></div>
 </div>
-<div class="actions"><button class="btn" id="generate">Construire mon Mirror</button><button class="btn alt" id="reset">Réinitialiser</button></div>
+<div class="actions"><button class="btn" id="generate">Ouvrir mon édition</button><button class="btn alt" id="reset">Réinitialiser</button></div>
 <div class="notice"><p><strong>Principe :</strong> WORLD WEDDING propose une structure, pas une décision. Les informations réelles de lieux, prestataires, prix, disponibilités et obligations devront ensuite être reliées à des sources vérifiables.</p></div>
 </section>
-<aside class="panel"><h2>Votre première lecture</h2><div class="summary"><div class="stat"><b>DESTINATION</b><strong id="sDest">—</strong></div><div class="stat"><b>INVITÉS</b><strong id="sGuests">80</strong></div><div class="stat"><b>BUDGET</b><strong id="sBudget">25K</strong></div><div class="stat"><b>STYLE</b><strong id="sStyle">Éditorial</strong></div></div><div class="notice"><p id="summaryText">Choisissez une destination pour commencer. Le Mirror conservera le même point géographique tout au long du parcours.</p></div></aside>
+<aside class="panel"><h2>Mon édition</h2><div class="summary"><div class="stat"><b>DESTINATION</b><strong id="sDest">—</strong></div><div class="stat"><b>INVITÉS</b><strong id="sGuests">80</strong></div><div class="stat"><b>BUDGET</b><strong id="sBudget">25K</strong></div><div class="stat"><b>STYLE</b><strong id="sStyle">Éditorial</strong></div></div><div class="notice"><p id="summaryText">Choisissez une destination pour commencer. Votre édition conserve le même fil du magazine.</p></div></aside>
 </div>
-<section class="panel" style="margin-top:18px"><div class="kicker">24 HOURS / FIRST SCENARIO</div><h2 style="margin-top:8px">La journée commence avant la cérémonie.</h2><div class="timeline" id="timeline"></div></section>
+<section class="panel" style="margin-top:18px"><div class="kicker">MA JOURNÉE / PREMIÈRE ÉDITION</div><h2 style="margin-top:8px">La journée commence avant la cérémonie.</h2><div class="timeline" id="timeline"></div></section>
 </main>
 <script>
 const D=window.WORLD_WEDDING_DESTINATIONS||[]; let selected=null;
@@ -55,7 +55,7 @@ const moments=[['06:30','PRÉPARATION','Lumière, beauté, détails, personnes c
 function renderTimeline(){$('timeline').innerHTML=moments.map(m=>'<article class="moment"><time>'+m[0]+'</time><b>'+m[1]+'</b><span>'+m[2]+(selected?' · '+esc(selected.name):'')+'</span></article>').join('');}
 $('destination').oninput=e=>renderResults(e.target.value);$('destination').onfocus=()=>renderResults($('destination').value);document.addEventListener('click',e=>{if(!e.target.closest('.search'))$('results').classList.remove('open')});
 ['season','guests','budget','style'].forEach(id=>$(id).addEventListener('input',update));
-$('generate').onclick=()=>{if(selected){const wedding={destinationId:selected.id,season:$('season').value,guests:Number($('guests').value),budget:Number($('budget').value),style:$('style').value};localStorage.setItem('ww-my-wedding-v1',JSON.stringify(wedding));if(window.WORLD_OBJECT)window.WORLD_OBJECT.saveToWedding(window.WORLD_OBJECT.destination(selected),{origin:'my-wedding',season:wedding.season,guests:wedding.guests,budget:wedding.budget,style:wedding.style});}update();$('generate').textContent='MIRROR ENREGISTRÉ';setTimeout(()=>$('generate').textContent='Construire mon Mirror',1400)};
+$('generate').onclick=()=>{if(selected){const wedding={destinationId:selected.id,season:$('season').value,guests:Number($('guests').value),budget:Number($('budget').value),style:$('style').value};localStorage.setItem('ww-my-wedding-v1',JSON.stringify(wedding));if(window.WORLD_OBJECT)window.WORLD_OBJECT.saveToWedding(window.WORLD_OBJECT.destination(selected),{origin:'my-wedding',season:wedding.season,guests:wedding.guests,budget:wedding.budget,style:wedding.style});}update();$('generate').textContent='ÉDITION ENREGISTRÉE';setTimeout(()=>$('generate').textContent='Construire mon Mirror',1400)};
 $('reset').onclick=()=>{localStorage.removeItem('ww-my-wedding-v1');selected=null;$('destination').value='';$('selected').innerHTML='<b>Aucune destination</b><span>À CHOISIR</span>';$('guests').value=80;$('budget').value=25000;$('style').value='Éditorial';update()};
 (()=>{try{const s=JSON.parse(localStorage.getItem('ww-my-wedding-v1')||'null');if(s){choose(s.destinationId);$('season').value=s.season||'Été';$('guests').value=s.guests||80;$('budget').value=s.budget||25000;$('style').value=s.style||'Éditorial'}}catch{}update()})();
 </script>
