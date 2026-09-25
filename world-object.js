@@ -109,7 +109,8 @@
     wedding.savedObjects=Array.isArray(wedding.savedObjects)?wedding.savedObjects:[];
     const weddingId='wedding:current';
     if(!get(weddingId)) upsert(create('wedding',{id:weddingId,name:'My Wedding',source:'WORLD_WEDDING'} ,{origin:'my-wedding',status:'local',verified:false}));
-    relate(weddingId,'places',o.id);
+    const relationBucket={destination:'places',place:'places',service:'services',person:'people',people:'people',event:'events',media:'media',timeline:'timeline',wedding:'weddings'}[o.type]||'places';
+    relate(weddingId,relationBucket,o.id);
     relate(o.id,'weddings',weddingId);
     const entry={objectId:o.id,type:o.type,name:o.identity?.name||o.name||o.id,sourceId:o.sourceId,addedAt:new Date().toISOString(),...meta};
     const i=wedding.savedObjects.findIndex(x=>x.objectId===entry.objectId);
