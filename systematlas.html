@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SYSTEMATLAS — WWC + AIME</title>
+<style>
+:root{--bg:#0a0a0b;--surface:#101012;--line:#202025;--text:#f5f5f7;--muted:#777783;--f:#e91e8c;--ok:#d9f7e7;--warn:#f4d58b;--bad:#ff9b9b}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif}
+#atlas{position:fixed;inset:0;border:0;width:100%;height:100%;background:#0a0a0b}
+#top{position:fixed;z-index:20;top:0;left:0;right:0;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:rgba(10,10,11,.82);border-bottom:1px solid var(--line);backdrop-filter:blur(18px)}
+.brand{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}.brand span{color:var(--muted);font-weight:400;margin-left:12px}
+.actions{display:flex;gap:7px}.btn{height:30px;padding:0 12px;background:transparent;border:1px solid var(--line);color:var(--muted);font:10px ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}.btn:hover,.btn.active{color:var(--text);border-color:#555560}.btn.f{color:var(--f);border-color:#70204e}
+#audit{position:fixed;z-index:21;top:72px;right:18px;width:min(390px,calc(100vw - 36px));max-height:calc(100vh - 100px);overflow:auto;background:rgba(12,12,14,.95);border:1px solid var(--line);backdrop-filter:blur(22px);transform:translateX(calc(100% + 30px));transition:.45s ease;padding:18px}
+#audit.open{transform:translateX(0)}h2{font-size:16px;font-weight:400;margin:0 0 4px}h3{font:9px ui-monospace,monospace;letter-spacing:.16em;color:var(--muted);text-transform:uppercase;margin:20px 0 9px}
+.sub{font-size:11px;line-height:1.6;color:var(--muted)}#health{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:14px 0}.stat{border:1px solid var(--line);padding:10px 7px;text-align:center}.stat b{display:block;font:16px ui-monospace,monospace}.stat span{font:8px ui-monospace,monospace;color:var(--muted);text-transform:uppercase}
+.domain{border-top:1px solid var(--line);padding:11px 0;display:grid;grid-template-columns:8px 1fr auto;gap:10px;align-items:start}.dot{width:7px;height:7px;border-radius:50%;margin-top:4px;background:var(--muted)}.dot.ok{background:#b9e9ce}.dot.warn{background:var(--warn)}.dot.bad{background:var(--bad)}.dn{font-size:11px;letter-spacing:.05em}.details{font:9px/1.5 ui-monospace,monospace;color:var(--muted);margin-top:3px}.state{font:8px ui-monospace,monospace;letter-spacing:.08em;color:var(--muted);white-space:nowrap}
+#flow{position:fixed;z-index:19;left:18px;bottom:18px;padding:10px 12px;border:1px solid var(--line);background:rgba(10,10,11,.78);font:9px ui-monospace,monospace;letter-spacing:.08em;color:var(--muted);backdrop-filter:blur(12px)}
+#flow strong{color:var(--text);font-weight:400}#refreshing{color:var(--f);margin-left:8px}
+@media(max-width:700px){#top{padding:0 12px}.brand span{display:none}.btn{padding:0 9px}#flow{display:none}}
+</style>
+</head>
+<body>
+<iframe id="atlas" title="SYSTEMATLAS architecture" src="https://raw.githubusercontent.com/mattmezstitchlab/SYSTEMATLAS/main/index.html"></iframe>
+<div id="top">
+  <div class="brand">SYSTEMATLAS <span>WWC + AIME · LIVE ARCHITECTURE</span></div>
+  <div class="actions">
+    <button class="btn" id="back" onclick="location.href='./index.html'">WWC</button>
+    <button class="btn f" id="auditBtn" onclick="toggleAudit()">LIVE AUDIT</button>
+  </div>
+</div>
+<aside id="audit">
+  <h2>Reality ↔ Architecture</h2>
+  <div class="sub">SYSTEMATLAS reste la carte centrale. Ce panneau branche la carte sur les repositories publics et vérifie les points d'ancrage réellement présents. La présence d'un fichier ne constitue pas, à elle seule, une validation fonctionnelle.</div>
+  <div id="health"><div class="stat"><b id="ok">—</b><span>connected</span></div><div class="stat"><b id="partial">—</b><span>partial</span></div><div class="stat"><b id="missing">—</b><span>missing</span></div><div class="stat"><b id="commit">—</b><span>commit</span></div></div>
+  <h3>WWC · propagation map</h3><div id="domains"></div>
+  <h3>Source</h3><div class="sub" id="source">Loading repository state…</div>
+</aside>
+<div id="flow"><strong>SOURCE OF TRUTH</strong> → DATA → DOMAIN → VIEW → RETEST <span id="refreshing"></span></div>
+<script>
+const REPO='mattmezstitchlab/WORLDWEDDING';
+const ATLAS='mattmezstitchlab/SYSTEMATLAS';
+const MAP=[
+ ['WORLD',['index.html','destinations.js']],
+ ['365 EDITIONS',['index.html','destinations.js']],
+ ['MY SPACE',['index.html','living-grid.js','aime-universal.js']],
+ ['UNIVERSAL GRID',['universal-grid.html','universal-grid-core.js','universal-translator.js']],
+ ['MIRRORS',['mirrors.html']],
+ ['RELATIONS / RIPPLE',['index.html','living-grid.js']],
+ ['TIMELINE / 24H',['index.html']],
+ ['MUSIC',['universal-translator.js','universal-grid.html']],
+ ['VALUE',['universal-grid.html','aime-universal.js']],
+ ['ARCHIVE / TRANSMISSION',['aime-universal.js','living-grid.js']],
+ ['AIME',['aime-universal.js','aime-universal.css','living-grid.js']]
+];
+async function getJSON(url){const r=await fetch(url,{headers:{Accept:'application/vnd.github+json'}});if(!r.ok)throw new Error(r.status);return r.json()}
+async function audit(){
+ document.getElementById('refreshing').textContent='· scanning';
+ try{
+  const [files,head,atlas]=await Promise.all([
+   getJSON('https://api.github.com/repos/'+REPO+'/contents'),
+   getJSON('https://api.github.com/repos/'+REPO+'/commits/main'),
+   getJSON('https://api.github.com/repos/'+ATLAS+'/commits/main')
+  ]);
+  const names=new Set(files.map(x=>x.name));
+  let good=0,partial=0,missing=0;
+  const root=document.getElementById('domains');root.innerHTML='';
+  MAP.forEach(([name,need])=>{
+   const present=need.filter(x=>names.has(x)), absent=need.filter(x=>!names.has(x));
+   let state=absent.length===0?'CONNECTED':present.length?'PARTIAL':'MISSING';
+   if(state==='CONNECTED')good++; else if(state==='PARTIAL')partial++; else missing++;
+   const el=document.createElement('div');el.className='domain';
+   el.innerHTML='<i class="dot '+(state==='CONNECTED'?'ok':state==='PARTIAL'?'warn':'bad')+'"></i><div><div class="dn">'+name+'</div><div class="details">REAL: '+present.join(' · ')+(absent.length?' · ABSENT: '+absent.join(' · '):'')+'</div></div><div class="state">'+state+'</div>';
+   root.appendChild(el);
+  });
+  document.getElementById('ok').textContent=good;
+  document.getElementById('partial').textContent=partial;
+  document.getElementById('missing').textContent=missing;
+  document.getElementById('commit').textContent=head.sha.slice(0,7);
+  document.getElementById('source').innerHTML='WORLDWEDDING <b>'+head.sha.slice(0,12)+'</b><br>SYSTEMATLAS <b>'+atlas.sha.slice(0,12)+'</b><br>Architecture source is live from SYSTEMATLAS/main.';
+  document.getElementById('refreshing').textContent='· '+new Date().toLocaleTimeString();
+ }catch(e){
+  document.getElementById('source').textContent='Audit unavailable: '+e.message;
+  document.getElementById('refreshing').textContent='· ERROR';
+ }
+}
+function toggleAudit(){document.getElementById('audit').classList.toggle('open');document.getElementById('auditBtn').classList.toggle('active');if(document.getElementById('audit').classList.contains('open'))audit()}
+audit();setInterval(audit,60000);
+</script>
+</body></html>
