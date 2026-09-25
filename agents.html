@@ -16,13 +16,13 @@ button{font:inherit}
 .ring{position:absolute;inset:0;border:1px solid rgba(255,255,255,.08);border-radius:50%}
 .ring.r2{inset:12%;border-color:rgba(239,35,143,.13)}.ring.r3{inset:28%;border-color:rgba(255,255,255,.06)}
 #links{position:absolute;inset:0;pointer-events:none}
-.link{position:absolute;height:1px;background:linear-gradient(90deg,transparent,rgba(239,35,143,.18),transparent);transform-origin:0 50%}
-.agent{position:absolute;width:13px;height:13px;border:1px solid rgba(255,255,255,.42);background:#111;border-radius:50%;transform:translate(-50%,-50%);cursor:pointer;padding:0;transition:transform .18s,border-color .18s,box-shadow .18s,background .18s}
+.link{position:absolute;height:1px;background:linear-gradient(90deg,transparent,rgba(239,35,143,.18),transparent);opacity:.5;transition:opacity .2s}.link.talking{opacity:1;background:linear-gradient(90deg,transparent,rgba(239,35,143,.8),transparent);animation:linkFlow 1.1s linear infinite}@keyframes linkFlow{from{filter:brightness(.7);opacity:.25}50%{filter:brightness(1.8);opacity:1}to{filter:brightness(.7);opacity:.25}}transform-origin:0 50%}
+.agent{position:absolute;width:11px;height:11px;border:1px solid rgba(255,255,255,.42);background:#111;border-radius:50%;transform:translate(-50%,-50%);cursor:pointer;padding:0;transition:transform .18s,border-color .18s,box-shadow .18s,background .18s}
 .agent:hover,.agent.active{transform:translate(-50%,-50%) scale(1.7);border-color:var(--f);background:var(--f);box-shadow:0 0 0 5px rgba(239,35,143,.08),0 0 24px rgba(239,35,143,.38)}
-.agent.today{background:#fff;border-color:#fff}
+.agent.today{background:#fff;border-color:#fff}.agent.talking{animation:agentTalk 1.15s ease-in-out infinite}@keyframes agentTalk{0%,100%{box-shadow:0 0 0 0 rgba(239,35,143,0)}50%{box-shadow:0 0 0 8px rgba(239,35,143,.10),0 0 22px rgba(239,35,143,.30)}}
 .agent.loaded{box-shadow:0 0 0 2px rgba(255,255,255,.05)}
 #center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:230px;height:230px;border:1px solid rgba(239,35,143,.55);border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(239,35,143,.16),rgba(5,5,6,.96) 65%);box-shadow:0 0 80px rgba(239,35,143,.12),inset 0 0 45px rgba(239,35,143,.06);z-index:4}
-.center-inner{text-align:center}.center-dot{width:16px;height:16px;border-radius:50%;background:var(--f);margin:0 auto 14px;box-shadow:0 0 30px rgba(239,35,143,.55)}
+.center-inner{text-align:center}.center-dot{width:16px;height:16px;animation:centerPulse 2s ease-in-out infinite}@keyframes centerPulse{0%,100%{transform:scale(1);box-shadow:0 0 30px rgba(239,35,143,.35)}50%{transform:scale(1.22);box-shadow:0 0 48px rgba(239,35,143,.7)}}border-radius:50%;background:var(--f);margin:0 auto 14px;box-shadow:0 0 30px rgba(239,35,143,.55)}
 .center-kicker{font-size:9px;letter-spacing:.24em;color:var(--muted);text-transform:uppercase}.center-title{font-size:25px;letter-spacing:.08em;margin-top:7px}.center-sub{font-size:10px;line-height:1.5;color:var(--muted);margin-top:8px;text-transform:uppercase;letter-spacing:.1em}
 #panel{position:fixed;z-index:12;right:18px;top:76px;width:min(390px,calc(100vw - 36px));max-height:calc(100vh - 94px);overflow:auto;background:rgba(10,10,12,.94);border:1px solid var(--line);backdrop-filter:blur(20px);padding:18px;transform:translateX(calc(100% + 30px));transition:transform .28s ease}
 #panel.open{transform:none}.close{float:right;border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:18px}
@@ -82,6 +82,20 @@ async function loadAgent(n){
   loaded.set(n,data); active.add(n); return data;
 }
 function push(text){const el=document.createElement('div');el.className='msg';el.innerHTML=text;feedEl.prepend(el);while(feedEl.children.length>5)feedEl.lastChild.remove();document.getElementById('r-active').textContent=active.size;document.getElementById('r-sources').textContent=loaded.size;document.getElementById('r-relations').textContent=Math.min(TOTAL*2,active.size*2);document.getElementById('r-confirm').textContent=Math.max(0,active.size-3)}
+function animateConversation(){
+  const buttons=[...document.querySelectorAll('.agent')];
+  const links=[...document.querySelectorAll('.link')];
+  if(!buttons.length)return;
+  const a=buttons[Math.floor(Math.random()*buttons.length)];
+  const b=buttons[(buttons.indexOf(a)+30)%buttons.length];
+  buttons.forEach(x=>x.classList.remove('talking')); links.forEach(x=>x.classList.remove('talking'));
+  a.classList.add('talking'); b.classList.add('talking');
+  const idx=buttons.indexOf(a);
+  if(links[idx])links[idx].classList.add('talking');
+  push('<b>AGENT '+fmt(idx+1)+'</b> ↔ <b>AGENT '+fmt(buttons.indexOf(b)+1)+'</b> : « Relation transmise au cercle. »');
+}
+setInterval(animateConversation,1800);
+setTimeout(animateConversation,900);
 async function selectAgent(n,b){
   document.querySelectorAll('.agent.active').forEach(x=>x.classList.remove('active'));b.classList.add('active');
   const panel=document.getElementById('panel');panel.classList.add('open');document.getElementById('p-id').textContent=fmt(n);document.getElementById('p-name').textContent='Lecture de la source…';
