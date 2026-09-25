@@ -27,7 +27,26 @@
     };
   }
 
+  const RELATION_TYPES=['people','places','services','events','media','timeline','weddings'];
+
   function keyFor(object){return object?.id||null}
+
+  function create(type,data={},provenance={}){
+    if(!type)return null;
+    const sourceId=data.sourceId ?? data.id ?? slug(data.name||type);
+    const id=data.id&&String(data.id).includes(':')?String(data.id):type+':'+sourceId;
+    const object={
+      id,version:VERSION,type,
+      source:data.source||'WORLD_WEDDING',
+      sourceId,
+      identity:{name:data.name||data.identity?.name||id,...(data.identity||{})},
+      geo:data.geo||null,
+      editorial:data.editorial||{},
+      relations:Object.fromEntries(RELATION_TYPES.map(k=>[k,Array.isArray(data.relations?.[k])?data.relations[k]:[]])),
+      provenance:{origin:provenance.origin||data.provenance?.origin||'user',status:provenance.status||'registered',verified:Boolean(provenance.verified??data.provenance?.verified??false),...data.provenance,...provenance}
+    };
+    return object;
+  }
 
   function upsert(object){
     if(!object?.id)return null;
@@ -39,12 +58,48 @@
 
   function get(id){return load()[id]||null}
   function all(){return Object.values(load())}
+
   function link(id,type,targetId){
-    const o=get(id); if(!o||!targetId)return null;
+    if(!RELATION_TYPES.includes(type)||!targetId)return null;
+    const o=get(id); if(!o)return null;
     o.relations=o.relations||{};
     o.relations[type]=Array.isArray(o.relations[type])?o.relations[type]:[];
     if(!o.relations[type].includes(targetId))o.relations[type].push(targetId);
     return upsert(o);
+  }
+
+  function unlink(id,type,targetId){
+    const o=get(id); if(!o||!Array.isArray(o.relations?.[type]))return null;
+    o.relations[type]=o.relations[type].filter(x=>x!==targetId);
+    return upsert(o);
+  }
+
+  function related(id,type){
+    const o=get(id);
+    if(!o)return [];
+    const ids=Array.isArray(o.relations?.[type])?o.relations[type]:[];
+    return ids.map(get).filter(Boolean);
+  }
+
+  function relate(id,type,targetId,options={}){
+    const source=link(id,type,targetId);
+    if(!source)return null;
+    if(options.reverse){
+      const reverse=options.reverseType||null;
+      if(reverse)link(targetId,reverse,id);
+    }
+    return source;
+  }
+
+  function summary(object){
+    if(!object)return null;
+    return {
+      id:object.id,type:object.type,name:object.identity?.name||object.name||object.id,
+      location:object.geo||null,
+      keywords:object.editorial?.keywords||[],
+      relationCounts:Object.fromEntries(RELATION_TYPES.map(k=>[k,(object.relations?.[k]||[]).length])),
+      provenance:object.provenance||null
+    };
   }
 
   function saveToWedding(object,meta={}){
@@ -65,6 +120,6 @@
   }
 
   window.WORLD_OBJECT={
-    VERSION,KEY,slug,destination,upsert,get,all,link,saveToWedding,registerDestinations
+    VERSION,KEY,RELATION_TYPES,slug,destination,create,upsert,get,all,link,unlink,related,relate,summary,saveToWedding,registerDestinations
   };
 })();
