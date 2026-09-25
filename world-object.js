@@ -107,6 +107,10 @@
     const raw=localStorage.getItem('ww-my-wedding-v1');
     let wedding={}; try{wedding=JSON.parse(raw||'{}')||{}}catch{}
     wedding.savedObjects=Array.isArray(wedding.savedObjects)?wedding.savedObjects:[];
+    const weddingId='wedding:current';
+    if(!get(weddingId)) upsert(create('wedding',{id:weddingId,name:'My Wedding',source:'WORLD_WEDDING'} ,{origin:'my-wedding',status:'local',verified:false}));
+    relate(weddingId,'places',o.id);
+    relate(o.id,'weddings',weddingId);
     const entry={objectId:o.id,type:o.type,name:o.identity?.name||o.name||o.id,sourceId:o.sourceId,addedAt:new Date().toISOString(),...meta};
     const i=wedding.savedObjects.findIndex(x=>x.objectId===entry.objectId);
     if(i>=0)wedding.savedObjects[i]={...wedding.savedObjects[i],...entry}; else wedding.savedObjects.push(entry);
