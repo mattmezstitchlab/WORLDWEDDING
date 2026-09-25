@@ -2282,5 +2282,184 @@
     </script>
     <script src="./living-grid.js"></script>
 <script src="./aime-universal.js"></script>
+
+<style id="ww-grid-zoom-style">
+/* Grid readability + depth zoom */
+.edition-tile-name,
+.edition-tile-country,
+.editor-edition-meta span,
+.edition-inline-title,
+.edition-inline-country,
+.edition-inline-hour-name,
+.day-cell span {
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  hyphens: none;
+  text-overflow: clip !important;
+  overflow: visible !important;
+}
+.edition-tile-name { max-width: 72%; text-align: center; line-height: 1.05; }
+.edition-tile-country { display:block; font-size:.62em; line-height:1.05; margin-top:.18em; }
+.editor-edition-meta { min-width:0; }
+.editor-edition-meta span { display:block; line-height:1.05; }
+.ww-zoom-trigger {
+  position:fixed; right:1.25rem; bottom:1.25rem; z-index:175;
+  border:1px solid rgba(255,255,255,.22); background:rgba(26,26,26,.72);
+  color:var(--secondary); padding:.7rem .9rem; cursor:pointer;
+  font:600 .58rem/1 'Arial',sans-serif; letter-spacing:.18em; text-transform:uppercase;
+  backdrop-filter:blur(10px); transition:.2s ease;
+}
+.ww-zoom-trigger:hover,.ww-zoom-trigger:focus-visible { border-color:var(--accent); outline:none; }
+.ww-grid-zoom {
+  position:fixed; inset:0; z-index:1000; background:rgba(10,10,10,.97);
+  opacity:0; visibility:hidden; transition:opacity .28s ease,visibility .28s ease;
+  display:flex; flex-direction:column;
+}
+.ww-grid-zoom.visible { opacity:1; visibility:visible; }
+.ww-grid-zoom-head {
+  flex:0 0 auto; min-height:72px; display:flex; align-items:center;
+  justify-content:space-between; gap:1rem; padding:1rem 1.25rem;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+.ww-grid-zoom-title { font-size:.62rem; letter-spacing:.25em; text-transform:uppercase; opacity:.65; }
+.ww-grid-zoom-controls { display:flex; align-items:center; gap:.35rem; }
+.ww-grid-zoom-btn {
+  min-width:42px; height:34px; padding:0 .55rem; background:transparent;
+  border:1px solid rgba(255,255,255,.16); color:var(--secondary); cursor:pointer;
+  font-size:.58rem; letter-spacing:.12em;
+}
+.ww-grid-zoom-btn.active,.ww-grid-zoom-btn:hover { border-color:var(--accent); color:var(--accent); }
+.ww-grid-zoom-close {
+  width:34px;height:34px;border:1px solid rgba(255,255,255,.16);
+  background:transparent;color:var(--secondary);cursor:pointer;font-size:1.1rem;
+}
+.ww-grid-zoom-stage {
+  flex:1; min-height:0; overflow:auto; display:flex; align-items:flex-start;
+  justify-content:center; padding:clamp(1rem,3vw,3rem);
+  overscroll-behavior:contain;
+}
+.ww-grid-zoom-canvas {
+  flex:0 0 auto; transform-origin:top center; transition:transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.ww-grid-zoom-canvas .edition-tile {
+  cursor:default !important;
+}
+.ww-grid-zoom-canvas .ww-select { display:none !important; }
+.ww-grid-zoom-meta {
+  flex:0 0 auto; min-height:36px; padding:.45rem 1rem;
+  border-top:1px solid rgba(255,255,255,.08); text-align:center;
+  font-size:.52rem; letter-spacing:.16em; text-transform:uppercase; opacity:.45;
+}
+@media(max-width:768px){
+  .ww-zoom-trigger { right:.8rem; bottom:.8rem; }
+  .ww-grid-zoom-head { flex-wrap:wrap; min-height:88px; }
+  .ww-grid-zoom-controls { overflow-x:auto; max-width:100%; }
+  .ww-grid-zoom-stage { padding:1rem; }
+}
+</style>
+<button id="ww-grid-zoom-trigger" class="ww-zoom-trigger" type="button" aria-haspopup="dialog" aria-controls="ww-grid-zoom" aria-label="Open grid zoom">ZOOM GRID</button>
+<section id="ww-grid-zoom" class="ww-grid-zoom" role="dialog" aria-modal="true" aria-labelledby="ww-grid-zoom-title" aria-hidden="true">
+  <div class="ww-grid-zoom-head">
+    <div id="ww-grid-zoom-title" class="ww-grid-zoom-title">365 EDITIONS · DEPTH VIEW</div>
+    <div class="ww-grid-zoom-controls" role="group" aria-label="Grid zoom level">
+      <button class="ww-grid-zoom-btn active" type="button" data-zoom="1">GRID</button>
+      <button class="ww-grid-zoom-btn" type="button" data-zoom=".5">1/2</button>
+      <button class="ww-grid-zoom-btn" type="button" data-zoom=".25">1/4</button>
+      <button class="ww-grid-zoom-btn" type="button" data-zoom=".125">1/8</button>
+      <button class="ww-grid-zoom-btn" type="button" data-zoom="focus">FOCUS</button>
+      <button id="ww-grid-zoom-close" class="ww-grid-zoom-close" type="button" aria-label="Close zoom">×</button>
+    </div>
+  </div>
+  <div id="ww-grid-zoom-stage" class="ww-grid-zoom-stage">
+    <div id="ww-grid-zoom-canvas" class="ww-grid-zoom-canvas"></div>
+  </div>
+  <div id="ww-grid-zoom-meta" class="ww-grid-zoom-meta">GRID · 365 FIXED POINTS · TEXT ADAPTS · GEOMETRY STAYS</div>
+</section>
+<script>
+(function(){
+  let zoomLevel = 1;
+  let focusId = null;
+  function sourceGrid(){ return document.getElementById('home-editions-grid'); }
+  function renderZoomGrid(){
+    const source = sourceGrid(), canvas = document.getElementById('ww-grid-zoom-canvas');
+    if(!source || !canvas) return;
+    canvas.innerHTML = source.innerHTML;
+    canvas.className = 'ww-grid-zoom-canvas';
+    const originalStyle = getComputedStyle(source);
+    canvas.style.display = originalStyle.display || 'grid';
+    canvas.style.gridTemplateColumns = originalStyle.gridTemplateColumns || 'repeat(5,minmax(0,1fr))';
+    canvas.style.gap = originalStyle.gap || '1rem';
+    canvas.style.width = source.getBoundingClientRect().width + 'px';
+    canvas.querySelectorAll('.edition-tile').forEach(tile => {
+      tile.removeAttribute('onclick');
+      tile.addEventListener('click', () => {
+        const id = tile.dataset.editionId;
+        const original = source.querySelector('[data-edition-id="'+id+'"]');
+        focusId = Number(id);
+        setZoom('focus');
+        if(original) original.scrollIntoView({behavior:'smooth',block:'center'});
+      });
+    });
+    applyTransform();
+  }
+  function applyTransform(){
+    const canvas=document.getElementById('ww-grid-zoom-canvas');
+    if(!canvas) return;
+    if(zoomLevel === 'focus'){
+      const tile=canvas.querySelector('[data-edition-id="'+focusId+'"]');
+      canvas.style.transform='scale(1)';
+      canvas.style.width = 'min(92vw, 900px)';
+      canvas.style.gridTemplateColumns='minmax(0,1fr)';
+      canvas.querySelectorAll('.edition-tile').forEach(t=>t.style.display='none');
+      if(tile){ tile.style.display='block'; tile.style.aspectRatio='1/1'; }
+      document.getElementById('ww-grid-zoom-meta').textContent='FOCUS · ONE EDITION · FULL FRAME · TEXT ADAPTS';
+    } else {
+      canvas.querySelectorAll('.edition-tile').forEach(t=>t.style.display='');
+      canvas.style.width = sourceGrid()?.getBoundingClientRect().width + 'px';
+      canvas.style.gridTemplateColumns = getComputedStyle(sourceGrid()).gridTemplateColumns;
+      canvas.style.transform='scale('+zoomLevel+')';
+      document.getElementById('ww-grid-zoom-meta').textContent =
+        (zoomLevel===1?'GRID · 365 FIXED POINTS':zoomLevel===.5?'1/2 · HALF VIEW':zoomLevel===.25?'1/4 · QUARTER VIEW':'1/8 · OVERVIEW') +
+        ' · TEXT ADAPTS · GEOMETRY STAYS';
+    }
+  }
+  function setZoom(level){
+    zoomLevel = level;
+    document.querySelectorAll('.ww-grid-zoom-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.zoom===String(level)));
+    if(level==='focus' && !focusId){
+      const first=sourceGrid()?.querySelector('.edition-tile');
+      focusId=first ? Number(first.dataset.editionId) : null;
+    }
+    renderZoomGrid();
+  }
+  function openZoom(){
+    const modal=document.getElementById('ww-grid-zoom');
+    if(!modal) return;
+    modal.classList.add('visible'); modal.setAttribute('aria-hidden','false');
+    setZoom(zoomLevel);
+    document.body.classList.add('ww-grid-zoom-open');
+  }
+  function closeZoom(){
+    const modal=document.getElementById('ww-grid-zoom');
+    if(!modal) return;
+    modal.classList.remove('visible'); modal.setAttribute('aria-hidden','true');
+    document.body.classList.remove('ww-grid-zoom-open');
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    document.getElementById('ww-grid-zoom-trigger')?.addEventListener('click',openZoom);
+    document.getElementById('ww-grid-zoom-close')?.addEventListener('click',closeZoom);
+    document.querySelectorAll('.ww-grid-zoom-btn').forEach(btn=>btn.addEventListener('click',()=>setZoom(btn.dataset.zoom==='focus'?'focus':Number(btn.dataset.zoom))));
+    document.addEventListener('keydown',e=>{
+      const modal=document.getElementById('ww-grid-zoom');
+      if(!modal?.classList.contains('visible')) return;
+      if(e.key==='Escape') closeZoom();
+      if(e.key==='+' || e.key==='=') setZoom(Math.min(1, typeof zoomLevel==='number'?zoomLevel*2:1));
+      if(e.key==='-') setZoom(Math.max(.125, typeof zoomLevel==='number'?zoomLevel/2:.5));
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
