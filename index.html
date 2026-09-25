@@ -6,193 +6,72 @@
 <title>WORLD WEDDING — The Living Magazine</title>
 <script defer src="./destinations.js"></script>
 <script defer src="./world-object.js"></script>
+<script defer src="./world-object-universal.js"></script>
 <style>
 *{box-sizing:border-box;margin:0}
 :root{--ink:#111;--paper:#f7f5ef;--line:#171717;--pink:#ff2b8a}
-html{scroll-behavior:smooth}
-body{background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;overflow-x:hidden}
-button,a{font:inherit;color:inherit}
-.top{position:fixed;z-index:50;top:0;left:0;right:0;height:72px;padding:0 28px;display:flex;align-items:center;justify-content:space-between;mix-blend-mode:multiply;pointer-events:none}
-.brand{font-size:12px;letter-spacing:.25em;font-weight:700;pointer-events:auto}
-.top-meta{font-size:10px;letter-spacing:.18em;text-transform:uppercase;pointer-events:auto}
-.top-actions{display:flex;gap:8px;pointer-events:auto}
-.top button{border:0;background:transparent;text-transform:uppercase;letter-spacing:.14em;font-size:10px;cursor:pointer;padding:10px}
-.top button:hover{color:var(--pink)}
-.mag{width:100%}
-.spread{min-height:100vh;position:relative;padding:clamp(80px,9vw,130px) clamp(22px,5vw,76px);display:grid;align-items:center;border-bottom:1px solid rgba(0,0,0,.14)}
-.spread.hero{min-height:100svh;grid-template-columns:1.15fr .85fr;gap:5vw;padding-top:110px}
-.kicker{font-size:10px;letter-spacing:.3em;text-transform:uppercase;margin-bottom:20px}
-h1{font-size:clamp(60px,12vw,190px);line-height:.78;letter-spacing:-.07em;font-weight:700}
-.hero-copy{max-width:650px}
-.hero-copy p{font-size:clamp(18px,2vw,28px);line-height:1.18;margin-top:38px;max-width:540px}
-.hero-image{height:78vh;min-height:520px;background:#ddd;overflow:hidden}
-.hero-image img,.image img{width:100%;height:100%;object-fit:cover;display:block}
-.note{position:absolute;bottom:30px;left:5vw;font-size:9px;letter-spacing:.16em;text-transform:uppercase}
-.page-number{position:absolute;right:5vw;bottom:30px;font-size:9px;letter-spacing:.16em}
-.full{padding:0;min-height:100svh;display:grid;grid-template-columns:1fr}
-.full .image{height:100svh}
-.full .overlay{position:absolute;inset:0;padding:10vw 7vw;display:flex;flex-direction:column;justify-content:flex-end;color:white;background:linear-gradient(transparent 35%,rgba(0,0,0,.58))}
-.full h2{font-size:clamp(50px,11vw,170px);line-height:.8;letter-spacing:-.06em;max-width:1000px}
-.full .overlay p{font-size:16px;max-width:520px;line-height:1.45;margin-top:24px}
-.split{grid-template-columns:1fr 1fr;gap:5vw}
-.split .image{height:75vh;min-height:500px}
-.copy h2{font-size:clamp(45px,7vw,110px);line-height:.82;letter-spacing:-.06em;margin-bottom:30px}
-.copy p{font-size:18px;line-height:1.45;max-width:500px}
-.factline{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:45px}
-.fact{padding:18px 0;border-right:1px solid var(--line)}
-.fact:last-child{border-right:0;padding-left:18px}
-.fact b{display:block;font-size:10px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px}
-.fact span{font-size:14px}
-.type{grid-template-columns:.25fr 1.75fr;gap:4vw;align-items:start}
-.type .index{font-size:11px;letter-spacing:.2em}
-.type h2{font-size:clamp(58px,10vw,150px);line-height:.78;letter-spacing:-.065em}
-.type p{font-size:20px;line-height:1.35;max-width:720px;margin-top:38px}
-.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:2vw}
-.card{min-height:70vh;position:relative;overflow:hidden;background:#ddd}
-.card img{width:100%;height:100%;object-fit:cover;display:block}
-.card .caption{position:absolute;left:24px;right:24px;bottom:24px;color:white}
-.card .caption strong{font-size:clamp(32px,5vw,75px);letter-spacing:-.05em;line-height:.82;display:block}
-.card .caption span{font-size:9px;letter-spacing:.2em;text-transform:uppercase}
-.destination-strip{padding:0 5vw 8vw}
-.destination-strip h3{font-size:11px;letter-spacing:.25em;text-transform:uppercase;margin-bottom:25px}
-.dest-row{display:flex;gap:18px;overflow-x:auto;padding-bottom:18px}
-.dest{flex:0 0 220px;height:300px;border:1px solid #111;background:white;position:relative;cursor:pointer;overflow:hidden}
-.dest img{width:100%;height:100%;object-fit:cover;filter:saturate(.85)}
-.dest .dtext{position:absolute;inset:auto 0 0;padding:18px;color:white;background:linear-gradient(transparent,rgba(0,0,0,.8))}
-.dest b{font-size:25px;display:block;letter-spacing:-.04em}
-.dest span{font-size:9px;text-transform:uppercase;letter-spacing:.16em}
-.footer{min-height:55vh;padding:9vw 5vw;display:grid;grid-template-columns:1fr 1fr;gap:6vw;border-top:1px solid #111}
-.footer h2{font-size:clamp(50px,9vw,130px);line-height:.8;letter-spacing:-.06em}
-.footer p{font-size:18px;line-height:1.5;max-width:480px}
-.drawer{position:fixed;z-index:100;inset:0;background:var(--paper);transform:translateY(100%);transition:transform .55s cubic-bezier(.2,.8,.2,1);overflow:auto}
-.drawer.open{transform:translateY(0)}
-.drawer-head{height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid #111;position:sticky;top:0;background:rgba(247,245,239,.94);backdrop-filter:blur(10px);z-index:2}
-.close{border:0;background:transparent;font-size:22px;cursor:pointer}
-.drawer-grid{display:grid;grid-template-columns:1.1fr .9fr;min-height:calc(100vh - 80px)}
-.drawer-image{min-height:80vh}
-.drawer-image img{width:100%;height:100%;object-fit:cover}
-.drawer-copy{padding:8vw 6vw}
-.drawer-copy .kicker{margin-bottom:25px}
-.drawer-copy h2{font-size:clamp(60px,10vw,150px);line-height:.76;letter-spacing:-.07em}
-.drawer-copy p{font-size:18px;line-height:1.5;margin-top:35px;max-width:500px}
-.drawer-copy .cta{display:inline-block;margin-top:45px;padding:14px 18px;border:1px solid #111;text-decoration:none;font-size:10px;letter-spacing:.18em;text-transform:uppercase}
-@media(max-width:800px){
-.top{height:58px;padding:0 16px}.top-meta{display:none}
-.spread.hero,.split,.footer,.drawer-grid{grid-template-columns:1fr}
-.spread.hero{gap:35px}.hero-image{height:58vh;min-height:380px}.full .image{height:100svh}
-.type{grid-template-columns:1fr;gap:20px}.type .index{order:-1}
-.cards{grid-template-columns:1fr}.card{min-height:68vh}
-.factline{grid-template-columns:1fr}.fact{border-right:0;border-bottom:1px solid #111}.fact:last-child{padding-left:0;border-bottom:0}
-.drawer-image{height:55vh;min-height:0}.drawer-copy{padding:45px 24px 80px}
-}
+html{scroll-behavior:smooth}body{background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;overflow-x:hidden}
+button,a{font:inherit;color:inherit}.top{position:fixed;z-index:50;top:0;left:0;right:0;height:72px;padding:0 28px;display:flex;align-items:center;justify-content:space-between;mix-blend-mode:multiply;pointer-events:none}.brand{font-size:12px;letter-spacing:.25em;font-weight:700;pointer-events:auto}.top-meta{font-size:10px;letter-spacing:.18em;text-transform:uppercase;pointer-events:auto}.top-actions{display:flex;gap:8px;pointer-events:auto}.top button{border:0;background:transparent;text-transform:uppercase;letter-spacing:.14em;font-size:10px;cursor:pointer;padding:10px}.top button:hover{color:var(--pink)}
+.mag{width:100%}.spread{min-height:100vh;position:relative;padding:clamp(80px,9vw,130px) clamp(22px,5vw,76px);display:grid;align-items:center;border-bottom:1px solid rgba(0,0,0,.14)}.hero{min-height:100svh;grid-template-columns:1.15fr .85fr;gap:5vw;padding-top:110px}.kicker{font-size:10px;letter-spacing:.3em;text-transform:uppercase;margin-bottom:20px}h1{font-size:clamp(60px,12vw,190px);line-height:.78;letter-spacing:-.07em;font-weight:700}.hero-copy{max-width:650px}.hero-copy p{font-size:clamp(18px,2vw,28px);line-height:1.18;margin-top:38px;max-width:540px}.hero-image{height:78vh;min-height:520px;background:#ddd;overflow:hidden}.hero-image img,.image img{width:100%;height:100%;object-fit:cover;display:block}.note{position:absolute;bottom:30px;left:5vw;font-size:9px;letter-spacing:.16em;text-transform:uppercase}.page-number{position:absolute;right:5vw;bottom:30px;font-size:9px;letter-spacing:.16em}
+.full{padding:0;min-height:100svh;display:grid;grid-template-columns:1fr}.full .image{height:100svh}.full .overlay{position:absolute;inset:0;padding:10vw 7vw;display:flex;flex-direction:column;justify-content:flex-end;color:white;background:linear-gradient(transparent 35%,rgba(0,0,0,.58))}.full h2{font-size:clamp(50px,11vw,170px);line-height:.8;letter-spacing:-.06em;max-width:1000px}.full .overlay p{font-size:16px;max-width:520px;line-height:1.45;margin-top:24px}
+.split{grid-template-columns:1fr 1fr;gap:5vw}.split .image{height:75vh;min-height:500px}.copy h2{font-size:clamp(45px,7vw,110px);line-height:.82;letter-spacing:-.06em;margin-bottom:30px}.copy p{font-size:18px;line-height:1.45;max-width:500px}.factline{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:45px}.fact{padding:18px 0;border-right:1px solid var(--line)}.fact:last-child{border-right:0;padding-left:18px}.fact b{display:block;font-size:10px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px}.fact span{font-size:14px}
+.type{grid-template-columns:.25fr 1.75fr;gap:4vw;align-items:start}.type .index{font-size:11px;letter-spacing:.2em}.type h2{font-size:clamp(58px,10vw,150px);line-height:.78;letter-spacing:-.065em}.type p{font-size:20px;line-height:1.35;max-width:720px;margin-top:38px}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:2vw}.card{min-height:70vh;position:relative;overflow:hidden;background:#ddd}.card img{width:100%;height:100%;object-fit:cover;display:block}.card .caption{position:absolute;left:24px;right:24px;bottom:24px;color:white}.card .caption strong{font-size:clamp(32px,5vw,75px);letter-spacing:-.05em;line-height:.82;display:block}.card .caption span{font-size:9px;letter-spacing:.2em;text-transform:uppercase}
+.destination-strip{padding:0 5vw 8vw}.destination-strip h3{font-size:11px;letter-spacing:.25em;text-transform:uppercase;margin-bottom:25px}.dest-row{display:flex;gap:18px;overflow-x:auto;padding-bottom:18px}.dest{flex:0 0 220px;height:300px;border:1px solid #111;background:white;position:relative;cursor:pointer;overflow:hidden}.dest img{width:100%;height:100%;object-fit:cover;filter:saturate(.85)}.dest .dtext{position:absolute;inset:auto 0 0;padding:18px;color:white;background:linear-gradient(transparent,rgba(0,0,0,.8))}.dest b{font-size:25px;display:block;letter-spacing:-.04em}.dest span{font-size:9px;text-transform:uppercase;letter-spacing:.16em}
+.editorial-grid{min-height:100vh;padding:9vw 5vw;display:grid;grid-template-columns:.35fr 1.65fr;gap:5vw;border-bottom:1px solid rgba(0,0,0,.14)}.editorial-grid h2{font-size:clamp(52px,9vw,135px);line-height:.8;letter-spacing:-.065em}.grid-stage{display:grid;grid-template-columns:repeat(15,1fr);aspect-ratio:1/1;border-top:1px solid #111;border-left:1px solid #111}.grid-cell{border-right:1px solid rgba(17,17,17,.22);border-bottom:1px solid rgba(17,17,17,.22);min-width:0;position:relative}.grid-cell.hot{background:#111}.grid-cell.hot:after{content:"";position:absolute;width:6px;height:6px;border-radius:50%;background:var(--pink);left:50%;top:50%;transform:translate(-50%,-50%)}.grid-copy{font-size:17px;line-height:1.5;max-width:430px;margin-top:30px}.grid-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-top:35px}
+.timeline-editorial{min-height:100vh;padding:9vw 5vw;border-bottom:1px solid rgba(0,0,0,.14)}.timeline-editorial h2{font-size:clamp(55px,10vw,150px);line-height:.78;letter-spacing:-.065em;max-width:1000px}.timeline-line{margin-top:8vw;border-top:1px solid #111}.time-row{display:grid;grid-template-columns:120px 1fr 1fr;gap:25px;padding:24px 0;border-bottom:1px solid rgba(17,17,17,.2);align-items:baseline}.time-row time{font-size:12px;letter-spacing:.12em}.time-row b{font-size:clamp(22px,3vw,42px);letter-spacing:-.04em}.time-row span{font-size:13px;line-height:1.4;max-width:380px}
+.mirror-editorial{min-height:100vh;padding:10vw 5vw;display:grid;grid-template-columns:1fr 1fr;gap:7vw;border-bottom:1px solid rgba(0,0,0,.14)}.mirror-editorial h2{font-size:clamp(60px,11vw,160px);line-height:.76;letter-spacing:-.07em}.mirror-editorial p{font-size:20px;line-height:1.45;max-width:500px}.mirror-form{margin-top:45px;border-top:1px solid #111}.mirror-field{display:grid;grid-template-columns:140px 1fr;padding:16px 0;border-bottom:1px solid rgba(17,17,17,.2);gap:20px}.mirror-field label{font-size:9px;letter-spacing:.15em;text-transform:uppercase}.mirror-field input,.mirror-field select{border:0;background:transparent;font-size:16px;outline:none}.mirror-action{margin-top:28px;border:1px solid #111;background:#111;color:white;padding:15px 20px;text-transform:uppercase;letter-spacing:.15em;font-size:10px;cursor:pointer}.mirror-preview{min-height:70vh;background:#111;color:#f7f5ef;padding:6vw;display:flex;flex-direction:column;justify-content:space-between}.mirror-preview .big{font-size:clamp(55px,9vw,130px);line-height:.78;letter-spacing:-.07em}.mirror-preview .small{font-size:10px;letter-spacing:.18em;text-transform:uppercase}.space-note{font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-top:30px}
+.footer{min-height:55vh;padding:9vw 5vw;display:grid;grid-template-columns:1fr 1fr;gap:6vw;border-top:1px solid #111}.footer h2{font-size:clamp(50px,9vw,130px);line-height:.8;letter-spacing:-.06em}.footer p{font-size:18px;line-height:1.5;max-width:480px}
+.drawer{position:fixed;z-index:100;inset:0;background:var(--paper);transform:translateY(100%);transition:transform .55s cubic-bezier(.2,.8,.2,1);overflow:auto}.drawer.open{transform:translateY(0)}.drawer-head{height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid #111;position:sticky;top:0;background:rgba(247,245,239,.94);backdrop-filter:blur(10px);z-index:2}.close{border:0;background:transparent;font-size:22px;cursor:pointer}.drawer-grid{display:grid;grid-template-columns:1.1fr .9fr;min-height:calc(100vh - 80px)}.drawer-image{min-height:80vh}.drawer-image img{width:100%;height:100%;object-fit:cover}.drawer-copy{padding:8vw 6vw}.drawer-copy h2{font-size:clamp(60px,10vw,150px);line-height:.76;letter-spacing:-.07em}.drawer-copy p{font-size:18px;line-height:1.5;margin-top:35px;max-width:500px}.drawer-copy .cta{display:inline-block;margin-top:45px;padding:14px 18px;border:1px solid #111;text-decoration:none;font-size:10px;letter-spacing:.18em;text-transform:uppercase;background:transparent;cursor:pointer}
+@media(max-width:800px){.top{height:58px;padding:0 16px}.top-meta{display:none}.spread.hero,.split,.footer,.drawer-grid,.editorial-grid,.mirror-editorial{grid-template-columns:1fr}.spread.hero{gap:35px}.hero-image{height:58vh;min-height:380px}.full .image{height:100svh}.type{grid-template-columns:1fr;gap:20px}.type .index{order:-1}.cards{grid-template-columns:1fr}.factline{grid-template-columns:1fr}.fact{border-right:0;border-bottom:1px solid #111}.fact:last-child{padding-left:0;border-bottom:0}.drawer-image{height:55vh;min-height:0}.drawer-copy{padding:45px 24px 80px}.grid-stage{grid-template-columns:repeat(10,1fr)}.time-row{grid-template-columns:75px 1fr}.time-row span{grid-column:2}.mirror-preview{min-height:55vh}.mirror-field{grid-template-columns:95px 1fr}}
 </style>
 </head>
 <body>
 <header class="top">
   <div class="brand">WORLD WEDDING</div>
   <div class="top-meta">THE LIVING MAGAZINE</div>
-  <div class="top-actions">
-    <button onclick="document.getElementById('destinations').scrollIntoView({behavior:'smooth'})">WORLD</button>
-    <button onclick="location.href='./my-wedding.html'">MY WEDDING</button>
-  </div>
+  <div class="top-actions"><button onclick="document.getElementById('destinations').scrollIntoView({behavior:'smooth'})">FEUILLETER</button><button onclick="document.getElementById('space').scrollIntoView({behavior:'smooth'})">ESPACE</button></div>
 </header>
 
 <main class="mag">
 <section class="spread hero">
-  <div class="hero-copy">
-    <div class="kicker">The living magazine · 365 days · the world</div>
-    <h1>WORLD<br>WEDDING</h1>
-    <p>Un immense magazine déjà ouvert. Des lieux, des cultures, des personnes, des gestes et des histoires à travers le monde.</p>
-  </div>
-  <div class="hero-image"><img src="https://picsum.photos/seed/worldwedding-cover/1200/1600" alt=""></div>
-  <div class="note">SCROLL TO ENTER</div><div class="page-number">001</div>
+  <div class="hero-copy"><div class="kicker">The living magazine · 365 days · the world</div><h1>WORLD<br>WEDDING</h1><p>Un magazine vivant. Des lieux, des cultures, des personnes, des gestes et des histoires. Feuilletez le monde du mariage comme une édition qui ne se termine jamais.</p></div>
+  <div class="hero-image"><img src="https://picsum.photos/seed/worldwedding-cover/1200/1600" alt=""></div><div class="note">SCROLL TO ENTER</div><div class="page-number">001</div>
 </section>
 
-<section class="spread full">
-  <div class="image"><img src="https://picsum.photos/seed/worldwedding-landscape/1800/1200" alt=""></div>
-  <div class="overlay"><div class="kicker">One world · infinite stories</div><h2>NOT A<br>WEBSITE.</h2><p>Une matière éditoriale continue. Tu ne choisis pas une page : tu entres dans le magazine et tu le traverses.</p></div>
-  <div class="page-number">002</div>
-</section>
+<section class="spread full"><div class="image"><img src="https://picsum.photos/seed/worldwedding-landscape/1800/1200" alt=""></div><div class="overlay"><div class="kicker">One world · infinite stories</div><h2>JUST<br>TURN<br>THE PAGE.</h2><p>Il n'y a pas de catalogue à parcourir. Chaque histoire ouvre la suivante. Chaque élément peut être regardé comme un lieu, une personne, un moment, une relation ou une mémoire.</p></div><div class="page-number">002</div></section>
 
-<section class="spread split">
-  <div class="image"><img src="https://picsum.photos/seed/worldwedding-architecture/1200/1500" alt=""></div>
-  <div class="copy">
-    <div class="kicker">Places</div><h2>THE<br>PLACE<br>MATTERS.</h2>
-    <p>Chaque destination devient une histoire visuelle : architecture, paysage, culture, saison et atmosphère.</p>
-    <div class="factline"><div class="fact"><b>World</b><span>365 destinations</span></div><div class="fact"><b>Time</b><span>24 moments</span></div><div class="fact"><b>Format</b><span>Editorial</span></div></div>
-  </div>
-  <div class="page-number">003</div>
-</section>
+<section class="spread split"><div class="image"><img src="https://picsum.photos/seed/worldwedding-architecture/1200/1500" alt=""></div><div class="copy"><div class="kicker">Places</div><h2>THE<br>PLACE<br>MATTERS.</h2><p>Chaque destination devient une histoire visuelle : architecture, paysage, culture, saison et atmosphère.</p><div class="factline"><div class="fact"><b>World</b><span>365 éditions</span></div><div class="fact"><b>Time</b><span>24 moments</span></div><div class="fact"><b>Format</b><span>Éditorial</span></div></div></div><div class="page-number">003</div></section>
 
-<section class="spread type">
-  <div class="index">04 / PEOPLE</div>
-  <div><h2>PEOPLE<br>MAKE<br>THE DAY.</h2><p>Photographes, fleuristes, traiteurs, musiciens, lieux, couples, familles, témoins. Les relations deviennent visibles sans transformer le magazine en annuaire.</p></div>
-  <div class="page-number">004</div>
-</section>
+<section class="spread type"><div class="index">04 / PEOPLE</div><div><h2>PEOPLE<br>MAKE<br>THE DAY.</h2><p>Photographes, fleuristes, traiteurs, musiciens, lieux, couples, familles, témoins. Les relations apparaissent dans les histoires au lieu de devenir un annuaire séparé.</p></div><div class="page-number">004</div></section>
 
-<section class="spread cards">
-  <article class="card"><img src="https://picsum.photos/seed/worldwedding-portrait/1000/1400" alt=""><div class="caption"><span>PORTRAIT</span><strong>THE COUPLE</strong></div></article>
-  <article class="card"><img src="https://picsum.photos/seed/worldwedding-table/1000/1400" alt=""><div class="caption"><span>DETAIL</span><strong>THE TABLE</strong></div></article>
-</section>
+<section class="spread cards"><article class="card"><img src="https://picsum.photos/seed/worldwedding-portrait/1000/1400" alt=""><div class="caption"><span>PORTRAIT</span><strong>THE COUPLE</strong></div></article><article class="card"><img src="https://picsum.photos/seed/worldwedding-table/1000/1400" alt=""><div class="caption"><span>DETAIL</span><strong>THE TABLE</strong></div></article></section>
 
-<section class="spread full">
-  <div class="image"><img src="https://picsum.photos/seed/worldwedding-night/1800/1200" alt=""></div>
-  <div class="overlay"><div class="kicker">After dark</div><h2>WHEN<br>THE DAY<br>BEGINS.</h2><p>La journée devient une timeline vivante. Chaque moment peut ensuite rejoindre ton propre mariage.</p></div>
-  <div class="page-number">006</div>
-</section>
+<section class="timeline-editorial"><div class="kicker">A DAY / READ IT IN TIME</div><h2>THE DAY<br>HAS A RHYTHM.</h2><div class="timeline-line"><div class="time-row"><time>06:30</time><b>PRÉPARATION</b><span>Lumière, beauté, détails, personnes clés.</span></div><div class="time-row"><time>09:30</time><b>ARRIVÉE</b><span>Transport, accueil, lieu et coordination.</span></div><div class="time-row"><time>11:00</time><b>CÉRÉMONIE</b><span>Le moment central et ses traditions locales.</span></div><div class="time-row"><time>13:00</time><b>TABLE</b><span>Cuisine, service, matières et convivialité.</span></div><div class="time-row"><time>15:30</time><b>EXPLORATION</b><span>Portraits, territoire, culture et respiration.</span></div><div class="time-row"><time>17:30</time><b>GOLDEN HOUR</b><span>Photo, paysage, musique et mise en scène.</span></div><div class="time-row"><time>19:30</time><b>DINER</b><span>Menu, discours, lumière et rythme.</span></div><div class="time-row"><time>22:00</time><b>PARTY</b><span>DJ, live, danse, énergie et dernière image.</span></div></div></section>
 
-<section id="destinations" class="destination-strip">
-  <h3>Entrer quelque part dans le monde</h3>
-  <div id="dest-row" class="dest-row"></div>
-</section>
+<section class="editorial-grid"><div><div class="kicker">STRUCTURE / ONE SOURCE</div><h2>EVERYTHING<br>IS<br>CONNECTED.</h2><p class="grid-copy">La grille n'est pas un autre site. C'est une page du magazine qui révèle la structure cachée des histoires : lieux, personnes, moments et relations peuvent occuper une même matière.</p><div class="grid-label">Une convention visuelle · pas une vérité scientifique</div></div><div><div class="grid-stage" id="magGrid" aria-label="Grille éditoriale"></div></div><div class="page-number">007</div></section>
 
-<footer class="footer">
-  <h2>KEEP<br>EXPLORING.</h2>
-  <div><p>Le magazine continue. Les 365 jours et leurs contenus ne sont plus une grille à regarder : ils constituent la matière invisible de cette expérience.</p><p style="margin-top:35px;font-size:11px;letter-spacing:.16em;text-transform:uppercase">WORLD → DESTINATION → STORY → YOUR WEDDING</p></div>
-</footer>
+<section class="spread split"><div class="copy"><div class="kicker">AROUND THIS STORY</div><h2>ONE STORY.<br>MANY<br>CONNECTIONS.</h2><p>Une page peut ouvrir sur une personne, un lieu, une musique, un savoir-faire ou un événement. Les liens restent dans le magazine.</p><div class="factline"><div class="fact"><b>PLACE</b><span>Destination</span></div><div class="fact"><b>PEOPLE</b><span>Identités</span></div><div class="fact"><b>TIME</b><span>Moments</span></div></div></div><div class="image"><img src="https://picsum.photos/seed/worldwedding-connections/1200/1500" alt=""></div><div class="page-number">008</div></section>
+
+<section class="mirror-editorial" id="space"><div><div class="kicker">YOUR EDITION / PRIVATE SPACE</div><h2>MAKE IT<br>YOURS.</h2><p>Au fil du magazine, vous pouvez conserver des éléments. Ici seulement, votre expérience devient personnelle : votre mariage, vos choix, vos histoires et vos traces.</p><div class="mirror-form"><div class="mirror-field"><label>Destination</label><input id="mDestination" placeholder="Paris, Rome, Bali…"></div><div class="mirror-field"><label>Saison</label><select id="mSeason"><option>Printemps</option><option>Été</option><option>Automne</option><option>Hiver</option></select></div><div class="mirror-field"><label>Invités</label><input id="mGuests" type="number" value="80"></div><div class="mirror-field"><label>Style</label><select id="mStyle"><option>Éditorial</option><option>Intime</option><option>Contemporain</option><option>Nature</option><option>Traditionnel</option><option>Destination</option></select></div></div><button class="mirror-action" onclick="saveMirror()">CRÉER MON ESPACE</button><div id="mirrorStatus" class="space-note">Vos choix restent locaux dans ce prototype.</div></div><div class="mirror-preview"><div class="small">MY EDITION</div><div class="big" id="mirrorPreview">YOUR<br>WEDDING.</div><div class="small" id="mirrorMeta">UNE PAGE PERSONNELLE DANS LE MÊME MONDE</div></div></section>
+
+<section id="destinations" class="destination-strip"><h3>Feuilleter le monde</h3><div id="dest-row" class="dest-row"></div></section>
+
+<footer class="footer"><h2>KEEP<br>EXPLORING.</h2><div><p>WORLD WEDDING reste un seul magazine. Les grilles, les relations, les timelines et les miroirs sont des façons de lire ou de personnaliser la même matière.</p><p style="margin-top:35px;font-size:11px;letter-spacing:.16em;text-transform:uppercase">WORLD → STORY → CONNECTION → YOUR EDITION</p></div></footer>
 </main>
 
-<section id="drawer" class="drawer" aria-hidden="true">
-  <div class="drawer-head"><div class="brand">WORLD WEDDING</div><button class="close" onclick="closeDestination()" aria-label="Fermer">×</button></div>
-  <div class="drawer-grid">
-    <div class="drawer-image"><img id="drawer-img" alt=""></div>
-    <div class="drawer-copy"><div id="drawer-kicker" class="kicker"></div><h2 id="drawer-title"></h2><p id="drawer-desc"></p><button class="cta" type="button" onclick="saveDestinationToWedding()">SAVE TO MY WEDDING</button></div>
-  </div>
-</section>
+<section id="drawer" class="drawer" aria-hidden="true"><div class="drawer-head"><div class="brand">WORLD WEDDING</div><button class="close" onclick="closeDestination()" aria-label="Fermer">×</button></div><div class="drawer-grid"><div class="drawer-image"><img id="drawer-img" alt=""></div><div class="drawer-copy"><div id="drawer-kicker" class="kicker"></div><h2 id="drawer-title"></h2><p id="drawer-desc"></p><button class="cta" type="button" onclick="saveDestinationToWedding()">ADD TO MY EDITION</button></div></div></section>
 
 <script>
 let currentDestinationId=null;
-function saveDestinationToWedding(){const d=(window.WORLD_WEDDING_DESTINATIONS||[]).find(x=>String(x.id)===String(currentDestinationId));if(!d||!window.WORLD_OBJECT)return;const entry=window.WORLD_OBJECT.saveToWedding(window.WORLD_OBJECT.destination(d),{origin:'living-magazine'});const cta=document.querySelector('.drawer-copy .cta');if(cta)cta.textContent=entry?'SAVED TO MY WEDDING':'SAVE TO MY WEDDING';}
-function bootMagazine(){
-  const list=window.WORLD_WEDDING_DESTINATIONS||window.DESTINATIONS||[];
-  if(window.WORLD_OBJECT)window.WORLD_OBJECT.registerDestinations(list);
-  const row=document.getElementById('dest-row');
-  list.slice(0,24).forEach((d,i)=>{
-    const el=document.createElement('article'); el.className='dest';
-    el.innerHTML='<img src="https://picsum.photos/seed/ww-mag-'+(d.id||i)+'-destination/600/800" alt=""><div class="dtext"><span>'+(d.country||d.region||'WORLD')+'</span><b>'+d.name+'</b></div>';
-    el.onclick=()=>openDestination(d);
-    row.appendChild(el);
-  });
-}
-function openDestination(d){
-  currentDestinationId=d.id;
-  if(window.WORLD_OBJECT)window.WORLD_OBJECT.upsert(window.WORLD_OBJECT.destination(d));
-  document.getElementById('drawer-img').src='https://picsum.photos/seed/ww-mag-'+d.id+'-detail/1400/1800';
-  document.getElementById('drawer-img').alt=d.name;
-  document.getElementById('drawer-kicker').textContent=(d.country||'WORLD')+' · '+(d.region||'');
-  document.getElementById('drawer-title').textContent=d.name;
-  document.getElementById('drawer-desc').textContent=(d.keywords||[]).join(' · ') || 'Destination wedding · World Wedding';
-  document.getElementById('drawer').classList.add('open');
-  document.getElementById('drawer').setAttribute('aria-hidden','false');
-  document.body.style.overflow='hidden';
-}
-function closeDestination(){
-  document.getElementById('drawer').classList.remove('open');
-  document.getElementById('drawer').setAttribute('aria-hidden','true');
-  document.body.style.overflow='';
-}
-document.addEventListener('DOMContentLoaded',()=>setTimeout(bootMagazine,50));
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDestination()});
+const $=id=>document.getElementById(id);
+function saveDestinationToWedding(){const d=(window.WORLD_WEDDING_DESTINATIONS||[]).find(x=>String(x.id)===String(currentDestinationId));if(!d||!window.WORLD_OBJECT)return;const entry=window.WORLD_OBJECT.saveToWedding(window.WORLD_OBJECT.destination(d),{origin:'living-magazine'});const cta=document.querySelector('.drawer-copy .cta');if(cta)cta.textContent=entry?'ADDED TO MY EDITION':'ADD TO MY EDITION';}
+function bootMagazine(){const list=window.WORLD_WEDDING_DESTINATIONS||window.DESTINATIONS||[];if(window.WORLD_OBJECT)window.WORLD_OBJECT.registerDestinations(list);const row=$('dest-row');list.slice(0,24).forEach((d,i)=>{const el=document.createElement('article');el.className='dest';el.innerHTML='<img src="https://picsum.photos/seed/ww-mag-'+(d.id||i)+'-destination/600/800" alt=""><div class="dtext"><span>'+(d.country||d.region||'WORLD')+'</span><b>'+d.name+'</b></div>';el.onclick=()=>openDestination(d);row.appendChild(el);});renderGrid();}
+function openDestination(d){currentDestinationId=d.id;if(window.WORLD_OBJECT)window.WORLD_OBJECT.upsert(window.WORLD_OBJECT.destination(d));$('drawer-img').src='https://picsum.photos/seed/ww-mag-'+d.id+'-detail/1400/1800';$('drawer-img').alt=d.name;$('drawer-kicker').textContent=(d.country||'WORLD')+' · '+(d.region||'');$('drawer-title').textContent=d.name;$('drawer-desc').textContent=(d.keywords||[]).join(' · ')||'Destination wedding · World Wedding';$('drawer').classList.add('open');$('drawer').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+function closeDestination(){$('drawer').classList.remove('open');$('drawer').setAttribute('aria-hidden','true');document.body.style.overflow='';}
+function renderGrid(){const grid=$('magGrid');if(!grid)return;const objects=window.WORLD_OBJECT?.all?.()||[];const hot=new Set(objects.map(o=>window.WORLD_OBJECT_GRID?.project(o)?.number));grid.innerHTML='';for(let i=1;i<=225;i++){const c=document.createElement('div');c.className='grid-cell'+(hot.has(i)?' hot':'');grid.appendChild(c);}}
+function saveMirror(){const wedding={destination:$('mDestination').value.trim(),season:$('mSeason').value,guests:Number($('mGuests').value||0),style:$('mStyle').value};localStorage.setItem('ww-my-wedding-v1',JSON.stringify(wedding));$('mirrorPreview').innerHTML=(wedding.destination||'YOUR')+'<br>WEDDING.';$('mirrorMeta').textContent=wedding.destination?(wedding.destination+' · '+wedding.guests+' INVITÉS · '+wedding.season).toUpperCase():'UNE PAGE PERSONNELLE DANS LE MÊME MONDE';$('mirrorStatus').textContent='MON ÉDITION EST ENREGISTRÉE';}
+document.addEventListener('DOMContentLoaded',()=>setTimeout(bootMagazine,50));document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDestination()});
 </script>
 </body>
 </html>
