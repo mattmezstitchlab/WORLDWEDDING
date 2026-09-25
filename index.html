@@ -445,8 +445,7 @@
             position:absolute;
             inset:0;
             flex:none;
-            min-height: 0;
-            position: relative;
+            min-height:0;
             display: flex;
             align-items: flex-end;
             justify-content: flex-start;
@@ -1850,22 +1849,10 @@ body{font-family:Arial,'Helvetica Neue',sans-serif}
         }
 
         function openEdition(destination) {
+            if (!destination) return;
             currentDestination = destination;
-            
-            // Update cover content
-            document.getElementById('cover-day').textContent = `DAY ${String(destination.id).padStart(3, '0')}`;
-            document.getElementById('cover-number').textContent = String(destination.id).padStart(3, '0');
-            document.getElementById('cover-destination').textContent = destination.name.toUpperCase();
-            document.getElementById('cover-country').textContent = destination.country.toUpperCase();
-            
-            // Set cover image (using a consistent Unsplash source based on keywords)
-            const keywords = destination.keywords || [];
-            const searchTerm = keywords[0] || destination.name;
-            document.getElementById('cover-image').src = 
-                `https://picsum.photos/seed/ww-cover-${destination.id}/1600/1100`;
-
-            // Show cover
-            document.getElementById('edition-cover').classList.add('visible');
+            initInterior(destination, 6);
+            document.getElementById('edition-interior').classList.add('visible');
             document.getElementById('hero').classList.remove('interactive');
         }
 
@@ -2012,7 +1999,7 @@ body{font-family:Arial,'Helvetica Neue',sans-serif}
                 
                 const keywords = newDestination.keywords || [];
                 document.getElementById('cover-image').src = 
-                    `https://source.unsplash.com/1600x1200/?${encodeURIComponent(keywords[0] || newDestination.name)},travel`;
+                    `https://picsum.photos/seed/ww-cover-${newDestination.id}/1600/1100`;
                 
                 // Update interior if visible
                 if (document.getElementById('edition-interior').classList.contains('visible')) {
@@ -2261,7 +2248,8 @@ body{font-family:Arial,'Helvetica Neue',sans-serif}
             document.getElementById('nav-my-space').addEventListener('click', openEditor);
             document.getElementById('nav-systematlas').addEventListener('click', () => { window.location.href = './systematlas.html'; });
             document.getElementById('nav-agents').style.display = 'none';
-            document.getElementById('editor-close').addEventListener('click', closeEditor);\n            document.getElementById('editor-inspector-close')?.addEventListener('click', () => document.getElementById('editor-inspector')?.classList.remove('active'));
+            document.getElementById('editor-close').addEventListener('click', closeEditor);
+            document.getElementById('editor-inspector-close')?.addEventListener('click', () => document.getElementById('editor-inspector')?.classList.remove('active'));
             document.getElementById('editor-form').addEventListener('submit', saveEditorEdition);
             document.getElementById('interior-back')?.addEventListener('click', () => {
                 document.getElementById('edition-interior')?.classList.remove('visible');
