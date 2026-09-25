@@ -10,6 +10,8 @@
     if(!r.ok)throw new Error('Media unavailable');
     const data=await r.json();remember(key,data.photos||[]);return data.photos||[];
   }
-  function apply(img,photo){if(!img||!photo)return;img.src=photo.src.large2x||photo.src.large||photo.src.original;img.alt=photo.alt||img.alt||'';img.dataset.pexelsUrl=photo.pexelsUrl||'';img.dataset.photographer=photo.photographer||'';}
-  window.WW_MEDIA={search,apply,async hydrate(){const nodes=[...document.querySelectorAll('[data-media-query]')];await Promise.all(nodes.map(async img=>{try{const photos=await search(img.dataset.mediaQuery,img.dataset.mediaOrientation||'landscape');if(photos[0])apply(img,photos[0]);}catch{}}));}};
+  function apply(img,photo){if(!img||!photo)return;img.src=photo.src.large2x||photo.src.large||photo.src.original;img.alt=photo.alt||img.alt||'';img.dataset.pexelsUrl=photo.pexelsUrl||'';img.dataset.photographer=photo.photographer||'';img.dataset.pexelsId=photo.id||'';return photo;}
+  function credit(photo){if(!photo)return '';const photographer=photo.photographer||'Photographe Pexels';const url=photo.photographerUrl||photo.pexelsUrl||'https://www.pexels.com/';return '<a href="'+url+'" target="_blank" rel="noreferrer">'+photographer+' · Pexels</a>';}
+  async function hydrateNode(img){try{const photos=await search(img.dataset.mediaQuery,img.dataset.mediaOrientation||'landscape');if(photos[0])return apply(img,photos[0]);}catch{}return null;}
+  window.WW_MEDIA={search,apply,credit,hydrateNode,async hydrate(){const nodes=[...document.querySelectorAll('[data-media-query]')];await Promise.all(nodes.map(hydrateNode));}};
 })();
