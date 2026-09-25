@@ -42,6 +42,12 @@ main{max-width:1500px;margin:auto;padding:6vw 3vw 8vw}.hero{display:grid;grid-te
 </section>
 <aside class="panel"><h2>Mon édition</h2><div class="summary"><div class="stat"><b>DESTINATION</b><strong id="sDest">—</strong></div><div class="stat"><b>INVITÉS</b><strong id="sGuests">80</strong></div><div class="stat"><b>BUDGET</b><strong id="sBudget">25K</strong></div><div class="stat"><b>STYLE</b><strong id="sStyle">Éditorial</strong></div></div><div class="notice"><p id="summaryText">Choisissez une destination pour commencer. Votre édition conserve le même fil du magazine.</p></div></aside>
 </div>
+<section class="panel" id="saved-section" style="margin-top:18px">
+  <div class="kicker">ÉLÉMENTS CONSERVÉS / MAGAZINE</div>
+  <h2 style="margin-top:8px">Votre sélection.</h2>
+  <div id="saved-list" style="border-top:1px solid var(--line)"></div>
+  <div class="notice"><p>Les éléments conservés depuis le magazine restent liés à votre édition locale. Vous pouvez les retirer ici sans effacer vos paramètres.</p></div>
+</section>
 <section class="panel" style="margin-top:18px"><div class="kicker">MA JOURNÉE / PREMIÈRE ÉDITION</div><h2 style="margin-top:8px">La journée commence avant la cérémonie.</h2><div class="timeline" id="timeline"></div></section>
 </main>
 <script>
@@ -57,6 +63,7 @@ $('destination').oninput=e=>renderResults(e.target.value);$('destination').onfoc
 ['season','guests','budget','style'].forEach(id=>$(id).addEventListener('input',update));
 $('generate').onclick=()=>{if(selected){const wedding={destinationId:selected.id,season:$('season').value,guests:Number($('guests').value),budget:Number($('budget').value),style:$('style').value};const previous=JSON.parse(localStorage.getItem('ww-my-wedding-v1')||'{}')||{};localStorage.setItem('ww-my-wedding-v1',JSON.stringify({...previous,...wedding}));if(window.WORLD_OBJECT)window.WORLD_OBJECT.saveToWedding(window.WORLD_OBJECT.destination(selected),{origin:'my-wedding',season:wedding.season,guests:wedding.guests,budget:wedding.budget,style:wedding.style});}update();$('generate').textContent='ÉDITION ENREGISTRÉE';setTimeout(()=>$('generate').textContent='Ouvrir mon édition',1400)};
 $('reset').onclick=()=>{localStorage.removeItem('ww-my-wedding-v1');selected=null;$('destination').value='';$('selected').innerHTML='<b>Aucune destination</b><span>À CHOISIR</span>';$('guests').value=80;$('budget').value=25000;$('style').value='Éditorial';update()};
-(()=>{try{const s=JSON.parse(localStorage.getItem('ww-my-wedding-v1')||'null');if(s){choose(s.destinationId);$('season').value=s.season||'Été';$('guests').value=s.guests||80;$('budget').value=s.budget||25000;$('style').value=s.style||'Éditorial'}}catch{}update()})();
+function renderSaved(){const w=JSON.parse(localStorage.getItem('ww-my-wedding-v1')||'{}')||{};const list=Array.isArray(w.savedObjects)?w.savedObjects:[];const el=$('saved-list');if(!el)return;if(!list.length){el.innerHTML='<div style="padding:24px 0;color:var(--muted);font-size:13px">Aucun élément conservé. Feuilletez le magazine et utilisez « ADD TO MY EDITION ».</div>';return}el.innerHTML=list.map((o,i)=>'<div style="display:flex;justify-content:space-between;gap:20px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line)"><div><b style="font-size:17px;font-weight:400">'+esc(o.name||o.id||'Élément')+'</b><div style="margin-top:6px;color:var(--muted);font:9px monospace;letter-spacing:.12em;text-transform:uppercase">'+esc(o.type||'object')+' · '+esc(o.country||o.region||'WORLD')+'</div></div><button class="btn alt" type="button" data-remove="'+i+'">RETIRER</button></div>').join('');el.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{const w2=JSON.parse(localStorage.getItem('ww-my-wedding-v1')||'{}')||{};const arr=Array.isArray(w2.savedObjects)?w2.savedObjects:[];arr.splice(Number(b.dataset.remove),1);w2.savedObjects=arr;localStorage.setItem('ww-my-wedding-v1',JSON.stringify(w2));renderSaved();});}
+(()=>{try{const s=JSON.parse(localStorage.getItem('ww-my-wedding-v1')||'null');if(s){if(s.destinationId)choose(s.destinationId);$('season').value=s.season||'Été';$('guests').value=s.guests||80;$('budget').value=s.budget||25000;$('style').value=s.style||'Éditorial'}}catch{}update();renderSaved()})();
 </script>
 </body></html>
