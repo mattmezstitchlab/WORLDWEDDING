@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WORLD WEDDING CENTER — UNIVERSAL GRID</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0b0b;--paper:#f4f1e8;--ink:#111;--muted:#aaa;--line:rgba(244,241,232,.18);--a:#ff3d9a;--b:#ffd34d;--c:#6ee7ff;--d:#8df58d}
+html,body{background:var(--bg);color:var(--paper);font-family:Arial,Helvetica,sans-serif}
+body{min-height:100vh}
+button,input{font:inherit}
+header{border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;background:rgba(11,11,11,.94);backdrop-filter:blur(14px)}
+.head{max-width:1500px;margin:auto;padding:20px 3vw;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:10px;letter-spacing:.28em;font-weight:700}.logo span{color:var(--a)}
+.back{color:var(--paper);text-decoration:none;font-size:9px;letter-spacing:.2em;text-transform:uppercase}
+main{max-width:1500px;margin:auto;padding:65px 3vw 100px}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:50px;align-items:end}
+.kicker{font-size:9px;letter-spacing:.3em;color:var(--a);margin-bottom:16px}
+h1{font-size:clamp(54px,9vw,135px);font-weight:200;letter-spacing:-.07em;line-height:.8}
+h1 span{color:var(--a)}
+.lead{font-size:13px;line-height:1.8;color:#bcbab2}
+.rule{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 0;margin:38px 0 25px;display:flex;justify-content:space-between;gap:20px;font-size:9px;letter-spacing:.2em;text-transform:uppercase}
+.controls{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}
+.ctrl{border:1px solid var(--line);background:transparent;color:var(--paper);padding:10px 13px;font-size:9px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer}
+.ctrl.active,.ctrl:hover{background:var(--paper);color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:2px}
+.cell{aspect-ratio:1;border:1px solid rgba(244,241,232,.08);background:#111;position:relative;cursor:pointer;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.cell:hover{border-color:var(--paper)}
+.cell .n{position:absolute;top:6px;left:7px;font-size:7px;opacity:.55}
+.mark{width:38%;height:38%;display:flex;align-items:center;justify-content:center;font-size:clamp(15px,2vw,28px);font-weight:700}
+.mark.cross:before{content:'×'}
+.mark.dot:before{content:'•'}
+.mark.star:before{content:'✣'}
+.mark.line:before{content:'╱'}
+.mark.chain:before{content:'◌'}
+.mark.knot:before{content:'●';font-size:.7em}
+.mark.satin{border:5px solid currentColor}
+.mark.half{border-left:3px solid currentColor;border-bottom:3px solid currentColor}
+.mark.double{border:2px solid currentColor;transform:rotate(45deg)}
+.cell[data-color="pink"]{color:var(--a)}.cell[data-color="yellow"]{color:var(--b)}.cell[data-color="cyan"]{color:var(--c)}.cell[data-color="green"]{color:var(--d)}
+.cell[data-level="2"] .mark{transform:scale(1.35)}.cell[data-level="3"] .mark{transform:scale(1.7);font-weight:900}
+.legend{margin-top:28px;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--line)}
+.legend-card{background:var(--bg);padding:20px;min-height:125px}
+.legend-card b{display:block;font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:12px}
+.legend-card p{font-size:11px;line-height:1.6;color:#aaa}
+.symbol{font-size:25px;margin-bottom:10px}
+.composer{margin-top:45px;border-top:1px solid var(--line);padding-top:25px}
+.composer h2{font-size:32px;font-weight:300;letter-spacing:-.03em}
+.composer p{color:#aaa;font-size:11px;margin:8px 0 20px;line-height:1.6}
+.signature{display:grid;grid-template-columns:1fr 280px;gap:18px}
+.message{width:100%;min-height:120px;background:#111;color:var(--paper);border:1px solid var(--line);padding:15px;resize:vertical;outline:none}
+.preview{border:1px solid var(--line);padding:18px;min-height:120px}
+.preview-label{font-size:8px;letter-spacing:.2em;color:#999;margin-bottom:12px}
+.signature-line{display:flex;gap:5px;flex-wrap:wrap}
+.sig{width:18px;height:18px;display:grid;place-items:center;font-size:13px;border:1px solid currentColor}
+.small{font-size:8px;color:#777;margin-top:15px;line-height:1.5}
+.notice{margin-top:30px;padding:16px;background:#151515;border-left:3px solid var(--a);font-size:10px;line-height:1.7;color:#bbb}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(6,1fr)}.legend{grid-template-columns:1fr 1fr}.signature{grid-template-columns:1fr}}
+@media(max-width:520px){.grid{grid-template-columns:repeat(4,1fr)}.legend{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="head"><div class="logo">WORLD <span>WEDDING</span> CENTER</div><a class="back" href="./mirrors.html">← Mirrors</a></div></header>
+<main>
+<section class="hero">
+<div><div class="kicker">ACCESSIBILITY / AAC / DIGITAL SAMPLER</div><h1>THE <span>UNIVERSAL GRID</span></h1></div>
+<p class="lead">Une grille où une information peut être exprimée par la position, le signe, la forme, la densité, le rythme et une couleur d'appui. Le système est pensé pour être lisible sans langue parlée, puis traduit vers du texte, de la voix ou du braille.</p>
+</section>
+<div class="rule"><span>ONE POINT · MANY MEANINGS</span><span>365 CELLS</span></div>
+<div class="controls" id="controls"></div>
+<div class="grid" id="grid" aria-label="Grille universelle"></div>
+<div class="legend">
+<div class="legend-card"><div class="symbol">×</div><b>Point de croix</b><p>Proposition WWC : présence / expérience. Le sens est défini par le système, pas par une signification historique universelle.</p></div>
+<div class="legend-card"><div class="symbol">╱</div><b>Point lancé</b><p>Proposition WWC : direction / intention / mouvement.</p></div>
+<div class="legend-card"><div class="symbol">◌</div><b>Chaînette</b><p>Proposition WWC : relation continue / lien.</p></div>
+<div class="legend-card"><div class="symbol">●</div><b>Nœud</b><p>Proposition WWC : détail / souvenir / point d'attention.</p></div>
+</div>
+<section class="composer">
+<h2>COMPOSER UNE SIGNATURE</h2>
+<p>Le texte ci-dessous sert de contenu source. La grille produit une représentation symbolique. Pour un usage réel, le message original doit rester conservé et la représentation doit être réversible.</p>
+<div class="signature"><textarea id="message" class="message" placeholder="Écrire un message, une déclaration ou une transmission…"></textarea><div class="preview"><div class="preview-label">SIGNATURE VIBRATOIRE / VISUELLE</div><div id="signature" class="signature-line"></div><div class="small">Prototype : la signature n'est pas une signature électronique juridiquement qualifiée.</div></div></div>
+</section>
+<div class="notice"><b>ACCESSIBILITÉ :</b> la couleur n'est jamais la seule information. Chaque état possède un signe et une intensité distincts. Le système pourra ensuite être adapté à l'oeil, au toucher, au son, au balayage, au regard ou à une commande assistive.</div>
+</main>
+<script>
+const colors=['pink','yellow','cyan','green'];
+const symbols=['cross','dot','star','line','chain','knot','satin','half','double'];
+let mode='all';
+const controls=document.getElementById('controls');
+const grid=document.getElementById('grid');
+const message=document.getElementById('message');
+const signature=document.getElementById('signature');
+['all','presence','relation','intention','memory'].forEach(x=>{
+ const b=document.createElement('button');b.className='ctrl '+(x===mode?'active':'');b.textContent=x==='all'?'ALL':x.toUpperCase();
+ b.onclick=()=>{mode=x;document.querySelectorAll('.ctrl').forEach(z=>z.classList.remove('active'));b.classList.add('active');render()};
+ controls.appendChild(b);
+});
+function state(i){
+ const types={presence:'cross',relation:'chain',intention:'line',memory:'knot'};
+ const keys=Object.keys(types);
+ const t=keys[i%keys.length];
+ return {type:mode==='all'?symbols[i%symbols.length]:types[mode],color:colors[(i+Math.floor(i/7))%colors.length],level:1+(i%3),typeName:t};
+}
+function render(){
+ grid.innerHTML='';
+ for(let i=1;i<=365;i++){
+  const s=state(i-1),c=document.createElement('button');c.className='cell';c.dataset.color=s.color;c.dataset.level=s.level;
+  c.title='Cellule '+String(i).padStart(3,'0');
+  c.setAttribute('aria-label','Cellule '+String(i).padStart(3,'0')+' — '+s.typeName);
+  c.innerHTML='<span class="n">'+String(i).padStart(3,'0')+'</span><span class="mark '+s.type+'" aria-hidden="true"></span>';
+  c.onclick=()=>{c.dataset.level=(Number(c.dataset.level)%3)+1};
+  grid.appendChild(c);
+ }
+}
+function makeSignature(){
+ const text=message.value.trim();
+ signature.innerHTML='';
+ if(!text){return}
+ [...text].slice(0,80).forEach((ch,i)=>{
+  if(/\s/.test(ch))return;
+  const s=state(ch.charCodeAt(0)+i);
+  const el=document.createElement('span');el.className='sig';el.style.color='var(--'+s.color+')';el.textContent=s.type==='cross'?'×':s.type==='chain'?'◌':s.type==='line'?'╱':s.type==='knot'?'●':'✣';
+  el.title='Position '+(i+1);
+  signature.appendChild(el);
+ });
+}
+message.addEventListener('input',makeSignature);render();
+</script>
+</body>
+</html>
