@@ -891,7 +891,7 @@
         }
 
 
-        .editor-editions-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;padding:24px 0}.editor-edition-tile{position:relative;aspect-ratio:1 / 1;border:0;background:#111;overflow:hidden;color:#fff;text-align:left;cursor:pointer}.editor-edition-tile img{width:100%;height:100%;object-fit:cover;display:block;opacity:.72}.editor-edition-meta{position:absolute;left:10px;right:10px;bottom:10px;display:flex;align-items:end;gap:10px;text-shadow:0 2px 12px #000}.editor-edition-meta b{font-size:26px;line-height:.9}.editor-edition-meta span{font-size:13px;text-transform:uppercase;letter-spacing:.08em}.editor-inspector{display:none;position:fixed;right:24px;bottom:24px;width:min(390px,calc(100vw - 48px));padding:20px;background:#f7f4ec;color:#111;z-index:1000;box-shadow:0 20px 70px #0008}.editor-inspector.active{display:block}.editor-inspector.saved{outline:2px solid #111}.editor-inspector-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px}.editor-inspector-top span{font-size:32px;font-weight:800}.editor-inspector-top strong{font-size:18px}.editor-form label{display:block;font-size:10px;letter-spacing:.12em;margin:12px 0}.editor-form input{display:block;width:100%;box-sizing:border-box;padding:11px;margin-top:6px;border:1px solid #aaa;background:#fff}.editor-form button{margin-top:10px;padding:12px 16px;border:0;background:#111;color:#fff;cursor:pointer}.editor-inspector small{display:block;margin-top:14px;font-size:10px;line-height:1.4;opacity:.65}@media(max-width:800px){.editor-editions-grid{grid-template-columns:repeat(3,1fr)}}
+        .editor-editions-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;padding:24px 0}.editor-edition-tile{position:relative;aspect-ratio:1 / 1;border:0;background:#111;overflow:hidden;color:#fff;text-align:left;cursor:pointer}.editor-edition-tile img{width:100%;height:100%;object-fit:cover;display:block;opacity:.72}.editor-edition-meta{position:absolute;left:10px;right:10px;bottom:10px;display:flex;align-items:end;gap:10px;text-shadow:0 2px 12px #000}.editor-edition-meta b{font-size:26px;line-height:.9}.editor-edition-meta span{font-size:13px;text-transform:uppercase;letter-spacing:.08em}.editor-inspector{display:none;position:fixed;right:24px;bottom:24px;width:min(390px,calc(100vw - 48px));padding:20px;background:#f7f4ec;color:#111;z-index:1000;box-shadow:0 20px 70px #0008}.editor-inspector.active{display:block}.editor-inspector.saved{outline:2px solid #111}.editor-inspector-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.editor-inspector-top span{font-size:32px;font-weight:800}.editor-inspector-top strong{font-size:18px}.editor-inspector-close{border:0;background:transparent;color:#111;font-size:24px;line-height:1;cursor:pointer;padding:4px 6px}.editor-inspector-close:hover{opacity:.55}.editor-form label{display:block;font-size:10px;letter-spacing:.12em;margin:12px 0}.editor-form input{display:block;width:100%;box-sizing:border-box;padding:11px;margin-top:6px;border:1px solid #aaa;background:#fff}.editor-form button{margin-top:10px;padding:12px 16px;border:0;background:#111;color:#fff;cursor:pointer}.editor-inspector small{display:block;margin-top:14px;font-size:10px;line-height:1.4;opacity:.65}@media(max-width:800px){.editor-editions-grid{grid-template-columns:repeat(3,1fr)}}
 
         /* Edition mosaic hierarchy + globe treatment */
         .edition-tile-number{font-size:18px!important;line-height:.9}
@@ -936,10 +936,10 @@
         .nav-link-primary{opacity:1!important;color:#fff}
         @media(max-width:800px){.editor-editions-grid{grid-template-columns:repeat(3,1fr)}.editor-space-grid{grid-template-columns:repeat(2,1fr)}.editor-panel-header{align-items:flex-start}.editor-panel-note{display:none}.edition-tile-name{font-size:.55rem;line-height:1.02;max-width:68%;letter-spacing:.1em}.edition-tile-country{font-size:.34rem}.edition-tile-number{font-size:1rem}}
         .world-dots{position:absolute;inset:0;pointer-events:none;z-index:2}
-        .world-dot{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.72);box-shadow:0 0 8px rgba(255,255,255,.25)}
+        .world-dot{display:none}
         .world-globe-shell{position:relative;width:min(72vw,760px);aspect-ratio:1;border-radius:50%;border:1px solid rgba(255,255,255,.12);overflow:hidden;background:radial-gradient(circle at 45% 40%,rgba(255,255,255,.025),transparent 58%)}
         .world-globe-shell canvas{position:relative;z-index:1}
-        .world-globe-shell::after{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 0 100px rgba(0,0,0,.5);pointer-events:none;z-index:3}
+        .world-globe-shell::before{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;transform:translate(-50%,-50%);background:var(--primary);border-radius:50%;z-index:4;pointer-events:none}\n        .world-globe-shell::after{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 0 100px rgba(0,0,0,.5);pointer-events:none;z-index:3}
 
         /* Home Editions Mosaic */
         body.home-scroll {
@@ -2268,8 +2268,8 @@ body{font-family:Arial,'Helvetica Neue',sans-serif}
             document.getElementById('nav-my-wedding').addEventListener('click', () => { window.location.href = './my-wedding.html'; });
             document.getElementById('nav-my-space').addEventListener('click', openEditor);
             document.getElementById('nav-systematlas').addEventListener('click', () => { window.location.href = './systematlas.html'; });
-            document.getElementById('nav-agents').addEventListener('click', () => { window.location.href = './agents.html'; });
-            document.getElementById('editor-close').addEventListener('click', closeEditor);
+            document.getElementById('nav-agents').style.display = 'none';
+            document.getElementById('editor-close').addEventListener('click', closeEditor);\n            document.getElementById('editor-inspector-close').addEventListener('click', () => document.getElementById('editor-inspector')?.classList.remove('active'));
             document.getElementById('editor-form').addEventListener('submit', saveEditorEdition);
             document.getElementById('system-close').addEventListener('click', closeSystemPanels);
             document.getElementById('project-close').addEventListener('click', closeSystemPanels);
