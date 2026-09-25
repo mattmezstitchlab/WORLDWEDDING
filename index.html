@@ -1302,6 +1302,7 @@
                 <span class="nav-link" id="nav-world">WORLD</span>
                 <span class="nav-link" id="nav-editions">365 EDITIONS</span>
                 <span class="nav-link nav-link-primary" id="nav-my-space">MY SPACE</span>
+                <span class="nav-link" id="nav-systematlas">SYSTEMATLAS</span>
             </div>
         </nav>
 
@@ -2261,6 +2262,7 @@
             });
 
             document.getElementById('nav-my-space').addEventListener('click', openEditor);
+            document.getElementById('nav-systematlas').addEventListener('click', () => { window.location.href = './systematlas.html'; });
             document.getElementById('editor-close').addEventListener('click', closeEditor);
             document.getElementById('editor-form').addEventListener('submit', saveEditorEdition);
             document.getElementById('system-close').addEventListener('click', closeSystemPanels);
