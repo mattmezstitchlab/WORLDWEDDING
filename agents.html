@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AIME 365 — Agents du jour</title>
+<style>
+:root{--bg:#050506;--fg:#f5f5f2;--muted:#7d7d84;--line:rgba(255,255,255,.11);--f:#ef238f;--soft:rgba(239,35,143,.14);--ok:#bdebd2}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--fg);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif}
+body{overflow:hidden}
+button{font:inherit}
+#top{height:58px;position:fixed;z-index:20;inset:0 0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:rgba(5,5,6,.78);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.brand{font-size:11px;letter-spacing:.18em;text-transform:uppercase}.brand b{color:var(--f)}.top-actions{display:flex;gap:7px}.top-actions button{border:1px solid var(--line);background:transparent;color:var(--muted);padding:8px 11px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}.top-actions button:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+#stage{position:fixed;inset:58px 0 0;display:grid;place-items:center;overflow:hidden}
+#world{position:absolute;width:min(88vw,88vh);height:min(88vw,88vh);min-width:560px;min-height:560px}
+.ring{position:absolute;inset:0;border:1px solid rgba(255,255,255,.08);border-radius:50%}
+.ring.r2{inset:12%;border-color:rgba(239,35,143,.13)}.ring.r3{inset:28%;border-color:rgba(255,255,255,.06)}
+#links{position:absolute;inset:0;pointer-events:none}
+.link{position:absolute;height:1px;background:linear-gradient(90deg,transparent,rgba(239,35,143,.18),transparent);transform-origin:0 50%}
+.agent{position:absolute;width:13px;height:13px;border:1px solid rgba(255,255,255,.42);background:#111;border-radius:50%;transform:translate(-50%,-50%);cursor:pointer;padding:0;transition:transform .18s,border-color .18s,box-shadow .18s,background .18s}
+.agent:hover,.agent.active{transform:translate(-50%,-50%) scale(1.7);border-color:var(--f);background:var(--f);box-shadow:0 0 0 5px rgba(239,35,143,.08),0 0 24px rgba(239,35,143,.38)}
+.agent.today{background:#fff;border-color:#fff}
+.agent.loaded{box-shadow:0 0 0 2px rgba(255,255,255,.05)}
+#center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:230px;height:230px;border:1px solid rgba(239,35,143,.55);border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(239,35,143,.16),rgba(5,5,6,.96) 65%);box-shadow:0 0 80px rgba(239,35,143,.12),inset 0 0 45px rgba(239,35,143,.06);z-index:4}
+.center-inner{text-align:center}.center-dot{width:16px;height:16px;border-radius:50%;background:var(--f);margin:0 auto 14px;box-shadow:0 0 30px rgba(239,35,143,.55)}
+.center-kicker{font-size:9px;letter-spacing:.24em;color:var(--muted);text-transform:uppercase}.center-title{font-size:25px;letter-spacing:.08em;margin-top:7px}.center-sub{font-size:10px;line-height:1.5;color:var(--muted);margin-top:8px;text-transform:uppercase;letter-spacing:.1em}
+#panel{position:fixed;z-index:12;right:18px;top:76px;width:min(390px,calc(100vw - 36px));max-height:calc(100vh - 94px);overflow:auto;background:rgba(10,10,12,.94);border:1px solid var(--line);backdrop-filter:blur(20px);padding:18px;transform:translateX(calc(100% + 30px));transition:transform .28s ease}
+#panel.open{transform:none}.close{float:right;border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:18px}
+.p-kicker{font-size:9px;letter-spacing:.18em;color:var(--f);text-transform:uppercase}.p-name{font-size:25px;line-height:1.05;margin:8px 0}.p-date{font:11px ui-monospace,monospace;color:var(--muted)}.p-desc{font-size:12px;line-height:1.6;color:#c9c9cc;margin:15px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}.cell{background:#0b0b0d;padding:11px}.cell span{display:block;font-size:8px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}.cell strong{font-size:11px;font-weight:500}.missions{margin-top:16px}.missions h3,.report h3{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500}.mission{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid var(--line);font-size:11px}.mission i{color:var(--f);font-style:normal}.report{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+#conversation{position:fixed;z-index:8;left:20px;bottom:18px;width:min(430px,calc(100vw - 40px));background:rgba(7,7,8,.76);border:1px solid var(--line);backdrop-filter:blur(16px);padding:13px}
+.conv-head{display:flex;justify-content:space-between;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}.pulse{color:var(--f)}#feed{height:96px;overflow:hidden;display:flex;flex-direction:column;gap:7px}.msg{font-size:10px;line-height:1.4;color:#c8c8cb}.msg b{color:#fff;font-weight:500}.msg em{color:var(--f);font-style:normal}
+#report{position:fixed;z-index:11;left:20px;top:78px;width:min(360px,calc(100vw - 40px));background:rgba(10,10,12,.94);border:1px solid var(--line);padding:17px;transform:translateY(-130%);transition:transform .28s ease;backdrop-filter:blur(20px)}
+#report.open{transform:none}.report-big{font-size:30px;margin:7px 0}.report-copy{font-size:11px;line-height:1.55;color:#c4c4c8}.report-lines{margin-top:13px}.report-lines div{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line);font-size:10px}.report-lines span{color:var(--muted)}
+#legend{position:fixed;right:20px;bottom:18px;z-index:8;color:var(--muted);font-size:9px;line-height:1.6;text-align:right;max-width:300px}
+#loading{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:10;color:var(--muted);font:10px ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;pointer-events:none;opacity:.8}
+@media(max-width:760px){#world{min-width:500px;min-height:500px;width:96vw;height:96vw}.agent{width:10px;height:10px}#center{width:170px;height:170px}.center-title{font-size:19px}#legend{display:none}#conversation{bottom:10px;left:10px;width:calc(100vw - 20px)}#panel{right:10px;top:68px;width:calc(100vw - 20px)}#report{left:10px;top:68px;width:calc(100vw - 20px)}}
+</style>
+</head>
+<body>
+<header id="top">
+  <div class="brand">AIME <b>365</b><span>AGENTS DU JOUR</span></div>
+  <div class="top-actions"><button id="btn-report">RAPPORT AIME</button><button id="btn-refresh">ACTUALISER</button><button onclick="location.href='./index.html'">WORLD WEDDING</button></div>
+</header>
+<main id="stage">
+  <div id="world"><div class="ring"></div><div class="ring r2"></div><div class="ring r3"></div><div id="links"></div><div id="agents"></div>
+    <div id="center"><div class="center-inner"><div class="center-dot"></div><div class="center-kicker">ORCHESTRATION</div><div class="center-title">AIME</div><div class="center-sub">365 agents · une source<br>des relations · un rapport</div></div></div>
+  </div>
+</main>
+<section id="conversation"><div class="conv-head"><span>CONVERSATION DU CERCLE</span><span class="pulse">● LIVE</span></div><div id="feed"></div></section>
+<section id="report"><button class="close" id="close-report">×</button><div class="p-kicker">AIME · SYNTHÈSE</div><div class="report-big" id="report-count">365</div><div class="report-copy">Les agents ne décident pas à la place de l'humain. Ils explorent des sources, proposent des relations et remontent les éléments à vérifier.</div><div class="report-lines"><div><span>Agents actifs</span><b id="r-active">0</b></div><div><span>Relations explorées</span><b id="r-relations">0</b></div><div><span>Sources chargées</span><b id="r-sources">0</b></div><div><span>Points à confirmer</span><b id="r-confirm">0</b></div></div></section>
+<aside id="panel"><button class="close" id="close-panel">×</button><div class="p-kicker">AGENT DU JOUR · <span id="p-id"></span></div><div class="p-name" id="p-name">Chargement…</div><div class="p-date" id="p-date"></div><p class="p-desc" id="p-desc">Source en cours de lecture.</p><div class="grid"><div class="cell"><span>Source</span><strong id="p-source">Nominis</strong></div><div class="cell"><span>Calendrier</span><strong id="p-calendar">France · à confirmer selon calendrier</strong></div><div class="cell"><span>Époque</span><strong id="p-era">À extraire</strong></div><div class="cell"><span>État</span><strong id="p-state">SOURCE CHARGÉE</strong></div></div><div class="missions"><h3>Mission structurelle</h3><div class="mission"><i>●</i> Chercher les traces liées à cette date.</div><div class="mission"><i>□</i> Relier personnes, lieux et événements.</div><div class="mission"><i>→</i> Proposer des relations, jamais les inventer.</div><div class="mission"><i>⌁</i> Organiser les traces dans My Space / Archive.</div><div class="mission"><i>∞</i> Faire remonter à AIME ce qui reste à confirmer.</div></div><div class="report"><h3>Retour vers AIME</h3><div id="p-return" class="report-copy">L'agent attend une exploration.</div></div></aside>
+<div id="loading">construction du cercle…</div>
+<div id="legend">365 points fixes · les lignes représentent des relations de travail du prototype · les noms et descriptions viennent de la source calendrière lorsqu'ils sont chargés.</div>
+<script>
+const TOTAL=365, year=new Date().getFullYear();
+const monthLengths=[31,28,31,30,31,30,31,31,30,31,30,31];
+if((year%4===0&&year%100!==0)||year%400===0) monthLengths[1]=29;
+const agentsEl=document.getElementById('agents'), linksEl=document.getElementById('links'), feedEl=document.getElementById('feed');
+const loaded=new Map(), active=new Set();
+const fmt=n=>String(n).padStart(3,'0');
+function dayToDate(n){let m=0,d=n;while(d>monthLengths[m]){d-=monthLengths[m];m++}return {day:d,month:m+1};}
+function angle(n){return (-Math.PI/2)+(n-1)*(Math.PI*2/TOTAL)}
+function point(n,r=46){const a=angle(n);return {x:50+Math.cos(a)*r,y:50+Math.sin(a)*r}}
+function addAgent(n){
+  const p=point(n,46), b=document.createElement('button'); b.className='agent'; b.dataset.day=n; b.style.left=p.x+'%'; b.style.top=p.y+'%'; b.title='Agent '+fmt(n);
+  if(n===dayOfYear(new Date())) b.classList.add('today');
+  b.addEventListener('click',()=>selectAgent(n,b)); agentsEl.appendChild(b);
+}
+function addLink(a,b){
+  const p1=point(a,46),p2=point(b,46);const dx=p2.x-p1.x,dy=p2.y-p1.y,len=Math.hypot(dx,dy);
+  const el=document.createElement('div');el.className='link';el.style.left=p1.x+'%';el.style.top=p1.y+'%';el.style.width=len+'%';el.style.transform='rotate('+Math.atan2(dy,dx)+'rad)';linksEl.appendChild(el);
+}
+for(let i=1;i<=TOTAL;i++) addAgent(i);
+for(let i=1;i<=TOTAL;i++){addLink(i,i===TOTAL?1:i+1);addLink(i,((i+30-1)%TOTAL)+1)}
+document.getElementById('loading').style.display='none';
+function dayOfYear(d){const start=new Date(d.getFullYear(),0,0);return Math.floor((d-start)/86400000)}
+function api(n){const d=dayToDate(n);return 'https://nominis.cef.fr/json/saintdujour.php?annee='+year+'&jour='+d.day+'&mois='+d.month}
+async function loadAgent(n){
+  if(loaded.has(n)) return loaded.get(n);
+  const r=await fetch(api(n),{cache:'force-cache'}); const j=await r.json(); const s=j?.response?.saintdujour||{};
+  const data={name:s.nom||('Agent '+fmt(n)),description:(s.contenu||'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().slice(0,420),descriptionRaw:s.description||'',date:dayToDate(n)};
+  loaded.set(n,data); active.add(n); return data;
+}
+function push(text){const el=document.createElement('div');el.className='msg';el.innerHTML=text;feedEl.prepend(el);while(feedEl.children.length>5)feedEl.lastChild.remove();document.getElementById('r-active').textContent=active.size;document.getElementById('r-sources').textContent=loaded.size;document.getElementById('r-relations').textContent=Math.min(TOTAL*2,active.size*2);document.getElementById('r-confirm').textContent=Math.max(0,active.size-3)}
+async function selectAgent(n,b){
+  document.querySelectorAll('.agent.active').forEach(x=>x.classList.remove('active'));b.classList.add('active');
+  const panel=document.getElementById('panel');panel.classList.add('open');document.getElementById('p-id').textContent=fmt(n);document.getElementById('p-name').textContent='Lecture de la source…';
+  const data=await loadAgent(n);document.getElementById('p-name').textContent=data.name;document.getElementById('p-date').textContent='JOUR '+fmt(n)+' · '+String(data.date.day).padStart(2,'0')+'/'+String(data.date.month).padStart(2,'0')+'/'+year;document.getElementById('p-desc').textContent=data.description||'Aucune description retournée.';document.getElementById('p-era').textContent=data.descriptionRaw||'Voir la source';document.getElementById('p-return').textContent=data.name+' transmet à AIME ses traces, ses relations potentielles et les éléments qui demandent confirmation.';push('<b>'+data.name+'</b> → AIME : « J’ai chargé ma source et je cherche les relations pertinentes. »');setTimeout(()=>push('<b>AIME</b> → cercle : « Je conserve la source. Je ne transforme pas une hypothèse en fait. »'),180)
+}
+document.getElementById('close-panel').onclick=()=>document.getElementById('panel').classList.remove('open');
+document.getElementById('btn-report').onclick=()=>document.getElementById('report').classList.toggle('open');
+document.getElementById('close-report').onclick=()=>document.getElementById('report').classList.remove('open');
+document.getElementById('btn-refresh').onclick=()=>location.reload();
+async function boot(){const today=dayOfYear(new Date());const b=document.querySelector('.agent[data-day="'+today+'"]');if(b)await selectAgent(today,b);push('<b>365 agents</b> → cercle : « Nous partageons une même source et des missions différentes par date. »');push('<b>AIME</b> → cercle : « Discutez, reliez, sourcer. Je ferai la synthèse. »')}
+boot();
+</script>
+</body>
+</html>
