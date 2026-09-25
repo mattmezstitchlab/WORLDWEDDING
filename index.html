@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WORLD WEDDING CENTER | 365 Days / One World</title>
+    <title>WORLD WEDDING CENTER — Le magazine du mariage</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="./destinations.js"></script>
     <style>
@@ -1020,7 +1020,7 @@
             grid-auto-rows: 1fr;
             gap: 3px;
         }
-        /* ONE GRID: every edition has exactly the same square geometry. */
+        /* ONE GRILLE: every edition has exactly the same square geometry. */
         .editions-mosaic .edition-tile {
             aspect-ratio: 1 / 1;
             grid-column: span 1 !important;
@@ -1272,7 +1272,24 @@
           .timeline-item{padding:.7rem .5rem}
         }
 </style>
-<link rel="stylesheet" href="./aime-universal.css"></head>
+<link rel="stylesheet" href="./aime-universal.css"><style id="ww-french-editorial">
+:root{--accent:#ff2b8a!important;--accent-light:#ff9fc8!important}
+body{font-family:Arial,'Helvetica Neue',sans-serif}
+.home-editions-title,.hero-title,.cover-destination,.moment-title{font-family:Arial,'Helvetica Neue',sans-serif}
+.editorial-kicker{font-size:.55rem;letter-spacing:.28em;text-transform:uppercase;color:#ff2b8a;margin-bottom:1.2rem}
+.editorial-facts{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.14);margin:2rem 0 3rem}
+.editorial-facts>div{background:#151515;padding:1.1rem}
+.editorial-facts span,.editorial-grid span{display:block;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;opacity:.45;margin-bottom:.45rem}
+.editorial-facts b{font-size:.8rem;font-weight:400}
+.editorial-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,.12);margin:2rem 0}
+.editorial-grid>div{background:#151515;padding:1.5rem}
+.editorial-grid p{font-size:.78rem;line-height:1.7;opacity:.7}
+.editorial-feature{border-color:rgba(255,43,138,.38)!important;background:rgba(255,43,138,.045)!important}
+.editorial-signature{margin:4rem 0 2rem;padding:2rem 0;border-top:1px solid rgba(255,255,255,.14);display:flex;justify-content:space-between;gap:2rem;align-items:end}
+.editorial-signature span{font-size:.5rem;letter-spacing:.18em;color:#ff2b8a}
+.editorial-signature b{font-size:1.1rem;font-weight:300;max-width:480px}
+@media(max-width:700px){.editorial-facts{grid-template-columns:repeat(2,1fr)}.editorial-grid{grid-template-columns:1fr}.editorial-signature{display:block}.editorial-signature b{display:block;margin-top:1rem}}
+</style></head>
 <body>
     <!-- Loader -->
     <div id="loader">
@@ -1282,12 +1299,12 @@
 
     <!-- Main App -->
     <div id="app">        <div id="ww-search" aria-label="Search the world">
-            <input id="ww-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="SEARCH THE WORLD…" aria-label="Search the world">
+            <input id="ww-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="RECHERCHER DANS LE MAGAZINE…" aria-label="Rechercher dans le magazine">
             <span id="ww-search-count">365</span>
         </div>
         <div id="ww-selection-bar" aria-live="polite">
-            <span><b id="ww-selection-count">0</b> SELECTED</span>
-            <button type="button" id="ww-add-to-space">ADD TO MY SPACE</button>
+            <span><b id="ww-selection-count">0</b> SÉLECTIONNÉES</span>
+            <button type="button" id="ww-add-to-space">AJOUTER À MON ESPACE</button>
         </div>
 
         <!-- Globe Container -->
@@ -1297,13 +1314,13 @@
         <nav>
             <div class="logo">WORLD <span>WEDDING</span> CENTER</div>
             <div class="nav-center">
-                <span class="day-indicator">DAY</span>
+                <span class="day-indicator">ÉDITION</span>
                 <span class="day-number" id="current-day">001</span>
             </div>
             <div class="nav-links">
-                <span class="nav-link" id="nav-world">WORLD</span>
-                <span class="nav-link" id="nav-editions">365 EDITIONS</span>
-                <span class="nav-link nav-link-primary" id="nav-my-space">MY SPACE</span>
+                <span class="nav-link" id="nav-world">ACCUEIL</span>
+                <span class="nav-link" id="nav-editions">365 ÉDITIONS</span>
+                <span class="nav-link nav-link-primary" id="nav-my-space">MON ESPACE</span>
                 <span class="nav-link" id="nav-systematlas">SYSTEMATLAS</span>
                 <span class="nav-link" id="nav-agents">365 AGENTS</span>
             </div>
@@ -1312,36 +1329,36 @@
         <!-- Hero Section -->
         <section id="hero" class="interactive">
             <div class="hero-content">
-                <div class="hero-tag">365 Days / One World</div>
+                <div class="hero-tag">LE MAGAZINE · 365 ÉDITIONS · MARIAGE</div>
                 <h1 class="hero-title">
-                    WORLD<br>
-                    <span>WEDDING</span>
+                    LE MONDE<br>
+                    <span>DU MARIAGE</span>
                 </h1>
-                <p class="hero-subtitle">The World is Common. The View is Personal.</p>
+                <p class="hero-subtitle">365 façons de raconter un mariage · une grille · un monde</p>
             </div>
             <div class="scroll-indicator">
-                <span>Explore</span>
+                <span>Feuilleter</span>
                 <div class="scroll-line"></div>
             </div>
         </section>
 
 
         <!-- 365 Editions — the homepage magazine mosaic -->
-        <section id="home-editions" aria-label="365 editions">
+        <section id="home-editions" aria-label="365 éditions du magazine mariage">
             <div class="home-editions-intro">
                 <div>
-                    <div class="home-editions-kicker">365 DAYS / 365 EDITIONS</div>
-                    <h2 class="home-editions-title">THE <span>EDITIONS</span></h2>
+                    <div class="home-editions-kicker">365 JOURS / 365 ÉDITIONS MARIAGE</div>
+                    <h2 class="home-editions-title">LE <span>MAGAZINE</span></h2>
                 </div>
                 <p class="home-editions-copy">
-                    Une destination. Une couverture. Une édition.<br>
-                    Le monde devient le sommaire.
+                    Une destination. Une couverture. Une histoire de mariage.<br>
+                    Chaque édition devient un magazine à feuilleter.
                 </p>
             </div>
             <div class="editions-mosaic" id="home-editions-grid"></div>
             <div class="home-editions-end">
                 <span>001 — 365</span>
-                <span>THE WORLD IS COMMON. THE VIEW IS PERSONAL.</span>
+                <span>LE MONDE EST COMMUN. VOTRE HISTOIRE EST PERSONNELLE.</span>
             </div>
         </section>
 
@@ -1349,7 +1366,7 @@
         <div id="destination-info">
             <div class="info-name" id="info-name">Tromsø</div>
             <div class="info-country" id="info-country">Norway</div>
-            <div class="info-cta">Click to open edition</div>
+            <div class="info-cta">Ouvrir l’édition mariage</div>
         </div>
 
         <!-- Edition Cover -->
@@ -1359,13 +1376,13 @@
                 <div class="cover-overlay"></div>
             </div>
             <div class="cover-content">
-                <div class="cover-day" id="cover-day">DAY 001</div>
+                <div class="cover-day" id="cover-day">ÉDITION 001</div>
                 <div class="cover-number" id="cover-number">001</div>
                 <h2 class="cover-destination" id="cover-destination">Tromsø</h2>
                 <div class="cover-country" id="cover-country">Norway</div>
-                <div class="cover-tagline">365 Days / One World</div>
+                <div class="cover-tagline">MAGAZINE MARIAGE · 24 MOMENTS · 1 DESTINATION</div>
                 <div class="cover-enter" id="enter-edition">
-                    <span>Enter Edition</span>
+                    <span>Feuilleter l’édition</span>
                     <div class="cover-enter-arrow"></div>
                 </div>
             </div>
@@ -1377,9 +1394,9 @@
             <div class="interior-header">
                 <img class="interior-header-bg" id="interior-bg" src="" alt="">
                 <div class="interior-header-content">
-                    <div class="interior-day-badge" id="interior-day-badge">DAY 001 / TROMSØ</div>
+                    <div class="interior-day-badge" id="interior-day-badge">ÉDITION 001 / TROMSØ</div>
                     <div class="interior-time" id="interior-time">06:00</div>
-                    <div class="interior-moment-name" id="interior-moment-name">First Light</div>
+                    <div class="interior-moment-name" id="interior-moment-name">OUVERTURE</div>
                 </div>
             </div>
             <div class="interior-body">
@@ -1528,41 +1545,58 @@
 
         // 24 Hours Moments Configuration
         const HOURS_CONFIG = [
-            { hour: 0, name: "MIDNIGHT", theme: "The world sleeps", description: "A moment of pure silence. The world holds its breath in the darkest hour, creating space for dreams and infinite possibilities." },
-            { hour: 1, name: "NIGHT", theme: "City lights glow", description: "Urban landscapes transform into constellations of light. The night shift keeps the world turning while most dream." },
-            { hour: 2, name: "DEEP NIGHT", theme: "Inner stillness", description: "The deepest darkness before the dawn. A liminal space where time seems to stand still and mysteries unfold." },
-            { hour: 3, name: "SILENCE", theme: "Sacred hour", description: "An ancient stillness descends. The space between sleeping and waking holds profound creative energy." },
-            { hour: 4, name: "BEFORE DAWN", theme: "Anticipation builds", description: "First stirrings of life. Early risers begin their rituals as the world prepares for transformation." },
-            { hour: 5, name: "FIRST LIGHT", theme: "A new beginning", description: "Golden hour begins. The first rays pierce the horizon, painting the world in soft amber tones." },
-            { hour: 6, name: "MORNING", theme: "Daily rituals", description: "The world awakens with purpose. Coffee brews, newspapers unfold, and the day takes its first breath." },
-            { hour: 7, name: "LOCAL LIFE", theme: "Neighborhood stories", description: "Streets come alive with local character. Markets open, children head to school, life unfolds authentically." },
-            { hour: 8, name: "CITY AWAKENS", theme: "Commuters and commerce", description: "The pulse quickens. Transit systems carry millions to their destinations as cities fully wake." },
-            { hour: 9, name: "CULTURE", theme: "Heritage speaks", description: "Museums, galleries, and cultural institutions open their doors to preserve and share human creativity." },
-            { hour: 10, name: "DISCOVERY", theme: "Exploration begins", description: "Adventurous spirits venture forth. Hidden gems reveal themselves to those who seek." },
-            { hour: 11, name: "PLACE", theme: "Sense of location", description: "The spirit of the destination reveals itself. Architecture, geography, and atmosphere converge." },
-            { hour: 12, name: "NOON", theme: "High tide of day", description: "The sun reaches its zenith. Lunch tables fill, business peaks, and the world hums with activity." },
-            { hour: 13, name: "FOOD", theme: "Culinary journey", description: "The art of eating transcends mere nutrition. Local cuisines tell stories of culture and tradition." },
-            { hour: 14, name: "TRAVEL", theme: "Moving through space", description: "Journeys continue. Trains, planes, and automobiles carry souls between destinations." },
-            { hour: 15, name: "PEOPLE", theme: "Human connections", description: "Faces and stories. The human tapestry weaves together in markets, cafes, and streets." },
-            { hour: 16, name: "CRAFT & PROFESSION", theme: "Skills and trades", description: "Artisans at work. Centuries-old techniques meet modern innovation in workshops worldwide." },
-            { hour: 17, name: "PREPARATION", theme: "Evening approaches", description: "The world shifts gears. Chefs prep, musicians tune, and anticipation builds." },
-            { hour: 18, name: "GOLDEN HOUR", theme: "Magic light", description: "Photography's favorite moment. Warm, soft light transforms ordinary scenes into gold." },
-            { hour: 19, name: "CELEBRATION", theme: "Joy emerges", description: "Weddings, festivals, and gatherings. Human connection reaches its most beautiful expression." },
-            { hour: 20, name: "DINNER", theme: "Breaking bread", description: "The most important meal becomes social ritual. Tables gather, stories shared, bonds strengthened." },
-            { hour: 21, name: "MUSIC", theme: "Sound journeys", description: "Live performances, street musicians, and private moments. Sound fills the evening air." },
-            { hour: 22, name: "NIGHT LIFE", theme: "After dark", description: "Cities transform again. Clubs, bars, and late-night cafes keep the night alive." },
-            { hour: 23, name: "MEMORY", theme: "Reflection hour", description: "The day compiles into memory. Photographs reviewed, journal entries written, gratitude expressed." }
+            { hour: 0, name: "OUVERTURE", theme: "La promesse", description: "Avant les préparatifs, il y a une intention : raconter deux personnes, un lieu et tout ce qui les relie." },
+            { hour: 1, name: "INSPIRATION", theme: "Une direction esthétique", description: "Couleurs, matières, lumière et architecture composent la première page du mariage. Rien n’est décoratif par hasard." },
+            { hour: 2, name: "HISTOIRE", theme: "Ce qui vous réunit", description: "Une édition de mariage commence par une histoire : rencontre, famille, territoire, habitudes et souvenirs qui donnent du sens." },
+            { hour: 3, name: "DESTINATION", theme: "Choisir le cadre", description: "Ville, campagne, mer ou montagne : le lieu devient une partie du récit et conditionne les déplacements, les images et le rythme." },
+            { hour: 4, name: "LIEU", theme: "Trouver l’espace juste", description: "Une adresse, une architecture, un jardin, une salle ou un paysage. Le lieu doit être lisible avant d’être réservé." },
+            { hour: 5, name: "LUMIÈRE", theme: "La journée commence", description: "La lumière construit les images du matin au soir. Elle influence les portraits, la cérémonie, le décor et l’atmosphère." },
+            { hour: 6, name: "PRÉPARATIFS", theme: "Avant de se retrouver", description: "Tenues, beauté, accessoires, fleurs, documents et dernières vérifications : les préparatifs donnent le ton de la journée." },
+            { hour: 7, name: "ENTOURAGE", theme: "Les personnes qui comptent", description: "Mariés, familles, témoins, enfants, amis et équipes professionnelles forment le réseau humain de l’édition." },
+            { hour: 8, name: "CÉRÉMONIE", theme: "Le moment des engagements", description: "Cérémonie civile, laïque ou religieuse : le contenu dépend du couple, du lieu, du rite choisi et des personnes présentes." },
+            { hour: 9, name: "RITUELS", theme: "Les gestes qui racontent", description: "Échange des alliances, discours, lectures, traditions familiales et gestes personnels : les détails deviennent des traces." },
+            { hour: 10, name: "PORTRAITS", theme: "Garder une trace", description: "Photographie et vidéo ne documentent pas seulement une esthétique : elles construisent l’archive du jour." },
+            { hour: 11, name: "DÉCOR", theme: "Mettre le lieu en scène", description: "Tables, fleurs, papeterie, mobilier, signalétique et lumière donnent une forme visible à l’univers du couple." },
+            { hour: 12, name: "TABLE", theme: "Le goût du lieu", description: "Menu, service, produits locaux, gâteau et boissons composent une expérience qui relie destination et réception." },
+            { hour: 13, name: "MUSIQUE", theme: "Donner un rythme", description: "Playlist, musicien, DJ, cérémonie et transitions : la musique accompagne chaque changement de chapitre." },
+            { hour: 14, name: "RÉCEPTION", theme: "Partager le moment", description: "Cocktail, repas, conversations et rencontres font passer l’édition du récit intime à l’expérience collective." },
+            { hour: 15, name: "DÉTAILS", theme: "Ce que l’on remarque après", description: "Papeterie, objets, cadeaux, matières, signatures et petits gestes composent la mémoire fine de la journée." },
+            { hour: 16, name: "PROFESSIONNELS", theme: "Orchestrer les métiers", description: "Photographe, vidéaste, traiteur, fleuriste, DJ, musicien, lieu, transport et coordination doivent pouvoir travailler sur une même timeline." },
+            { hour: 17, name: "TIMELINE", theme: "Le mariage comme partition", description: "Chaque action possède un horaire, une personne, un lieu et une relation. La grille devient un outil d’orchestration." },
+            { hour: 18, name: "COCKTAIL", theme: "La lumière change", description: "Le cocktail ouvre une transition : circulation des invités, musique, photos, service et lumière se croisent." },
+            { hour: 19, name: "SOIRÉE", theme: "Le grand passage", description: "Entrée, discours, première danse et repas composent le cœur éditorial de la réception." },
+            { hour: 20, name: "FÊTE", theme: "Le rythme collectif", description: "La piste devient un espace commun. Musique, énergie, images et relations se superposent." },
+            { hour: 21, name: "MÉMOIRE", theme: "Ce que l’on emporte", description: "Photos, vidéos, messages, musique, objets et documents commencent à former l’archive du mariage." },
+            { hour: 22, name: "TRANSMISSION", theme: "Partager sans perdre la source", description: "Une invitation, une photo, une playlist ou un album devient une trace transmissible tout en conservant son origine." },
+            { hour: 23, name: "APRÈS", theme: "L’histoire continue", description: "Le mariage ne s’arrête pas à minuit : remerciements, album, souvenirs, prestataires et destinations restent reliés dans le temps." }
         ];
 
         // Wedding Templates per hour
         const WEDDING_TEMPLATES = {
-            0: { activity: "Stargazing session", ritual: "Midnight vows under the stars", detail: "An intimate ceremony as the world sleeps" },
-            6: { activity: "Morning yoga by the water", ritual: " couples meditation", detail: "Begin your journey together in stillness" },
-            12: { activity: "Garden lunch reception", ritual: "Seasonal menu tasting", detail: "Celebrate with farm-to-table elegance" },
-            18: { activity: "Golden hour photoshoot", ritual: "Portrait session", detail: "Capture love in the magic light" },
-            19: { activity: "Wedding ceremony", ritual: "The main event", detail: "Exchange vows in paradise" },
-            20: { activity: "Reception dinner", ritual: "First dance", detail: "Celebrate with loved ones" },
-            22: { activity: "Late night celebration", ritual: "Cake cutting", detail: "Party until dawn" }
+            0: { activity: "Ouverture éditoriale", ritual: "Définir l’intention du mariage", detail: "Une page de départ pour le couple, le lieu et le récit." },
+            1: { activity: "Direction artistique", ritual: "Choisir une ligne visuelle", detail: "Palette, matières, lumière et références." },
+            2: { activity: "Récit du couple", ritual: "Rassembler les histoires", detail: "Rencontre, famille, souvenirs et symboles personnels." },
+            3: { activity: "Destination", ritual: "Définir le territoire", detail: "Le lieu devient une composante du récit." },
+            4: { activity: "Repérage", ritual: "Identifier les espaces", detail: "Cérémonie, cocktail, repas, soirée et solutions de repli." },
+            5: { activity: "Lumière", ritual: "Observer les heures", detail: "Un repère pour photo, vidéo, cérémonie et réception." },
+            6: { activity: "Préparatifs", ritual: "Préparer sans surcharge", detail: "Tenues, beauté, accessoires et vérifications." },
+            7: { activity: "Entourage", ritual: "Cartographier les relations", detail: "Famille, témoins, invités et équipes." },
+            8: { activity: "Cérémonie", ritual: "Vivre le moment central", detail: "Un chapitre construit autour des engagements." },
+            9: { activity: "Rituels", ritual: "Personnaliser les gestes", detail: "Traditions, lectures, alliances et gestes propres au couple." },
+            10: { activity: "Images", ritual: "Créer l’archive", detail: "Photographie et vidéo comme traces du jour." },
+            11: { activity: "Décor", ritual: "Composer le lieu", detail: "Fleurs, tables, papeterie, mobilier et signalétique." },
+            12: { activity: "Table", ritual: "Construire l’expérience", detail: "Menu, service, produits et gâteau." },
+            13: { activity: "Musique", ritual: "Écrire la bande-son", detail: "Cérémonie, cocktail, repas et soirée." },
+            14: { activity: "Réception", ritual: "Réunir les personnes", detail: "Le collectif devient le sujet de l’édition." },
+            15: { activity: "Détails", ritual: "Conserver les petites choses", detail: "Objets, cadeaux, papeterie et signatures." },
+            16: { activity: "Prestataires", ritual: "Relier les métiers", detail: "Chaque professionnel intervient dans la même architecture." },
+            17: { activity: "Orchestration", ritual: "Synchroniser la journée", detail: "Personne, lieu, heure et action restent reliés." },
+            18: { activity: "Cocktail", ritual: "Créer la transition", detail: "Circulation, musique, service et lumière." },
+            19: { activity: "Soirée", ritual: "Passer au chapitre suivant", detail: "Entrée, discours, repas et première danse." },
+            20: { activity: "Fête", ritual: "Ouvrir la piste", detail: "Musique, mouvement et relations." },
+            21: { activity: "Mémoire", ritual: "Rassembler les traces", detail: "Photos, vidéos, messages et objets." },
+            22: { activity: "Transmission", ritual: "Partager l’histoire", detail: "Invitations, albums, playlists et souvenirs." },
+            23: { activity: "Après", ritual: "Continuer le récit", detail: "Remerciements, archive et relations restent dans le même espace." }
         };
 
         // =============================================
@@ -1837,144 +1871,110 @@
         }
 
         function initInterior(destination, hour) {
-            // Update header
-            document.getElementById('interior-day-badge').textContent = 
-                `DAY ${String(destination.id).padStart(3, '0')} / ${destination.name.toUpperCase()}`;
-            
+            document.getElementById('interior-day-badge').textContent =
+                `ÉDITION ${String(destination.id).padStart(3, '0')} / ${destination.name.toUpperCase()}`;
+
             const hourConfig = HOURS_CONFIG[hour];
             document.getElementById('interior-time').textContent = `${String(hour).padStart(2, '0')}:00`;
             document.getElementById('interior-moment-name').textContent = hourConfig.name;
 
-            // Set background
             const keywords = destination.keywords || [];
-            document.getElementById('interior-bg').src = 
-                `https://source.unsplash.com/1600x900/?${encodeURIComponent(keywords[0] || destination.name)},landscape`;
+            document.getElementById('interior-bg').src =
+                `https://source.unsplash.com/1600x900/?${encodeURIComponent(keywords[0] || destination.name)},wedding`;
 
-            // Generate timeline
             const sidebar = document.getElementById('timeline-sidebar');
             sidebar.innerHTML = '';
-            
             HOURS_CONFIG.forEach((config, index) => {
                 const item = document.createElement('div');
                 item.className = `timeline-item ${index === hour ? 'active' : ''}`;
                 item.innerHTML = `
-                    <div class="timeline-hour">${String(index).padStart(2, '0')}:00</div>
+                    <div class="timeline-hour">${String(index).padStart(2, '0')} : 00</div>
                     <div class="timeline-moment">${config.name}</div>
                 `;
                 item.addEventListener('click', () => selectHour(destination, index));
                 sidebar.appendChild(item);
             });
-
-            // Load content
             loadMomentContent(destination, hour);
         }
 
         function selectHour(destination, hour) {
-            // Update active state
-            document.querySelectorAll('.timeline-item').forEach((item, index) => {
-                item.classList.toggle('active', index === hour);
-            });
-
-            // Update header
+            document.querySelectorAll('.timeline-item').forEach((item, index) => item.classList.toggle('active', index === hour));
             const hourConfig = HOURS_CONFIG[hour];
             document.getElementById('interior-time').textContent = `${String(hour).padStart(2, '0')}:00`;
             document.getElementById('interior-moment-name').textContent = hourConfig.name;
-
-            // Load content
             loadMomentContent(destination, hour);
         }
 
         function loadMomentContent(destination, hour) {
             const hourConfig = HOURS_CONFIG[hour];
             const weddingConfig = WEDDING_TEMPLATES[hour] || null;
-            
             const content = document.getElementById('moment-content');
-            
+            const editorial = [
+                ['ÉDITORIAL', 'Le lieu devient le premier personnage de cette édition.'],
+                ['À REGARDER', (destination.keywords || []).slice(0,3).join(' · ') || 'Lumière · architecture · paysage'],
+                ['À ORGANISER', 'Personnes · lieux · horaires · prestataires'],
+                ['À CONSERVER', 'Source · date · image · musique · document']
+            ];
+
             let weddingSection = '';
             if (weddingConfig) {
                 weddingSection = `
-                    <div class="wedding-section">
-                        <div class="wedding-section-title">Wedding Moment</div>
+                    <div class="wedding-section editorial-feature">
+                        <div class="wedding-section-title">Chapitre mariage</div>
                         <div class="wedding-section-content">
-                            <p><strong>Activity:</strong> ${weddingConfig.activity}</p>
-                            <p><strong>Ritual:</strong> ${weddingConfig.ritual}</p>
-                            <p><strong>Details:</strong> ${weddingConfig.detail}</p>
+                            <p><strong>Action :</strong> ${weddingConfig.activity}</p>
+                            <p><strong>Rituel :</strong> ${weddingConfig.ritual}</p>
+                            <p><strong>Détail :</strong> ${weddingConfig.detail}</p>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             }
 
             content.innerHTML = `
-                <div class="moment-meta fade-in-up">
-                    <div class="meta-item">
-                        <span class="meta-label">Destination</span>
-                        <span class="meta-value">${destination.name}, ${destination.country}</span>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-label">Region</span>
-                        <span class="meta-value">${destination.region || 'N/A'}</span>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-label">Season</span>
-                        <span class="meta-value">${destination.season || 'All year'}</span>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-label">Keywords</span>
-                        <span class="meta-value">${(destination.keywords || []).slice(0, 3).join(', ')}</span>
-                    </div>
+                <div class="editorial-kicker">WORLD WEDDING CENTER · ÉDITION ${String(destination.id).padStart(3,'0')}</div>
+                <h1 class="moment-title fade-in-up">${hourConfig.theme}</h1>
+                <p class="moment-description fade-in-up" style="animation-delay:.1s">${hourConfig.description}</p>
+
+                <div class="editorial-facts">
+                    <div><span>DESTINATION</span><b>${destination.name}</b></div>
+                    <div><span>PAYS</span><b>${destination.country}</b></div>
+                    <div><span>RÉGION</span><b>${destination.region || 'À confirmer'}</b></div>
+                    <div><span>SAISON</span><b>${destination.season || 'À confirmer'}</b></div>
                 </div>
-                
-                <h1 class="moment-title fade-in-up" style="animation-delay: 0.1s">
-                    ${hourConfig.theme}
-                </h1>
-                
-                <p class="moment-description fade-in-up" style="animation-delay: 0.2s">
-                    ${hourConfig.description}
-                </p>
-                
-                <div class="moment-gallery fade-in-up" style="animation-delay: 0.3s">
-                    <div class="gallery-item">
-                        <img src="https://source.unsplash.com/800x800/?${encodeURIComponent(destination.keywords?.[0] || destination.name)},architecture" alt="">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://source.unsplash.com/400x400/?${encodeURIComponent(destination.keywords?.[1] || 'travel')},landscape" alt="">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://source.unsplash.com/400x400/?${encodeURIComponent(destination.keywords?.[2] || 'culture')},people" alt="">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://source.unsplash.com/400x400/?${encodeURIComponent(destination.country)},city" alt="">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://source.unsplash.com/400x400/?${encodeURIComponent(destination.name)},food" alt="">
-                    </div>
+
+                <div class="moment-gallery fade-in-up" style="animation-delay:.2s">
+                    <div class="gallery-item"><img src="https://source.unsplash.com/800x800/?${encodeURIComponent(destination.keywords?.[0] || destination.name)},wedding,venue" alt=""></div>
+                    <div class="gallery-item"><img src="https://source.unsplash.com/400x400/?${encodeURIComponent(destination.keywords?.[1] || 'wedding'),},flowers" alt=""></div>
+                    <div class="gallery-item"><img src="https://source.unsplash.com/400x400/?${encodeURIComponent(destination.keywords?.[2] || 'wedding'),},portrait" alt=""></div>
+                    <div class="gallery-item"><img src="https://source.unsplash.com/400x400/?${encodeURIComponent(destination.country)},wedding,food" alt=""></div>
+                    <div class="gallery-item"><img src="https://source.unsplash.com/400x400/?${encodeURIComponent(destination.name)},wedding,architecture" alt=""></div>
                 </div>
-                
-                <div class="wedding-section fade-in-up" style="animation-delay: 0.4s">
-                    <div class="wedding-section-title">Destination Details</div>
-                    <div class="wedding-section-content">
-                        <p><strong>Culture:</strong> ${destination.culture || 'Discover the unique local heritage.'}</p>
-                        <p><strong>Travel:</strong> ${destination.travel || 'Multiple access options available.'}</p>
-                        <p><strong>Weather:</strong> ${destination.weather || 'Check seasonal conditions.'}</p>
-                        <p><strong>Sunrise:</strong> ${destination.sunrise || 'Varies by season'}</p>
-                        <p><strong>Sunset:</strong> ${destination.sunset || 'Varies by season'}</p>
-                    </div>
+
+                <div class="editorial-grid">
+                    ${editorial.map(([label,value]) => `<div><span>${label}</span><p>${value}</p></div>`).join('')}
                 </div>
-                
+
                 ${weddingSection}
-                
-                <div class="wedding-section fade-in-up" style="animation-delay: 0.5s">
-                    <div class="wedding-section-title">Places to Discover</div>
+
+                <div class="wedding-section">
+                    <div class="wedding-section-title">Carnet de destination</div>
                     <div class="wedding-section-content">
-                        <p>${(destination.places || ['Historic downtown', 'Local markets', 'Scenic viewpoints']).map(p => `• ${p}`).join('<br>')}</p>
+                        <p><strong>Culture :</strong> ${destination.culture || 'À documenter dans l’édition.'}</p>
+                        <p><strong>Accès :</strong> ${destination.travel || 'À documenter dans l’édition.'}</p>
+                        <p><strong>Climat :</strong> ${destination.weather || 'À documenter dans l’édition.'}</p>
                     </div>
                 </div>
-                
-                <div class="wedding-section fade-in-up" style="animation-delay: 0.6s">
-                    <div class="wedding-section-title">Local Professionals</div>
+
+                <div class="wedding-section">
+                    <div class="wedding-section-title">Lieux & savoir-faire</div>
                     <div class="wedding-section-content">
-                        <p>${(destination.professions || ['Local experts', 'Creative artisans', 'Service providers']).map(p => `• ${p}`).join('<br>')}</p>
+                        <p>${(destination.places || ['Lieu de réception à sélectionner', 'Espace de cérémonie à sélectionner']).map(p => '• ' + p).join('<br>')}</p>
+                        <p style="margin-top:1rem">${(destination.professions || ['Photographe', 'Traiteur', 'Fleuriste', 'Musicien / DJ']).map(p => '• ' + p).join('<br>')}</p>
                     </div>
+                </div>
+
+                <div class="editorial-signature">
+                    <span>UNE MÊME GRILLE · PLUSIEURS LECTURES</span>
+                    <b>La destination reste le point. Le mariage ajoute les couches.</b>
                 </div>
             `;
         }
@@ -2364,12 +2364,12 @@
   .ww-grid-zoom-stage { padding:1rem; }
 }
 </style>
-<button id="ww-grid-zoom-trigger" class="ww-zoom-trigger" type="button" aria-haspopup="dialog" aria-controls="ww-grid-zoom" aria-label="Open grid zoom">ZOOM GRID</button>
+<button id="ww-grid-zoom-trigger" class="ww-zoom-trigger" type="button" aria-haspopup="dialog" aria-controls="ww-grid-zoom" aria-label="Open grid zoom">ZOOM GRILLE</button>
 <section id="ww-grid-zoom" class="ww-grid-zoom" role="dialog" aria-modal="true" aria-labelledby="ww-grid-zoom-title" aria-hidden="true">
   <div class="ww-grid-zoom-head">
-    <div id="ww-grid-zoom-title" class="ww-grid-zoom-title">365 EDITIONS · DEPTH VIEW</div>
+    <div id="ww-grid-zoom-title" class="ww-grid-zoom-title">365 ÉDITIONS · LECTURE PROFONDE</div>
     <div class="ww-grid-zoom-controls" role="group" aria-label="Grid zoom level">
-      <button class="ww-grid-zoom-btn active" type="button" data-zoom="1">GRID</button>
+      <button class="ww-grid-zoom-btn active" type="button" data-zoom="1">GRILLE</button>
       <button class="ww-grid-zoom-btn" type="button" data-zoom=".5">1/2</button>
       <button class="ww-grid-zoom-btn" type="button" data-zoom=".25">1/4</button>
       <button class="ww-grid-zoom-btn" type="button" data-zoom=".125">1/8</button>
@@ -2380,7 +2380,7 @@
   <div id="ww-grid-zoom-stage" class="ww-grid-zoom-stage">
     <div id="ww-grid-zoom-canvas" class="ww-grid-zoom-canvas"></div>
   </div>
-  <div id="ww-grid-zoom-meta" class="ww-grid-zoom-meta">GRID · 365 FIXED POINTS · TEXT ADAPTS · GEOMETRY STAYS</div>
+  <div id="ww-grid-zoom-meta" class="ww-grid-zoom-meta">GRILLE · 365 POINTS FIXES · LE TEXTE S’ADAPTE · LA STRUCTURE RESTE</div>
 </section>
 <script>
 (function(){
@@ -2426,7 +2426,7 @@
       canvas.style.gridTemplateColumns = getComputedStyle(sourceGrid()).gridTemplateColumns;
       canvas.style.transform='scale('+zoomLevel+')';
       document.getElementById('ww-grid-zoom-meta').textContent =
-        (zoomLevel===1?'GRID · 365 FIXED POINTS':zoomLevel===.5?'1/2 · HALF VIEW':zoomLevel===.25?'1/4 · QUARTER VIEW':'1/8 · OVERVIEW') +
+        (zoomLevel===1?'GRILLE · 365 POINTS FIXES':zoomLevel===.5?'1/2 · HALF VIEW':zoomLevel===.25?'1/4 · QUARTER VIEW':'1/8 · OVERVIEW') +
         ' · TEXT ADAPTS · GEOMETRY STAYS';
     }
   }
