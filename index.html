@@ -1320,7 +1320,8 @@ body{font-family:Arial,'Helvetica Neue',sans-serif}
             <div class="nav-links">
                 <span class="nav-link" id="nav-world">ACCUEIL</span>
                 <span class="nav-link" id="nav-editions">365 ÉDITIONS</span>
-                <span class="nav-link nav-link-primary" id="nav-my-space">MON ESPACE</span>
+                <span class="nav-link nav-link-primary" id="nav-my-wedding">MON MARIAGE</span>
+                <span class="nav-link" id="nav-my-space">MON ESPACE</span>
                 <span class="nav-link" id="nav-systematlas">SYSTEMATLAS</span>
                 <span class="nav-link" id="nav-agents">365 AGENTS</span>
             </div>
@@ -2264,6 +2265,7 @@ body{font-family:Arial,'Helvetica Neue',sans-serif}
                 }
             });
 
+            document.getElementById('nav-my-wedding').addEventListener('click', () => { window.location.href = './my-wedding.html'; });
             document.getElementById('nav-my-space').addEventListener('click', openEditor);
             document.getElementById('nav-systematlas').addEventListener('click', () => { window.location.href = './systematlas.html'; });
             document.getElementById('nav-agents').addEventListener('click', () => { window.location.href = './agents.html'; });
