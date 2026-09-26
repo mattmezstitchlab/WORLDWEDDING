@@ -13,7 +13,7 @@ html{scroll-behavior:smooth}body{background:var(--paper);color:var(--ink);font-f
 button,input,select,textarea{font:inherit;color:inherit}.top{position:fixed;z-index:20;top:0;left:0;right:0;height:72px;padding:0 28px;display:flex;align-items:center;justify-content:space-between;mix-blend-mode:multiply}.brand{font-size:12px;font-weight:700;letter-spacing:.25em}.nav{display:flex;gap:24px}.nav a{font-size:9px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none}.nav a:hover{color:var(--pink)}
 section{position:relative;border-bottom:1px solid rgba(0,0,0,.16)}
 .hero{min-height:100svh;padding:110px 5vw 45px;display:grid;grid-template-columns:1.05fr .95fr;gap:5vw;align-items:end}.kicker,.eyebrow{font-size:9px;letter-spacing:.25em;text-transform:uppercase}.hero h1{font-size:clamp(74px,13vw,190px);line-height:.73;letter-spacing:-.075em;margin-top:20px}.hero-copy p{font-size:clamp(18px,2vw,27px);line-height:1.15;max-width:580px;margin-top:40px}.cta{display:inline-flex;margin-top:28px;padding:14px 18px;background:var(--ink);color:var(--paper);border:1px solid var(--ink);font-size:9px;letter-spacing:.17em;text-transform:uppercase;text-decoration:none}.cta:hover{background:var(--pink);border-color:var(--pink)}
-.hero-media{height:78vh;min-height:520px;position:relative;overflow:hidden;background:#ddd}.hero-media img,.media img{width:100%;height:100%;object-fit:cover;display:block}.hero-media:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.38))}
+.hero-media{height:78vh;min-height:520px;position:relative;overflow:hidden;background:#ddd}.hero-media img,.hero-media video,.media img,.media video{width:100%;height:100%;object-fit:cover;display:block}.hero-media video,.media video{background:#111}.hero-media:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.38))}
 .media-note{position:absolute;z-index:2;left:20px;bottom:18px;color:white;font-size:8px;letter-spacing:.16em;text-transform:uppercase}.page{position:absolute;right:5vw;bottom:25px;font-size:9px;letter-spacing:.18em}
 .statement{min-height:70vh;padding:9vw 5vw;display:grid;grid-template-columns:.25fr 1.75fr;gap:5vw;align-items:center}.statement h2,.agency h2{font-size:clamp(60px,10vw,155px);line-height:.76;letter-spacing:-.07em}.statement p{font-size:clamp(24px,3.2vw,46px);line-height:1.05;max-width:1000px}.statement p strong{font-weight:700}
 .full{min-height:90vh}.full .media{height:90vh}.overlay{position:absolute;inset:0;padding:8vw 5vw;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(transparent 35%,rgba(0,0,0,.72))}.overlay h2{font-size:clamp(70px,12vw,175px);line-height:.73;letter-spacing:-.075em}.overlay p{max-width:520px;font-size:16px;line-height:1.45;margin-top:25px}
@@ -42,7 +42,7 @@ footer{min-height:30vh;padding:6vw 5vw;display:flex;justify-content:space-betwee
     <p>Nous imaginons des mariages comme des histoires à vivre, à orchestrer et à raconter.</p>
     <a class="cta" href="#contact">Parler de votre mariage →</a>
   </div>
-  <div class="hero-media"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=85" data-media-query="luxury wedding bride groom editorial" data-media-orientation="portrait" alt="Mariage éditorial"><div class="media-note">WEDDING EDITORIAL / 001</div></div>
+  <div class="hero-media"><video data-media-query="luxury wedding bride groom editorial cinematic" data-media-orientation="portrait" data-alt="Mariage éditorial" poster="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=85" autoplay muted loop playsinline preload="metadata"></video><div class="media-note">WEDDING EDITORIAL / 001</div></div>
   <div class="page">001 / WORLD WEDDING</div>
 </section>
 
@@ -52,7 +52,7 @@ footer{min-height:30vh;padding:6vw 5vw;display:flex;justify-content:space-betwee
 </section>
 
 <section class="full">
-  <div class="media"><img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=2000&q=85" data-media-query="luxury destination wedding ceremony landscape" data-media-orientation="landscape" alt="Cérémonie de mariage"></div>
+  <div class="media"><video data-media-query="luxury destination wedding ceremony cinematic" data-media-orientation="landscape" data-alt="Cérémonie de mariage" poster="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=2000&q=85" autoplay muted loop playsinline preload="metadata"></video></div>
   <div class="overlay"><div class="kicker">DESTINATION · STYLE · EXPERIENCE</div><h2>FROM<br>THE FIRST<br>IDEA.</h2><p>De la première conversation au dernier moment de la réception, nous construisons une vision cohérente : lieu, ambiance, rythme, équipe et expérience des invités.</p></div>
   <div class="page">002</div>
 </section>
@@ -81,10 +81,10 @@ footer{min-height:30vh;padding:6vw 5vw;display:flex;justify-content:space-betwee
 </section>
 
 <section class="gallery" aria-label="Sélection wedding">
-  <div class="media large"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=85" data-media-query="editorial wedding couple fashion photography" data-media-orientation="landscape" alt="Couple de mariés"></div>
+  <div class="media large"><video data-media-query="editorial wedding couple fashion cinematic" data-media-orientation="landscape" data-alt="Couple de mariés" poster="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=85" autoplay muted loop playsinline preload="metadata"></video></div>
   <div class="stack">
-    <div class="media small"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=85" data-media-query="wedding flowers table luxury editorial" data-media-orientation="landscape" alt="Décoration de mariage"></div>
-    <div class="media small"><img src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1200&q=85" data-media-query="wedding reception dinner elegant editorial" data-media-orientation="landscape" alt="Réception de mariage"></div>
+    <div class="media small"><video data-media-query="luxury wedding flowers tables cinematic" data-media-orientation="landscape" data-alt="Décoration de mariage" poster="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=85" autoplay muted loop playsinline preload="metadata"></video></div>
+    <div class="media small"><video data-media-query="luxury wedding reception dinner cinematic" data-media-orientation="landscape" data-alt="Réception de mariage" poster="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1200&q=85" autoplay muted loop playsinline preload="metadata"></video></div>
   </div>
 </section>
 
